@@ -90,8 +90,11 @@ async function loadRotaData() {
 async function verifyLogin(username, password) {
     const storedUsername = "radiology";
     const storedPassword = "watford";
-    return username === storedUsername && password === storedPassword;
+    // Normalise input username
+    const normalisedUsername = username.trim().toLowerCase();
+    return normalisedUsername === storedUsername && password === storedPassword;
 }
+
 
 // Function to show a message box with entered login information
 function showMessageBox(username, password) {
