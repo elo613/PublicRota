@@ -106,8 +106,6 @@ loginForm.addEventListener("submit", async (e) => {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    // Call the function to display the entered information in a message box
-    showMessageBox(username, password);
 
     // Verify the login credentials
     const isValid = await verifyLogin(username, password);
