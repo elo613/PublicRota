@@ -49,12 +49,6 @@
         let firstDate = null; // Earliest date in JSON
         let lastDate = null;  // Latest date in JSON
 
-        const githubUsername = "elo613";
-        const repoName = "radrota";
-        const branch = "main";
-        const githubToken = "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"; // Replace with your token
-        const rotaUrl = `https://api.github.com/repos/${githubUsername}/${repoName}/contents/rota.json?ref=${branch}`;
-
         // Helper to get Monday of the current week
         function getWeekStart(date) {
             const day = date.getDay();
@@ -137,18 +131,12 @@
             updateButtonStates(); // Update button states after rendering
         }
 
-        // Function to load JSON data from GitHub
+        // Function to load JSON data
         async function loadRotaData() {
             try {
-                const response = await fetch(rotaUrl, {
-                    headers: { Authorization: `token ${githubToken}` },
-                });
+                const response = await fetch("rota.json");
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const jsonResponse = await response.json();
-
-                // Decode the content (base64) into JSON
-                const content = atob(jsonResponse.content);
-                rotaData = JSON.parse(content);
+                rotaData = await response.json();
 
                 // Determine the first and last dates in the JSON
                 firstDate = parseDateString(rotaData[0].Date);
