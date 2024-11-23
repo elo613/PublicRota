@@ -42,7 +42,7 @@ function updateButtonStates() {
     // Disable "Previous" button if the current week is the earliest week
     prevWeekButton.disabled = weekStart <= firstDate;
 
-    // Disable "Next" button if the current week is the latest week
+    // Disable "Next" button if the current week is more than 2 weeks beyond the last week
     const nextWeekStart = new Date(weekStart);
     nextWeekStart.setDate(nextWeekStart.getDate() + 7);
     nextWeekButton.disabled = nextWeekStart > lastDate;
@@ -83,6 +83,7 @@ async function loadRotaData() {
         rotaData = await response.json();
         firstDate = getWeekStart(parseDateString(rotaData[0].Date));
         lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
+        lastDate.setDate(lastDate.getDate() + 7); // Allow 2 weeks beyond the last date
         displayRota();
     } catch (error) {
         console.error("Error loading rota.json:", error);
