@@ -12,11 +12,28 @@ let rotaData = [];
 let firstDate = null; // Earliest date in JSON
 let lastDate = null;  // Latest date in JSON
 
-// Helper to get Monday of the current week
-function getWeekStart(date) {
-    const day = date.getDay();
-    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
-    return new Date(date.setDate(diff));
+// Precomputed SHA-256 hashes for username and password
+const storedUsernameHash = "6b64d9c9fb06c7f3522e30c93a62e88f45c8c504d8743cda752ca3211a34b0b9"; 
+const storedPasswordHash = "b3b2d8e2a87a041ab0d7390ff8e49a4476f1e57c1a27633c3c7f80ccfb3af93a"; 
+
+// Helper to hash a string using SHA-256
+async function hashInput(input) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(input);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+// Verify login credentials
+async function verifyLogin(username, password) {
+    // Hash the username and password entered by the user
+    const usernameHash = await hashInput(username.trim().toLowerCase());
+    const passwordHash = await hashInput(password);
+
+    // Compare the hashes
+    return usernameHash === storedUsernameHash && passwordHash === storedPasswordHash;
 }
 
 // Format date to "Day, dd Month yyyy"
@@ -33,6 +50,13 @@ function formatDate(date) {
 function parseDateString(dateString) {
     const [day, month, year] = dateString.split(" ");
     return new Date(`${month} ${day}, ${year}`);
+}
+
+// Helper to get Monday of the current week
+function getWeekStart(date) {
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
+    return new Date(date.setDate(diff));
 }
 
 // Enable or disable navigation buttons
@@ -88,20 +112,6 @@ async function loadRotaData() {
     } catch (error) {
         console.error("Error loading rota.json:", error);
     }
-}
-
-// Verify login credentials
-async function verifyLogin(username, password) {
-    const storedUsername = "radiology";
-    const storedPassword = "watford";
-    // Normalise input username
-    const normalisedUsername = username.trim().toLowerCase();
-    return normalisedUsername === storedUsername && password === storedPassword;
-}
-
-// Function to show a message box with entered login information
-function showMessageBox(username, password) {
-    alert(`Entered Username: ${username}\nEntered Password: ${password}`);
 }
 
 // Login form event listener
