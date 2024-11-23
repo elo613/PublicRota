@@ -1,3 +1,4 @@
+/* General Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -6,31 +7,36 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
 }
 
-.rota-container {
-    width: 80%;
-    max-width: 800px;
-    background: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.week-header h1 {
-    font-size: 1.5em;
+h1 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.button-container {
-    width: 100%;
-    margin: 10px 0;
+/* Login Form */
+.login-container {
+    width: 300px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
     text-align: center;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    text-align: left;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 button {
@@ -42,18 +48,33 @@ button {
     border-radius: 5px;
     font-size: 1em;
     cursor: pointer;
-    text-align: center;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-/* Grey out the button when disabled */
-button:disabled {
-    background-color: #d6d6d6;
-    color: #8c8c8c;
-    cursor: not-allowed;
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+/* Rota Viewer */
+.rota-container {
+    width: 80%;
+    max-width: 800px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.button-container {
+    width: 100%;
+    margin: 10px 0;
+    text-align: center;
 }
 
 table {
