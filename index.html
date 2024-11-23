@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Rota Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="rota-container">
+        <!-- Week Header -->
+        <div class="week-header">
+            <h1 id="week-title">Week of:</h1>
+        </div>
+
+        <!-- Previous Week Button -->
+        <div class="button-container">
+            <button id="prev-week">← Previous Week</button>
+        </div>
+
+        <!-- Rota Table -->
+        <table id="rota-table">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>AM Shift</th>
+                    <th>PM Shift</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rota rows will be dynamically generated here -->
+            </tbody>
+        </table>
+
+        <!-- Next Week Button -->
+        <div class="button-container">
+            <button id="next-week">Next Week →</button>
+        </div>
+    </div>
+
+    <script>
+        const rotaTableBody = document.querySelector("#rota-table tbody");
+        const weekTitle = document.getElementById("week-title");
+        const prevWeekButton = document.getElementById("prev-week");
+        const nextWeekButton = document.getElementById("next-week");
+
+        let currentDate = new Date(); // Default current date
+        let rotaData = [];
+        let firstDate = null; // Earliest date in JSON
+        let lastDate = null;  // Latest date in JSON
+
+        const githubUsername = "elo613";
+        const repoName = "radrota";
+        const branch = "main";
+        const githubToken = "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"; // Replace with your token
+        const rotaUrl = `https://api.github.com/repos/${githubUsername}/${repoName}/contents/rota.json?ref=${branch}`;
+
+        // Helper to get Monday of the current week
+        function getWeekStart(date) {
+            const day = date.getDay();
+            const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
+            return new Date(date.setDate(diff));
+        }
+
+        // Format date to "Day, dd Month yyyy"
+        function formatDate(date) {
+            return date.toLocaleDateString("en-GB", {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            });
+        }
+
+        // Parse a date string in "dd Month yyyy" format
+        function parseDateString(dateString) {
+            const [day, month, year] = dateString.split(" ");
+            return new Date(`${month} ${day}, ${year}`);
+        }
+
+        // Enable or disable navigation buttons
+        function updateButtonStates() {
+            const weekStart = getWeekStart(new Date(currentDate));
+
+            // Disable "Previous Week" button if we're at or before the first week
+            prevWeekButton.disabled = weekStart <= firstDate;
+
+            // Disable "Next Week" button if we're at or after the last week
+            const nextWeekStart = new Date(weekStart);
+            nextWeekStart.setDate(nextWeekStart.getDate() + 7);
+            nextWeekButton.disabled = nextWeekStart > lastDate;
+        }
+
+        // Function to render rota for the current week
+        function displayRota() {
+            const weekStart = getWeekStart(new Date(currentDate));
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekEnd.getDate() + 6);
+
+            weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
+
+            rotaTableBody.innerHTML = ""; // Clear previous rows
+
+            for (let i = 0; i < 7; i++) {
+                const currentDay = new Date(weekStart);
+                currentDay.setDate(weekStart.getDate() + i);
+                const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
+                const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+
+                // Filter data for AM and PM shifts
+                const amShift = rotaData.find(item => {
+                    const shiftDate = parseDateString(item.Date);
+                    return (
+                        shiftDate.toDateString() === currentDay.toDateString() &&
+                        item["Shift Type"].includes("AM")
+                    );
+                });
+
+                const pmShift = rotaData.find(item => {
+                    const shiftDate = parseDateString(item.Date);
+                    return (
+                        shiftDate.toDateString() === currentDay.toDateString() &&
+                        item["Shift Type"].includes("PM")
+                    );
+                });
+
+                // Create table row with the day name and date
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${dayName} (${dayDate})</td>
+                    <td>${amShift ? amShift.Registrar : "N/A"}</td>
+                    <td>${pmShift ? pmShift.Registrar : "N/A"}</td>
+                `;
+                rotaTableBody.appendChild(row);
+            }
+
+            updateButtonStates(); // Update button states after rendering
+        }
+
+        // Function to load JSON data from GitHub
+        async function loadRotaData() {
+            try {
+                const response = await fetch(rotaUrl, {
+                    headers: { Authorization: `token ${githubToken}` },
+                });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const jsonResponse = await response.json();
+
+                // Decode the content (base64) into JSON
+                const content = atob(jsonResponse.content);
+                rotaData = JSON.parse(content);
+
+                // Determine the first and last dates in the JSON
+                firstDate = parseDateString(rotaData[0].Date);
+                lastDate = parseDateString(rotaData[rotaData.length - 1].Date);
+
+                displayRota(); // Display rota for the initial week
+            } catch (error) {
+                console.error("Failed to load rota data:", error);
+            }
+        }
+
+        // Event listeners for navigation
+        prevWeekButton.addEventListener("click", () => {
+            currentDate.setDate(currentDate.getDate() - 7);
+            displayRota();
+        });
+
+        nextWeekButton.addEventListener("click", () => {
+            currentDate.setDate(currentDate.getDate() + 7);
+            displayRota();
+        });
+
+        // Load data and initialise display
+        loadRotaData();
+    </script>
+</body>
+</html>
