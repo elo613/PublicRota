@@ -39,24 +39,17 @@ function parseDateString(dateString) {
 function updateButtonStates() {
     const weekStart = getWeekStart(new Date(currentDate));
 
-    // Disable "Previous Week" button if we're at or before the first week
     prevWeekButton.disabled = weekStart <= firstDate;
-
-    // Disable "Next Week" button if we're at or after the last week
     const nextWeekStart = new Date(weekStart);
     nextWeekStart.setDate(nextWeekStart.getDate() + 7);
     nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
-// Function to render rota for the current week
+// Render rota for the current week
 function displayRota() {
     const weekStart = getWeekStart(new Date(currentDate));
-    const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekEnd.getDate() + 6);
-
     weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
-
-    rotaTableBody.innerHTML = ""; // Clear previous rows
+    rotaTableBody.innerHTML = "";
 
     for (let i = 0; i < 7; i++) {
         const currentDay = new Date(weekStart);
@@ -64,24 +57,9 @@ function displayRota() {
         const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
         const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
-        // Filter data for AM and PM shifts
-        const amShift = rotaData.find(item => {
-            const shiftDate = parseDateString(item.Date);
-            return (
-                shiftDate.toDateString() === currentDay.toDateString() &&
-                item["Shift Type"].includes("AM")
-            );
-        });
+        const amShift = rotaData.find(item => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("AM"));
+        const pmShift = rotaData.find(item => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM"));
 
-        const pmShift = rotaData.find(item => {
-            const shiftDate = parseDateString(item.Date);
-            return (
-                shiftDate.toDateString() === currentDay.toDateString() &&
-                item["Shift Type"].includes("PM")
-            );
-        });
-
-        // Create table row with the day name and date
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
@@ -91,63 +69,37 @@ function displayRota() {
         rotaTableBody.appendChild(row);
     }
 
-    updateButtonStates(); // Update button states after rendering
+    updateButtonStates();
 }
 
-// Function to load JSON data
+// Load rota data
 async function loadRotaData() {
     try {
         const response = await fetch("rota.json");
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         rotaData = await response.json();
-
-        // Determine the first and last dates in the JSON
         firstDate = parseDateString(rotaData[0].Date);
         lastDate = parseDateString(rotaData[rotaData.length - 1].Date);
-
-        displayRota(); // Display the rota
+        displayRota();
     } catch (error) {
         console.error("Error loading rota.json:", error);
     }
 }
 
-// Function to verify login credentials
+// Verify login credentials
 async function verifyLogin(username, password) {
-    try {
-        // Replace "credentials.txt" with hardcoded credentials if necessary for testing
-        const response = await fetch("credentials.txt");
-
-        if (!response.ok) {
-            throw new Error("Failed to fetch credentials");
-        }
-
-        const credentials = await response.text();
-        const [storedUsername, storedPassword] = credentials.trim().split("\n");
-
-        // Log fetched credentials for debugging
-        console.log("Fetched credentials:", { storedUsername, storedPassword });
-
-        return username === storedUsername && password === storedPassword;
-    } catch (error) {
-        console.error("Error verifying login:", error);
-        return false;
-    }
+    const storedUsername = "radiology";
+    const storedPassword = "watford";
+    return username === storedUsername && password === storedPassword;
 }
 
-
-
-// Event listener for login form submission
+// Login event listener
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const isValid = await verifyLogin(username, password);
-    if (isValid) {
+    if (await verifyLogin(username, password)) {
         loginContainer.style.display = "none";
         rotaContainer.style.display = "block";
         loadRotaData();
@@ -156,7 +108,7 @@ loginForm.addEventListener("submit", async (e) => {
     }
 });
 
-// Event listeners for navigation
+// Navigation buttons
 prevWeekButton.addEventListener("click", () => {
     currentDate.setDate(currentDate.getDate() - 7);
     displayRota();
