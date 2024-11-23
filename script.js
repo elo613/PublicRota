@@ -39,7 +39,10 @@ function parseDateString(dateString) {
 function updateButtonStates() {
     const weekStart = getWeekStart(new Date(currentDate));
 
+    // Disable "Previous" button if the current week is the earliest week
     prevWeekButton.disabled = weekStart <= firstDate;
+
+    // Disable "Next" button if the current week is the latest week
     const nextWeekStart = new Date(weekStart);
     nextWeekStart.setDate(nextWeekStart.getDate() + 7);
     nextWeekButton.disabled = nextWeekStart > lastDate;
@@ -69,7 +72,7 @@ function displayRota() {
         rotaTableBody.appendChild(row);
     }
 
-    updateButtonStates();
+    updateButtonStates(); // Update button states after rendering
 }
 
 // Load rota data
@@ -78,8 +81,8 @@ async function loadRotaData() {
         const response = await fetch("rota.json");
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         rotaData = await response.json();
-        firstDate = parseDateString(rotaData[0].Date);
-        lastDate = parseDateString(rotaData[rotaData.length - 1].Date);
+        firstDate = getWeekStart(parseDateString(rotaData[0].Date));
+        lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
         displayRota();
     } catch (error) {
         console.error("Error loading rota.json:", error);
@@ -95,7 +98,6 @@ async function verifyLogin(username, password) {
     return normalisedUsername === storedUsername && password === storedPassword;
 }
 
-
 // Function to show a message box with entered login information
 function showMessageBox(username, password) {
     alert(`Entered Username: ${username}\nEntered Password: ${password}`);
@@ -108,7 +110,6 @@ loginForm.addEventListener("submit", async (e) => {
     // Get the username and password entered by the user
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-
 
     // Verify the login credentials
     const isValid = await verifyLogin(username, password);
