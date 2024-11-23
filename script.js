@@ -13,8 +13,8 @@ let firstDate = null; // Earliest date in JSON
 let lastDate = null;  // Latest date in JSON
 
 // Precomputed SHA-256 hashes for username and password
-const storedUsernameHash = "6b64d9c9fb06c7f3522e30c93a62e88f45c8c504d8743cda752ca3211a34b0b9"; 
-const storedPasswordHash = "b3b2d8e2a87a041ab0d7390ff8e49a4476f1e57c1a27633c3c7f80ccfb3af93a"; 
+const storedUsernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032"; 
+const storedPasswordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c"; 
 
 // Helper to hash a string using SHA-256
 async function hashInput(input) {
