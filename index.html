@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="rota-container">
+    <div id="login-container" class="login-container">
+        <h1>Login</h1>
+        <form id="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <button type="submit">Login</button>
+            <p id="login-error" class="error-message"></p>
+        </form>
+    </div>
+
+    <div id="rota-container" class="rota-container" style="display: none;">
         <!-- Week Header -->
         <div class="week-header">
             <h1 id="week-title">Week of:</h1>
@@ -38,7 +50,6 @@
         </div>
     </div>
 
-    <!-- Link to External Script -->
     <script src="script.js"></script>
 </body>
 </html>
