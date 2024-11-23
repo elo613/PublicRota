@@ -88,10 +88,27 @@ async function loadRotaData() {
 
 // Verify login credentials
 async function verifyLogin(username, password) {
-    const storedUsername = "radiology";
-    const storedPassword = "watford";
-    return username === storedUsername && password === storedPassword;
+    try {
+        const response = await fetch("credentials.txt");
+        console.log("Fetch Response:", response);
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch credentials.txt");
+        }
+
+        const credentials = await response.text();
+        console.log("Fetched Credentials Content:", credentials);
+
+        const [storedUsername, storedPassword] = credentials.trim().split("\n");
+        console.log("Parsed Credentials:", { storedUsername, storedPassword });
+
+        return username === storedUsername && password === storedPassword;
+    } catch (error) {
+        console.error("Error in verifyLogin:", error);
+        return false;
+    }
 }
+
 
 // Login event listener
 loginForm.addEventListener("submit", async (e) => {
