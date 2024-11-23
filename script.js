@@ -2,6 +2,10 @@ const rotaTableBody = document.querySelector("#rota-table tbody");
 const weekTitle = document.getElementById("week-title");
 const prevWeekButton = document.getElementById("prev-week");
 const nextWeekButton = document.getElementById("next-week");
+const loginForm = document.getElementById("login-form");
+const loginContainer = document.getElementById("login-container");
+const rotaContainer = document.getElementById("rota-container");
+const loginError = document.getElementById("login-error");
 
 let currentDate = new Date(); // Default current date
 let rotaData = [];
@@ -100,7 +104,6 @@ async function loadRotaData() {
         }
 
         rotaData = await response.json();
-        console.log("Rota Data Fetched Successfully:", rotaData);
 
         // Determine the first and last dates in the JSON
         firstDate = parseDateString(rotaData[0].Date);
@@ -112,6 +115,40 @@ async function loadRotaData() {
     }
 }
 
+// Function to verify login credentials
+async function verifyLogin(username, password) {
+    try {
+        const response = await fetch("credentials.txt");
+        if (!response.ok) {
+            throw new Error("Failed to fetch credentials");
+        }
+
+        const credentials = await response.text();
+        const [storedUsername, storedPassword] = credentials.trim().split("\n");
+
+        return username === storedUsername && password === storedPassword;
+    } catch (error) {
+        console.error("Error verifying login:", error);
+        return false;
+    }
+}
+
+// Event listener for login form submission
+loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const isValid = await verifyLogin(username, password);
+    if (isValid) {
+        loginContainer.style.display = "none";
+        rotaContainer.style.display = "block";
+        loadRotaData();
+    } else {
+        loginError.textContent = "Invalid username or password";
+    }
+});
+
 // Event listeners for navigation
 prevWeekButton.addEventListener("click", () => {
     currentDate.setDate(currentDate.getDate() - 7);
@@ -122,6 +159,3 @@ nextWeekButton.addEventListener("click", () => {
     currentDate.setDate(currentDate.getDate() + 7);
     displayRota();
 });
-
-// Load data and initialise display
-loadRotaData();
