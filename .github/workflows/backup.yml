@@ -1,0 +1,35 @@
+name: Backup rota.json
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs every day at midnight UTC
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Public Repository
+      uses: actions/checkout@v3
+      with:
+        repository: elo613/PublicRadRota
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        ref: main
+
+    - name: Fetch rota.json from Private Repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        curl -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3.raw" \
+        https://api.github.com/repos/elo613/radrota/contents/rota.json \
+        --output rota.json
+
+    - name: Commit and Push rota.json to Public Repository
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add rota.json
+        git commit -m "Backup rota.json"
+        git push
