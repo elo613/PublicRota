@@ -48,10 +48,19 @@ button {
     border-radius: 5px;
     font-size: 1em;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+/* Disabled Button Styling */
+button:disabled {
+    background-color: #cccccc; /* Light grey */
+    color: #666666;          /* Darker grey for text */
+    cursor: not-allowed;     /* Indicates the button is not clickable */
+    opacity: 0.6;            /* Adds a slightly transparent effect */
 }
 
 .error-message {
