@@ -88,39 +88,36 @@ async function loadRotaData() {
 
 // Verify login credentials
 async function verifyLogin(username, password) {
-    try {
-        const response = await fetch("credentials.txt");
-        console.log("Fetch Response:", response);
-
-        if (!response.ok) {
-            throw new Error("Failed to fetch credentials.txt");
-        }
-
-        const credentials = await response.text();
-        console.log("Fetched Credentials Content:", credentials);
-
-        const [storedUsername, storedPassword] = credentials.trim().split("\n");
-        console.log("Parsed Credentials:", { storedUsername, storedPassword });
-
-        return username === storedUsername && password === storedPassword;
-    } catch (error) {
-        console.error("Error in verifyLogin:", error);
-        return false;
-    }
+    const storedUsername = "radiology";
+    const storedPassword = "watford";
+    return username === storedUsername && password === storedPassword;
 }
 
+// Function to show a message box with entered login information
+function showMessageBox(username, password) {
+    alert(`Entered Username: ${username}\nEntered Password: ${password}`);
+}
 
-// Login event listener
+// Login form event listener
 loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent page refresh
+
+    // Get the username and password entered by the user
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    if (await verifyLogin(username, password)) {
+    // Call the function to display the entered information in a message box
+    showMessageBox(username, password);
+
+    // Verify the login credentials
+    const isValid = await verifyLogin(username, password);
+    if (isValid) {
+        // If login is successful, hide the login form and show the rota
         loginContainer.style.display = "none";
         rotaContainer.style.display = "block";
         loadRotaData();
     } else {
+        // If login fails, display an error message
         loginError.textContent = "Invalid username or password";
     }
 });
