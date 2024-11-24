@@ -1,13 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const registrarSelect = document.getElementById("registrar-select");
-    const statutoryLeave = document.getElementById("statutory-leave");
-    const carriedOverLeave = document.getElementById("carried-over-leave");
-    const daysOffInLieu = document.getElementById("days-off-in-lieu");
+    const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
     const studyLeave = document.getElementById("study-leave");
     const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
     const studyLeaveUsed = document.getElementById("study-leave-used");
     const annualLeaveUsed = document.getElementById("annual-leave-used");
     const otherLeaveUsed = document.getElementById("other-leave-used");
+    const studyLeaveRemaining = document.getElementById("study-leave-remaining");
+    const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
+    const otherLeaveRemaining = document.getElementById("other-leave-remaining");
 
     // Fetch the JSON data
     fetch('registrars_data.json')
@@ -32,10 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(error => console.error("Error loading data:", error));
 
     function displayRegistrarDetails(registrar) {
-        // Update leave allowances
-        statutoryLeave.textContent = registrar.statutory_leave;
-        carriedOverLeave.textContent = registrar.carried_over_leave;
-        daysOffInLieu.textContent = registrar.days_off_in_lieu;
+        // Combine leave allowances into Annual Leave
+        const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
+        annualLeaveAllowance.textContent = totalAnnualLeave;
         studyLeave.textContent = registrar.study_leave;
 
         // Update leave records
@@ -69,10 +69,20 @@ document.addEventListener("DOMContentLoaded", () => {
             leaveRecordsTable.appendChild(row);
         });
 
-        // Update leave type summaries
+        // Calculate remaining leave
+        const studyRemaining = registrar.study_leave - studyDays;
+        const annualRemaining = totalAnnualLeave - annualDays;
+        const otherRemaining = 0 - otherDays; // If other leave is unpaid or unlimited, adjust accordingly
+
+        // Update leave type summaries with remaining leave
         studyLeaveUsed.textContent = studyDays;
+        studyLeaveRemaining.textContent = studyRemaining;
+
         annualLeaveUsed.textContent = annualDays;
+        annualLeaveRemaining.textContent = annualRemaining;
+
         otherLeaveUsed.textContent = otherDays;
+        otherLeaveRemaining.textContent = otherRemaining;
     }
 
     function calculateWeekdaysBetween(startDate, endDate) {
