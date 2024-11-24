@@ -39,6 +39,7 @@ input {
     border-radius: 5px;
 }
 
+/* Button Styling */
 button {
     width: 100%;
     padding: 10px;
@@ -49,6 +50,7 @@ button {
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-align: center;
 }
 
 button:hover {
@@ -63,12 +65,6 @@ button:disabled {
     opacity: 0.6;            /* Adds a slightly transparent effect */
 }
 
-.error-message {
-    color: red;
-    margin-top: 10px;
-    font-size: 0.9em;
-}
-
 /* Rota Viewer */
 .rota-container {
     width: 80%;
@@ -80,12 +76,72 @@ button:disabled {
     text-align: center;
 }
 
-.button-container {
-    width: 100%;
-    margin: 10px 0;
+/* Week Header Styling */
+.week-header h1 {
+    margin-bottom: 20px;
+}
+
+/* Styling for Previous and Next Week Buttons */
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.button-row button {
+    width: 48%; /* Two buttons side by side with some spacing */
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
     text-align: center;
 }
 
+.button-row button:hover {
+    background-color: #0056b3;
+}
+
+.button-row button:disabled {
+    background-color: #cccccc; /* Disabled state */
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Styling for 100% Width Buttons Below the Table */
+.button-container {
+    margin-top: 10px;
+}
+
+.button-container button {
+    width: 100%; /* Full width for View Blocks and View Leave buttons */
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+.button-container button:disabled {
+    background-color: #cccccc; /* Disabled state */
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
