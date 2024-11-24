@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update Summary with Remaining Leave
         const studyRemaining = registrar.study_leave - studyDays;
         const annualRemaining = totalAnnualLeave - annualDays;
-        const otherRemaining = 0 - otherDays;
+        const otherRemaining = "NA";
 
         studyLeaveUsed.textContent = studyDays || 0;
         studyLeaveRemaining.textContent = studyRemaining || 0;
