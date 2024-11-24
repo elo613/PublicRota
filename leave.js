@@ -1,17 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const registrarSelect = document.getElementById("registrar-select");
-    const leaveDetails = document.getElementById("leave-details");
+    const leaveDetailsTable = document.querySelector("#leave-details-summary table tbody");
     const leaveRecords = document.getElementById("leave-records");
-    const leaveSummary = document.getElementById("leave-summary");
-    const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
-    const studyLeave = document.getElementById("study-leave");
     const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
-    const studyLeaveUsed = document.getElementById("study-leave-used");
-    const annualLeaveUsed = document.getElementById("annual-leave-used");
-    const otherLeaveUsed = document.getElementById("other-leave-used");
-    const studyLeaveRemaining = document.getElementById("study-leave-remaining");
-    const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
-    const otherLeaveRemaining = document.getElementById("other-leave-remaining");
+    const leaveDetailsSection = document.getElementById("leave-details-summary");
 
     // Hide sections by default
     hideSections();
@@ -45,13 +37,21 @@ document.addEventListener("DOMContentLoaded", () => {
         // Combine leave allowances into Annual Leave
         const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
 
-        // Update Leave Allowance
-        annualLeaveAllowance.textContent = totalAnnualLeave || 0;
-        studyLeave.textContent = registrar.study_leave || 0;
+        // Update Leave Details Table
+        leaveDetailsTable.innerHTML = ""; // Clear existing rows
 
-        // Update Leave Records
-        leaveRecordsTable.innerHTML = "";
-        let studyDays = 0, annualDays = 0, otherDays = 0;
+        // Add Annual Leave Row
+        addLeaveRow("Annual Leave", totalAnnualLeave, calculateUsedLeave(registrar.leave_records, "Annual"), totalAnnualLeave);
+
+        // Add Study Leave Row
+        addLeaveRow("Study Leave", registrar.study_leave, calculateUsedLeave(registrar.leave_records, "Study"), registrar.study_leave);
+
+        // Add Other Leave Row
+        const otherLeaveUsed = calculateUsedLeave(registrar.leave_records, "Other");
+        addLeaveRow("Other Leave", "N/A", otherLeaveUsed, "N/A");
+
+        // Update Leave Records Table
+        leaveRecordsTable.innerHTML = ""; // Clear existing rows
 
         registrar.leave_records.forEach(record => {
             const row = document.createElement("tr");
@@ -68,27 +68,36 @@ document.addEventListener("DOMContentLoaded", () => {
             typeCell.textContent = record.type;
             row.appendChild(typeCell);
 
-            const leaveDays = calculateWeekdaysBetween(record.start, record.end);
-            if (record.type === "Study") studyDays += leaveDays;
-            else if (record.type === "Annual") annualDays += leaveDays;
-            else otherDays += leaveDays;
-
             leaveRecordsTable.appendChild(row);
         });
+    }
 
-        // Update Summary with Remaining Leave
-        const studyRemaining = registrar.study_leave - studyDays;
-        const annualRemaining = totalAnnualLeave - annualDays;
-        const otherRemaining = "NA";
+    function addLeaveRow(type, allowance, used, remaining) {
+        const row = document.createElement("tr");
 
-        studyLeaveUsed.textContent = studyDays || 0;
-        studyLeaveRemaining.textContent = studyRemaining || 0;
+        const typeCell = document.createElement("td");
+        typeCell.textContent = type;
+        row.appendChild(typeCell);
 
-        annualLeaveUsed.textContent = annualDays || 0;
-        annualLeaveRemaining.textContent = annualRemaining || 0;
+        const allowanceCell = document.createElement("td");
+        allowanceCell.textContent = allowance;
+        row.appendChild(allowanceCell);
 
-        otherLeaveUsed.textContent = otherDays || 0;
-        otherLeaveRemaining.textContent = otherRemaining || 0;
+        const usedCell = document.createElement("td");
+        usedCell.textContent = used || 0;
+        row.appendChild(usedCell);
+
+        const remainingCell = document.createElement("td");
+        remainingCell.textContent = remaining || 0;
+        row.appendChild(remainingCell);
+
+        leaveDetailsTable.appendChild(row);
+    }
+
+    function calculateUsedLeave(leaveRecords, type) {
+        return leaveRecords
+            .filter(record => record.type === type)
+            .reduce((total, record) => total + calculateWeekdaysBetween(record.start, record.end), 0);
     }
 
     function calculateWeekdaysBetween(startDate, endDate) {
@@ -107,14 +116,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function hideSections() {
-        leaveDetails.classList.add("hidden");
+        leaveDetailsSection.classList.add("hidden");
         leaveRecords.classList.add("hidden");
-        leaveSummary.classList.add("hidden");
     }
 
     function showSections() {
-        leaveDetails.classList.remove("hidden");
+        leaveDetailsSection.classList.remove("hidden");
         leaveRecords.classList.remove("hidden");
-        leaveSummary.classList.remove("hidden");
     }
 });
