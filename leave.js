@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const registrarSelect = document.getElementById("registrar-select");
-    const leaveDetails = document.getElementById("leave-details");
+    const leaveDetails = document.getElementById("leave-details-summary"); // Corrected
     const leaveRecords = document.getElementById("leave-records");
-    const leaveSummary = document.getElementById("leave-summary");
+    const leaveSummary = document.getElementById("leave-details-summary"); // Corrected
     const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
     const studyLeave = document.getElementById("study-leave");
     const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
@@ -13,8 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
     const otherLeaveRemaining = document.getElementById("other-leave-remaining");
 
-    // Hide sections by default
-    hideSections();
+    function hideSections() {
+        leaveDetails?.classList.add("hidden");
+        leaveRecords?.classList.add("hidden");
+        leaveSummary?.classList.add("hidden");
+    }
+
+    hideSections()
 
     // Fetch the JSON data
     fetch('registrars_data.json')
@@ -106,11 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return count;
     }
 
-    function hideSections() {
-        leaveDetails.classList.add("hidden");
-        leaveRecords.classList.add("hidden");
-        leaveSummary.classList.add("hidden");
-    }
 
     function showSections() {
         leaveDetails.classList.remove("hidden");
