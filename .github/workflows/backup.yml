@@ -1,8 +1,8 @@
-name: Backup rota.json
+name: Backup rota.json, registrars_data.json, and blocks.json
 
 on:
   schedule:
-    - cron: "*0 * * * *" # Runs every hour on the hour
+    - cron: "0 * * * *" # Runs every hour on the hour
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
@@ -26,10 +26,28 @@ jobs:
         https://api.github.com/repos/elo613/radrota/contents/rota.json \
         --output rota.json
 
-    - name: Commit and Push rota.json to Public Repository
+    - name: Fetch registrars_data.json from Private Repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        curl -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3.raw" \
+        https://api.github.com/repos/elo613/radrota/contents/registrars_data.json \
+        --output registrars_data.json
+
+    - name: Fetch blocks.json from Private Repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        curl -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3.raw" \
+        https://api.github.com/repos/elo613/radrota/contents/blocks.json \
+        --output blocks.json
+
+    - name: Commit and Push Files to Public Repository
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git add rota.json
-        git commit -m "Backup rota.json"
+        git add rota.json registrars_data.json blocks.json
+        git commit -m "Backup rota.json, registrars_data.json, and blocks.json"
         git push
