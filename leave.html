@@ -31,22 +31,41 @@
             </table>
         </div>
 
-        <!-- Summary Section -->
-        <div id="leave-details" class="hidden">
-            <h2>Leave Allowance</h2>
-            <ul>
-                <li>Annual Leave: <span id="annual-leave-allowance"></span></li>
-                <li>Study Leave: <span id="study-leave"></span></li>
-            </ul>
-        </div>
-        <div id="leave-summary" class="hidden">
-            <h2>Summary</h2>
-            <ul>
-                <li>Total Annual Leave Used: <span id="annual-leave-used">0</span> (Remaining: <span id="annual-leave-remaining">0</span>)</li>
-                <li>Total Study Leave Used: <span id="study-leave-used">0</span> (Remaining: <span id="study-leave-remaining">0</span>)</li>
-                <li>Total Other Leave Used: <span id="other-leave-used">0</span> (Remaining: <span id="other-leave-remaining">0</span>)</li>
-            </ul>
-        </div>
+    <!-- Leave Details Table -->
+    <div id="leave-details-summary">
+        <h2>Leave Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type of Leave</th>
+                    <th>Allowance</th>
+                    <th>Used</th>
+                    <th>Remaining</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Leave</td>
+                    <td><span id="annual-leave-allowance"></span></td>
+                    <td><span id="annual-leave-used">0</span></td>
+                    <td><span id="annual-leave-remaining">0</span></td>
+                </tr>
+                <tr>
+                    <td>Study Leave</td>
+                    <td><span id="study-leave"></span></td>
+                    <td><span id="study-leave-used">0</span></td>
+                    <td><span id="study-leave-remaining">0</span></td>
+                </tr>
+                <tr>
+                    <td>Other Leave</td>
+                    <td>N/A</td> <!-- Adjust if other leave allowance is provided -->
+                    <td><span id="other-leave-used">0</span></td>
+                    <td><span id="other-leave-remaining">0</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
     </div>
     <script src="leave.js"></script>
 </body>
