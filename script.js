@@ -68,7 +68,7 @@ function updateButtonStates() {
 
     // Disable "Next" button if the current week is more than 2 weeks beyond the last week
     const nextWeekStart = new Date(weekStart);
-    nextWeekStart.setDate(nextWeekStart.getDate() + 7);
+    nextWeekStart.setDate(nextWeekStart.getDate() + 14);
     nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
