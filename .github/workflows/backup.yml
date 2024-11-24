@@ -45,36 +45,16 @@ jobs:
         --output blocks.json
 
     - name: Replace Full Names with Abbreviations
+      env:
+        REPLACEMENT_TERMS: ${{ secrets.REPLACEMENT_TERMS }}
       run: |
-        sed -i 's/Eitan Lovat/EL/g' rota.json
-        sed -i 's/Kunj Patel/KP/g' rota.json
-        sed -i 's/Khaoula Bessame/KB/g' rota.json
-        sed -i 's/Kuresh Khodatars/KK/g' rota.json
-        sed -i 's/Senthan Rudrakumar/SR/g' rota.json
-        sed -i 's/Qabas Omran/QO/g' rota.json
-        sed -i 's/Shiv Hadani/SH/g' rota.json
-        sed -i 's/Kawser Ahmed/KA/g' rota.json
-        sed -i 's/Hassan Ahmad/HA/g' rota.json
-
-        sed -i 's/Eitan Lovat/EL/g' registrars_data.json
-        sed -i 's/Kunj Patel/KP/g' registrars_data.json
-        sed -i 's/Khaoula Bessame/KB/g' registrars_data.json
-        sed -i 's/Kuresh Khodatars/KK/g' registrars_data.json
-        sed -i 's/Senthan Rudrakumar/SR/g' registrars_data.json
-        sed -i 's/Qabas Omran/QO/g' registrars_data.json
-        sed -i 's/Shiv Hadani/SH/g' registrars_data.json
-        sed -i 's/Kawser Ahmed/KA/g' registrars_data.json
-        sed -i 's/Hassan Ahmad/HA/g' registrars_data.json
-
-        sed -i 's/Eitan Lovat/EL/g' blocks.json
-        sed -i 's/Kunj Patel/KP/g' blocks.json
-        sed -i 's/Khaoula Bessame/KB/g' blocks.json
-        sed -i 's/Kuresh Khodatars/KK/g' blocks.json
-        sed -i 's/Senthan Rudrakumar/SR/g' blocks.json
-        sed -i 's/Qabas Omran/QO/g' blocks.json
-        sed -i 's/Shiv Hadani/SH/g' blocks.json
-        sed -i 's/Kawser Ahmed/KA/g' blocks.json
-        sed -i 's/Hassan Ahmad/HA/g' blocks.json
+        # Read replacement terms from secret
+        echo "$REPLACEMENT_TERMS" | while IFS="=" read -r full_name abbreviation; do
+          # Apply replacements in all JSON files
+          sed -i "s/$full_name/$abbreviation/g" rota.json
+          sed -i "s/$full_name/$abbreviation/g" registrars_data.json
+          sed -i "s/$full_name/$abbreviation/g" blocks.json
+        done
 
     - name: Commit and Push Files to Public Repository
       run: |
