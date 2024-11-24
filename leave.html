@@ -14,7 +14,8 @@
             <option value="" disabled selected>-- Choose a Registrar --</option>
         </select>
 
-        <div id="leave-details">
+        <!-- Leave Allowance Section -->
+        <div id="leave-details" class="hidden">
             <h2>Leave Allowance</h2>
             <ul>
                 <li>Annual Leave: <span id="annual-leave-allowance"></span></li>
@@ -22,26 +23,32 @@
             </ul>
         </div>
 
-        <h2>Leave Records</h2>
-        <table id="leave-records-table">
-            <thead>
-                <tr>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Leave Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Leave records will be dynamically populated -->
-            </tbody>
-        </table>
+        <!-- Leave Records Section -->
+        <div id="leave-records" class="hidden">
+            <h2>Leave Records</h2>
+            <table id="leave-records-table">
+                <thead>
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Leave Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Leave records will be dynamically populated -->
+                </tbody>
+            </table>
+        </div>
 
-        <h2>Summary</h2>
-        <ul>
-            <li>Total Study Leave Used: <span id="study-leave-used">0</span> (Remaining: <span id="study-leave-remaining">0</span>)</li>
-            <li>Total Annual Leave Used: <span id="annual-leave-used">0</span> (Remaining: <span id="annual-leave-remaining">0</span>)</li>
-            <li>Total Other Leave Used: <span id="other-leave-used">0</span> (Remaining: <span id="other-leave-remaining">0</span>)</li>
-        </ul>
+        <!-- Summary Section -->
+        <div id="leave-summary" class="hidden">
+            <h2>Summary</h2>
+            <ul>
+                <li>Total Study Leave Used: <span id="study-leave-used">0</span> (Remaining: <span id="study-leave-remaining">0</span>)</li>
+                <li>Total Annual Leave Used: <span id="annual-leave-used">0</span> (Remaining: <span id="annual-leave-remaining">0</span>)</li>
+                <li>Total Other Leave Used: <span id="other-leave-used">0</span> (Remaining: <span id="other-leave-remaining">0</span>)</li>
+            </ul>
+        </div>
     </div>
     <script src="leave.js"></script>
 </body>
