@@ -41,14 +41,16 @@ document.addEventListener("DOMContentLoaded", () => {
         leaveDetailsTable.innerHTML = ""; // Clear existing rows
 
         // Add Annual Leave Row
-        addLeaveRow("Annual Leave", totalAnnualLeave, calculateUsedLeave(registrar.leave_records, "Annual"), totalAnnualLeave);
+        const annualUsed = calculateUsedLeave(registrar.leave_records, "Annual");
+        addLeaveRow("Annual Leave", totalAnnualLeave, annualUsed, totalAnnualLeave - annualUsed);
 
         // Add Study Leave Row
-        addLeaveRow("Study Leave", registrar.study_leave, calculateUsedLeave(registrar.leave_records, "Study"), registrar.study_leave);
+        const studyUsed = calculateUsedLeave(registrar.leave_records, "Study");
+        addLeaveRow("Study Leave", registrar.study_leave, studyUsed, registrar.study_leave - studyUsed);
 
         // Add Other Leave Row
-        const otherLeaveUsed = calculateUsedLeave(registrar.leave_records, "Other");
-        addLeaveRow("Other Leave", "N/A", otherLeaveUsed, "N/A");
+        const otherUsed = calculateUsedLeave(registrar.leave_records, "Other");
+        addLeaveRow("Other Leave", "N/A", otherUsed, "N/A");
 
         // Update Leave Records Table
         leaveRecordsTable.innerHTML = ""; // Clear existing rows
@@ -80,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         row.appendChild(typeCell);
 
         const allowanceCell = document.createElement("td");
-        allowanceCell.textContent = allowance;
+        allowanceCell.textContent = allowance !== "N/A" ? allowance || 0 : "N/A";
         row.appendChild(allowanceCell);
 
         const usedCell = document.createElement("td");
@@ -88,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         row.appendChild(usedCell);
 
         const remainingCell = document.createElement("td");
-        remainingCell.textContent = remaining || 0;
+        remainingCell.textContent = allowance !== "N/A" ? Math.max(allowance - used, 0) : "N/A";
         row.appendChild(remainingCell);
 
         leaveDetailsTable.appendChild(row);
