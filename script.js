@@ -47,7 +47,11 @@ function formatDate(date) {
 }
 
 function openBlocksPage() {
-    window.location.href = "Blocks.html"; // Redirects to Blocks.html
+    window.location.href = "blocks.html"; // Redirects to Blocks.html
+}
+
+function openLeave() {
+    window.location.href = "leave.html"; // Redirects to Leave.html
 }
 
 // Parse a date string in "dd Month yyyy" format
