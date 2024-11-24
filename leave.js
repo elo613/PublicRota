@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const registrarSelect = document.getElementById("registrar-select");
+    const leaveDetails = document.getElementById("leave-details");
+    const leaveRecords = document.getElementById("leave-records");
+    const leaveSummary = document.getElementById("leave-summary");
     const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
     const studyLeave = document.getElementById("study-leave");
     const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
@@ -9,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const studyLeaveRemaining = document.getElementById("study-leave-remaining");
     const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
     const otherLeaveRemaining = document.getElementById("other-leave-remaining");
+
+    // Hide sections by default
+    hideSections();
 
     // Fetch the JSON data
     fetch('registrars_data.json')
@@ -26,7 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
             registrarSelect.addEventListener("change", () => {
                 const selectedRegistrar = data.find(registrar => registrar.name === registrarSelect.value);
                 if (selectedRegistrar) {
+                    showSections();
                     displayRegistrarDetails(selectedRegistrar);
+                } else {
+                    hideSections();
                 }
             });
         })
@@ -72,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Calculate remaining leave
         const studyRemaining = registrar.study_leave - studyDays;
         const annualRemaining = totalAnnualLeave - annualDays;
-        const otherRemaining = 0 - otherDays; // If other leave is unpaid or unlimited, adjust accordingly
+        const otherRemaining = 0 - otherDays;
 
         // Update leave type summaries with remaining leave
         studyLeaveUsed.textContent = studyDays;
@@ -99,5 +108,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return count;
+    }
+
+    function hideSections() {
+        leaveDetails.classList.add("hidden");
+        leaveRecords.classList.add("hidden");
+        leaveSummary.classList.add("hidden");
+    }
+
+    function showSections() {
+        leaveDetails.classList.remove("hidden");
+        leaveRecords.classList.remove("hidden");
+        leaveSummary.classList.remove("hidden");
     }
 });
