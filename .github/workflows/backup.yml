@@ -1,0 +1,85 @@
+name: Backup rota.json, registrars_data.json, and blocks.json
+
+on:
+  schedule:
+    - cron: "0 * * * *" # Runs every hour on the hour
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Public Repository
+      uses: actions/checkout@v3
+      with:
+        repository: elo613/PublicRadRota
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        ref: main
+
+    - name: Fetch rota.json from Private Repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        curl -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3.raw" \
+        https://api.github.com/repos/elo613/radrota/contents/rota.json \
+        --output rota.json
+
+    - name: Fetch registrars_data.json from Private Repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        curl -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3.raw" \
+        https://api.github.com/repos/elo613/radrota/contents/registrars_data.json \
+        --output registrars_data.json
+
+    - name: Fetch blocks.json from Private Repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        curl -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3.raw" \
+        https://api.github.com/repos/elo613/radrota/contents/blocks.json \
+        --output blocks.json
+
+    - name: Replace Full Names with Abbreviations
+      run: |
+        sed -i 's/Eitan Lovat/EL/g' rota.json
+        sed -i 's/Kunj Patel/KP/g' rota.json
+        sed -i 's/Khaoula Bessame/KB/g' rota.json
+        sed -i 's/Kuresh Khodatars/KK/g' rota.json
+        sed -i 's/Senthan Rudrakumar/SR/g' rota.json
+        sed -i 's/Qabas Omran/QO/g' rota.json
+        sed -i 's/Shiv Hadani/SH/g' rota.json
+        sed -i 's/Kawser Ahmed/KA/g' rota.json
+        sed -i 's/Hassan Ahmad/HA/g' rota.json
+
+        sed -i 's/Eitan Lovat/EL/g' registrars_data.json
+        sed -i 's/Kunj Patel/KP/g' registrars_data.json
+        sed -i 's/Khaoula Bessame/KB/g' registrars_data.json
+        sed -i 's/Kuresh Khodatars/KK/g' registrars_data.json
+        sed -i 's/Senthan Rudrakumar/SR/g' registrars_data.json
+        sed -i 's/Qabas Omran/QO/g' registrars_data.json
+        sed -i 's/Shiv Hadani/SH/g' registrars_data.json
+        sed -i 's/Kawser Ahmed/KA/g' registrars_data.json
+        sed -i 's/Hassan Ahmad/HA/g' registrars_data.json
+
+        sed -i 's/Eitan Lovat/EL/g' blocks.json
+        sed -i 's/Kunj Patel/KP/g' blocks.json
+        sed -i 's/Khaoula Bessame/KB/g' blocks.json
+        sed -i 's/Kuresh Khodatars/KK/g' blocks.json
+        sed -i 's/Senthan Rudrakumar/SR/g' blocks.json
+        sed -i 's/Qabas Omran/QO/g' blocks.json
+        sed -i 's/Shiv Hadani/SH/g' blocks.json
+        sed -i 's/Kawser Ahmed/KA/g' blocks.json
+        sed -i 's/Hassan Ahmad/HA/g' blocks.json
+
+    - name: Commit and Push Files to Public Repository
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add rota.json registrars_data.json blocks.json
+        git commit -m "Backup rota.json, registrars_data.json, and blocks.json with abbreviations"
+        git push
