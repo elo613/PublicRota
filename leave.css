@@ -49,6 +49,9 @@ ul li {
     line-height: 1.5;
 }
 
+.hidden {
+    display: none;
+}
 
 table {
     width: 100%;
