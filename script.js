@@ -46,6 +46,10 @@ function formatDate(date) {
     });
 }
 
+function openBlocksPage() {
+    window.location.href = "Blocks.html"; // Redirects to Blocks.html
+}
+
 // Parse a date string in "dd Month yyyy" format
 function parseDateString(dateString) {
     const [day, month, year] = dateString.split(" ");
