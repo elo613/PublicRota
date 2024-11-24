@@ -44,32 +44,30 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayRegistrarDetails(registrar) {
         // Combine leave allowances into Annual Leave
         const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
-        annualLeaveAllowance.textContent = totalAnnualLeave;
-        studyLeave.textContent = registrar.study_leave;
 
-        // Update leave records
+        // Update Leave Allowance
+        annualLeaveAllowance.textContent = totalAnnualLeave || 0;
+        studyLeave.textContent = registrar.study_leave || 0;
+
+        // Update Leave Records
         leaveRecordsTable.innerHTML = "";
         let studyDays = 0, annualDays = 0, otherDays = 0;
 
         registrar.leave_records.forEach(record => {
             const row = document.createElement("tr");
 
-            // Start Date
             const startCell = document.createElement("td");
             startCell.textContent = record.start;
             row.appendChild(startCell);
 
-            // End Date
             const endCell = document.createElement("td");
             endCell.textContent = record.end;
             row.appendChild(endCell);
 
-            // Leave Type
             const typeCell = document.createElement("td");
             typeCell.textContent = record.type;
             row.appendChild(typeCell);
 
-            // Calculate the number of days excluding weekends
             const leaveDays = calculateWeekdaysBetween(record.start, record.end);
             if (record.type === "Study") studyDays += leaveDays;
             else if (record.type === "Annual") annualDays += leaveDays;
@@ -78,20 +76,19 @@ document.addEventListener("DOMContentLoaded", () => {
             leaveRecordsTable.appendChild(row);
         });
 
-        // Calculate remaining leave
+        // Update Summary with Remaining Leave
         const studyRemaining = registrar.study_leave - studyDays;
         const annualRemaining = totalAnnualLeave - annualDays;
         const otherRemaining = 0 - otherDays;
 
-        // Update leave type summaries with remaining leave
-        studyLeaveUsed.textContent = studyDays;
-        studyLeaveRemaining.textContent = studyRemaining;
+        studyLeaveUsed.textContent = studyDays || 0;
+        studyLeaveRemaining.textContent = studyRemaining || 0;
 
-        annualLeaveUsed.textContent = annualDays;
-        annualLeaveRemaining.textContent = annualRemaining;
+        annualLeaveUsed.textContent = annualDays || 0;
+        annualLeaveRemaining.textContent = annualRemaining || 0;
 
-        otherLeaveUsed.textContent = otherDays;
-        otherLeaveRemaining.textContent = otherRemaining;
+        otherLeaveUsed.textContent = otherDays || 0;
+        otherLeaveRemaining.textContent = otherRemaining || 0;
     }
 
     function calculateWeekdaysBetween(startDate, endDate) {
@@ -101,8 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
             const day = date.getDay();
-            // Count only weekdays (Monday to Friday)
-            if (day !== 0 && day !== 6) {
+            if (day !== 0 && day !== 6) { // Exclude weekends
                 count++;
             }
         }
