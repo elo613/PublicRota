@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Update leave records
         leaveRecordsTable.innerHTML = "";
-        let studyCount = 0, annualCount = 0, otherCount = 0;
+        let studyDays = 0, annualDays = 0, otherDays = 0;
 
         registrar.leave_records.forEach(record => {
             const row = document.createElement("tr");
@@ -60,17 +60,34 @@ document.addEventListener("DOMContentLoaded", () => {
             typeCell.textContent = record.type;
             row.appendChild(typeCell);
 
-            // Count leave types
-            if (record.type === "Study") studyCount++;
-            else if (record.type === "Annual") annualCount++;
-            else otherCount++;
+            // Calculate the number of days excluding weekends
+            const leaveDays = calculateWeekdaysBetween(record.start, record.end);
+            if (record.type === "Study") studyDays += leaveDays;
+            else if (record.type === "Annual") annualDays += leaveDays;
+            else otherDays += leaveDays;
 
             leaveRecordsTable.appendChild(row);
         });
 
         // Update leave type summaries
-        studyLeaveUsed.textContent = studyCount;
-        annualLeaveUsed.textContent = annualCount;
-        otherLeaveUsed.textContent = otherCount;
+        studyLeaveUsed.textContent = studyDays;
+        annualLeaveUsed.textContent = annualDays;
+        otherLeaveUsed.textContent = otherDays;
+    }
+
+    function calculateWeekdaysBetween(startDate, endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        let count = 0;
+
+        for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+            const day = date.getDay();
+            // Count only weekdays (Monday to Friday)
+            if (day !== 0 && day !== 6) {
+                count++;
+            }
+        }
+
+        return count;
     }
 });
