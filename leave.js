@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const registrarSelect = document.getElementById("registrar-select");
-    const leaveDetails = document.getElementById("leave-details-summary"); // Corrected
+    const leaveDetails = document.getElementById("leave-details-summary");
     const leaveRecords = document.getElementById("leave-records");
-    const leaveSummary = document.getElementById("leave-details-summary"); // Corrected
     const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
     const studyLeave = document.getElementById("study-leave");
     const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
@@ -13,63 +12,63 @@ document.addEventListener("DOMContentLoaded", () => {
     const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
     const otherLeaveRemaining = document.getElementById("other-leave-remaining");
 
+    // Hide all sections by default
     function hideSections() {
         leaveDetails?.classList.add("hidden");
         leaveRecords?.classList.add("hidden");
-        leaveSummary?.classList.add("hidden");
     }
 
-    hideSections()
+    // Show all sections after login validation
+    function showSections() {
+        leaveDetails?.classList.remove("hidden");
+        leaveRecords?.classList.remove("hidden");
+    }
 
+    // Check token validity
     function checkLogin() {
         const tokenString = localStorage.getItem("loginToken");
         if (!tokenString) {
             redirectToLogin();
             return false;
         }
-    
-        const token = JSON.parse(tokenString);
-        if (Date.now() > token.expiry) {
-            alert("Session expired. Please log in again.");
-            localStorage.removeItem("loginToken");
+
+        try {
+            const token = JSON.parse(tokenString);
+            if (Date.now() > token.expiry) {
+                alert("Session expired. Please log in again.");
+                localStorage.removeItem("loginToken");
+                redirectToLogin();
+                return false;
+            }
+            return true;
+        } catch (e) {
+            console.error("Error parsing token:", e);
             redirectToLogin();
             return false;
         }
-        return true;
     }
-    
+
+    // Redirect to the login page
     function redirectToLogin() {
         window.location.href = "index.html";
     }
-    
-    // Leave data loading
-    document.addEventListener("DOMContentLoaded", () => {
-        if (!checkLogin()) return;
-    
-        const registrarSelect = document.getElementById("registrar-select");
-        fetch("registrars_data.json")
-            .then((response) => response.json())
-            .then((data) => {
-                data.forEach((registrar) => {
-                    const option = document.createElement("option");
-                    option.value = registrar.name;
-                    option.textContent = registrar.name;
-                    registrarSelect.appendChild(option);
-                });
-    
-                registrarSelect.addEventListener("change", () => {
-                    const selectedRegistrar = data.find(
-                        (registrar) => registrar.name === registrarSelect.value
-                    );
-                    if (selectedRegistrar) {
-                        displayRegistrarDetails(selectedRegistrar);
-                    }
-                });
-            })
-            .catch((error) => console.error("Error loading leave data:", error));
-    });
+
+    // Calculate weekdays between two dates
+    function calculateWeekdaysBetween(startDate, endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        let count = 0;
+
+        for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+            const day = date.getDay();
+            if (day !== 0 && day !== 6) count++; // Exclude weekends
+        }
+
+        return count;
+    }
+
+    // Populate registrar details
     function displayRegistrarDetails(registrar) {
-        // Combine leave allowances into Annual Leave
         const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
 
         // Update Leave Allowance
@@ -80,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         leaveRecordsTable.innerHTML = "";
         let studyDays = 0, annualDays = 0, otherDays = 0;
 
-        registrar.leave_records.forEach(record => {
+        registrar.leave_records.forEach((record) => {
             const row = document.createElement("tr");
 
             const startCell = document.createElement("td");
@@ -104,39 +103,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Update Summary with Remaining Leave
-        const studyRemaining = registrar.study_leave - studyDays;
-        const annualRemaining = totalAnnualLeave - annualDays;
-        const otherRemaining = "NA";
-
         studyLeaveUsed.textContent = studyDays || 0;
-        studyLeaveRemaining.textContent = studyRemaining || 0;
-
+        studyLeaveRemaining.textContent = registrar.study_leave - studyDays || 0;
         annualLeaveUsed.textContent = annualDays || 0;
-        annualLeaveRemaining.textContent = annualRemaining || 0;
-
+        annualLeaveRemaining.textContent = totalAnnualLeave - annualDays || 0;
         otherLeaveUsed.textContent = otherDays || 0;
-        otherLeaveRemaining.textContent = otherRemaining || 0;
+        otherLeaveRemaining.textContent = "N/A";
     }
 
-    function calculateWeekdaysBetween(startDate, endDate) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        let count = 0;
+    // Main initialisation
+    function initialise() {
+        hideSections();
 
-        for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
-            const day = date.getDay();
-            if (day !== 0 && day !== 6) { // Exclude weekends
-                count++;
-            }
-        }
+        if (!checkLogin()) return;
 
-        return count;
+        fetch("registrars_data.json")
+            .then((response) => response.json())
+            .then((data) => {
+                // Populate registrar dropdown
+                data.forEach((registrar) => {
+                    const option = document.createElement("option");
+                    option.value = registrar.name;
+                    option.textContent = registrar.name;
+                    registrarSelect.appendChild(option);
+                });
+
+                // Event listener for registrar selection
+                registrarSelect.addEventListener("change", () => {
+                    const selectedRegistrar = data.find((registrar) => registrar.name === registrarSelect.value);
+                    if (selectedRegistrar) {
+                        showSections();
+                        displayRegistrarDetails(selectedRegistrar);
+                    }
+                });
+            })
+            .catch((error) => console.error("Error loading registrar data:", error));
     }
 
-
-    function showSections() {
-        leaveDetails.classList.remove("hidden");
-        leaveRecords.classList.remove("hidden");
-        leaveSummary.classList.remove("hidden");
-    }
+    initialise();
 });
