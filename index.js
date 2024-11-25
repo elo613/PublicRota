@@ -12,11 +12,7 @@ let rotaData = [];
 let firstDate = null; // Earliest date in JSON
 let lastDate = null;  // Latest date in JSON
 
-// Precomputed SHA-256 hashes for username and password
-const storedUsernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032"; 
-const storedPasswordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c"; 
-
-// Helper to hash a string using SHA-256
+// Login functionality
 async function hashInput(input) {
     const encoder = new TextEncoder();
     const data = encoder.encode(input);
@@ -26,14 +22,22 @@ async function hashInput(input) {
         .join("");
 }
 
-// Verify login credentials
 async function verifyLogin(username, password) {
-    // Hash the username and password entered by the user
+    const storedUsernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032";
+    const storedPasswordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c";
+
     const usernameHash = await hashInput(username.trim().toLowerCase());
     const passwordHash = await hashInput(password);
 
-    // Compare the hashes
     return usernameHash === storedUsernameHash && passwordHash === storedPasswordHash;
+}
+
+function setToken() {
+    const token = {
+        value: "userLoggedIn",
+        expiry: Date.now() + 10 * 60 * 1000, // 10 minutes
+    };
+    localStorage.setItem("loginToken", JSON.stringify(token));
 }
 
 // Format date to "Day, dd Month yyyy"
@@ -123,23 +127,23 @@ async function loadRotaData() {
 }
 
 // Login form event listener
-loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault(); // Prevent page refresh
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("login-form");
 
-    // Get the username and password entered by the user
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-    // Verify the login credentials
-    const isValid = await verifyLogin(username, password);
-    if (isValid) {
-        // If login is successful, hide the login form and show the rota
-        loginContainer.style.display = "none";
-        rotaContainer.style.display = "block";
-        loadRotaData();
-    } else {
-        // If login fails, display an error message
-        loginError.textContent = "Invalid username or password";
+            if (await verifyLogin(username, password)) {
+                setToken();
+                alert("Login successful!");
+                window.location.href = "blocks.html"; // Redirect on success
+            } else {
+                document.getElementById("login-error").textContent = "Invalid username or password";
+            }
+        });
     }
 });
 
