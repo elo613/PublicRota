@@ -130,6 +130,17 @@ function displayRota() {
     updateButtonStates();
 }
 
+// Redirect to the blocks.html page
+function openBlocksPage() {
+    window.location.href = "blocks.html"; // Ensure blocks.html exists in the same directory
+}
+
+// Redirect to the leave.html page
+function openLeave() {
+    window.location.href = "leave.html"; // Ensure leave.html exists in the same directory
+}
+
+
 // Load rota data from JSON
 async function loadRotaData() {
     try {
