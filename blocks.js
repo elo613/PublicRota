@@ -1,28 +1,46 @@
-// Load the blocks.json file and populate the dropdown
-document.addEventListener("DOMContentLoaded", () => {
-    fetch('blocks.json')
-        .then(response => response.json())
-        .then(data => {
-            const blockSelect = document.getElementById("block-select");
+function checkLogin() {
+    const tokenString = localStorage.getItem("loginToken");
+    if (!tokenString) {
+        redirectToLogin();
+        return false;
+    }
 
-            // Populate dropdown options
+    const token = JSON.parse(tokenString);
+    if (Date.now() > token.expiry) {
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("loginToken");
+        redirectToLogin();
+        return false;
+    }
+    return true;
+}
+
+function redirectToLogin() {
+    window.location.href = "index.html";
+}
+
+// Blocks data loading
+document.addEventListener("DOMContentLoaded", () => {
+    if (!checkLogin()) return;
+
+    fetch("blocks.json")
+        .then((response) => response.json())
+        .then((data) => {
+            const blockSelect = document.getElementById("block-select");
             for (const block in data) {
                 const option = document.createElement("option");
                 option.value = block;
                 option.textContent = block;
                 blockSelect.appendChild(option);
             }
-
-            // Event listener to update table based on selection
             blockSelect.addEventListener("change", () => {
                 const selectedBlock = blockSelect.value;
                 updateScheduleTable(data[selectedBlock]);
             });
         })
-        .catch(error => console.error("Error loading blocks.json:", error));
+        .catch((error) => console.error("Error loading blocks.json:", error));
 });
 
-// Update the schedule table based on the selected block
 function updateScheduleTable(blockData) {
     const tableBody = document.querySelector("#schedule-table tbody");
     tableBody.innerHTML = ""; // Clear previous rows
