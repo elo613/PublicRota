@@ -1,0 +1,27 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-fetch:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the public repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Inject the token into a public file (temporary workaround for dynamic use)
+      - name: Inject Token into Environment
+        run: |
+          echo "const GITHUB_TOKEN = '${{ secrets.REPO_SECRET }}';" > public/token.js
+
+      # Step 3: Deploy the application or commit the changes
+      - name: Deploy Application
+        run: |
+          git add public/token.js
+          git commit -m "Add token.js for dynamic fetching"
+          git push
