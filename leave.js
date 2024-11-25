@@ -21,31 +21,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hideSections()
 
-    // Fetch the JSON data
-    fetch('registrars_data.json')
-        .then(response => response.json())
-        .then(data => {
-            // Populate the dropdown
-            data.forEach(registrar => {
-                const option = document.createElement("option");
-                option.value = registrar.name;
-                option.textContent = registrar.name;
-                registrarSelect.appendChild(option);
-            });
-
-            // Event listener for registrar selection
-            registrarSelect.addEventListener("change", () => {
-                const selectedRegistrar = data.find(registrar => registrar.name === registrarSelect.value);
-                if (selectedRegistrar) {
-                    showSections();
-                    displayRegistrarDetails(selectedRegistrar);
-                } else {
-                    hideSections();
-                }
-            });
-        })
-        .catch(error => console.error("Error loading data:", error));
-
+    function checkLogin() {
+        const tokenString = localStorage.getItem("loginToken");
+        if (!tokenString) {
+            redirectToLogin();
+            return false;
+        }
+    
+        const token = JSON.parse(tokenString);
+        if (Date.now() > token.expiry) {
+            alert("Session expired. Please log in again.");
+            localStorage.removeItem("loginToken");
+            redirectToLogin();
+            return false;
+        }
+        return true;
+    }
+    
+    function redirectToLogin() {
+        window.location.href = "index.html";
+    }
+    
+    // Leave data loading
+    document.addEventListener("DOMContentLoaded", () => {
+        if (!checkLogin()) return;
+    
+        const registrarSelect = document.getElementById("registrar-select");
+        fetch("registrars_data.json")
+            .then((response) => response.json())
+            .then((data) => {
+                data.forEach((registrar) => {
+                    const option = document.createElement("option");
+                    option.value = registrar.name;
+                    option.textContent = registrar.name;
+                    registrarSelect.appendChild(option);
+                });
+    
+                registrarSelect.addEventListener("change", () => {
+                    const selectedRegistrar = data.find(
+                        (registrar) => registrar.name === registrarSelect.value
+                    );
+                    if (selectedRegistrar) {
+                        displayRegistrarDetails(selectedRegistrar);
+                    }
+                });
+            })
+            .catch((error) => console.error("Error loading leave data:", error));
+    });
     function displayRegistrarDetails(registrar) {
         // Combine leave allowances into Annual Leave
         const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
