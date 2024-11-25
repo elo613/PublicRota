@@ -31,43 +31,46 @@
             </table>
         </div>
 
-    <!-- Leave Details Table -->
-    <div id="leave-details-summary">
-        <h2>Leave Summary</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Type of Leave</th>
-                    <th>Allowance</th>
-                    <th>Used</th>
-                    <th>Remaining</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Annual Leave</td>
-                    <td><span id="annual-leave-allowance"></span></td>
-                    <td><span id="annual-leave-used">0</span></td>
-                    <td><span id="annual-leave-remaining">0</span></td>
-                </tr>
-                <tr>
-                    <td>Study Leave</td>
-                    <td><span id="study-leave"></span></td>
-                    <td><span id="study-leave-used">0</span></td>
-                    <td><span id="study-leave-remaining">0</span></td>
-                </tr>
-                <tr>
-                    <td>Other Leave</td>
-                    <td>N/A</td> <!-- Adjust if other leave allowance is provided -->
-                    <td><span id="other-leave-used">0</span></td>
-                    <td><span id="other-leave-remaining">0</span></td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Leave counts don't include weekends.</p>
-    </div>
+        <!-- Leave Details Table -->
+        <div id="leave-details-summary">
+            <h2>Leave Summary</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type of Leave</th>
+                        <th>Allowance</th>
+                        <th>Used</th>
+                        <th>Remaining</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Annual Leave</td>
+                        <td><span id="annual-leave-allowance"></span></td>
+                        <td><span id="annual-leave-used">0</span></td>
+                        <td><span id="annual-leave-remaining">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Study Leave</td>
+                        <td><span id="study-leave"></span></td>
+                        <td><span id="study-leave-used">0</span></td>
+                        <td><span id="study-leave-remaining">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>Other Leave</td>
+                        <td>N/A</td>
+                        <td><span id="other-leave-used">0</span></td>
+                        <td><span id="other-leave-remaining">0</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Leave counts don't include weekends.</p>
+        </div>
         
     </div>
+    <!-- Include token.js for dynamic token -->
+    <script src="public/token.js"></script>
+    <!-- Load leave.js as a module -->
     <script type="module" src="leave.js"></script>
 </body>
 </html>
