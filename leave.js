@@ -1,25 +1,14 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const registrarSelect = document.getElementById("registrar-select");
-    const leaveDetails = document.getElementById("leave-details");
-    const leaveRecords = document.getElementById("leave-records");
-    const leaveSummary = document.getElementById("leave-summary");
-    const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
-    const studyLeave = document.getElementById("study-leave");
-    const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
-    const studyLeaveUsed = document.getElementById("study-leave-used");
-    const annualLeaveUsed = document.getElementById("annual-leave-used");
-    const otherLeaveUsed = document.getElementById("other-leave-used");
-    const studyLeaveRemaining = document.getElementById("study-leave-remaining");
-    const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
-    const otherLeaveRemaining = document.getElementById("other-leave-remaining");
+// Import the dynamically injected token
+import { GITHUB_TOKEN } from './token.js';
 
+document.addEventListener("DOMContentLoaded", () => {
     const apiUrl = "https://api.github.com/repos/elo613/radrota/contents/registrars_data.json";
 
     // Fetch the JSON data from the private repository
     fetch(apiUrl, {
         method: "GET",
         headers: {
-            Authorization: `token ${GITHUB_TOKEN}`, // Replace GITHUB_TOKEN with an injected secret or environment variable
+            Authorization: `token ${GITHUB_TOKEN}`, // Use the dynamically injected token
             Accept: "application/vnd.github.v3.raw"
         }
     })
@@ -30,32 +19,37 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.json();
         })
         .then(data => {
-            // Populate the dropdown
-            data.forEach(registrar => {
-                const option = document.createElement("option");
-                option.value = registrar.name;
-                option.textContent = registrar.name;
-                registrarSelect.appendChild(option);
-            });
-
-            // Event listener for registrar selection
-            registrarSelect.addEventListener("change", () => {
-                const selectedRegistrar = data.find(registrar => registrar.name === registrarSelect.value);
-                if (selectedRegistrar) {
-                    showSections();
-                    displayRegistrarDetails(selectedRegistrar);
-                } else {
-                    hideSections();
-                }
-            });
+            console.log(data); // Process data
+            populateDropdown(data);
         })
         .catch(error => console.error("Error fetching data:", error));
 
+    function populateDropdown(data) {
+        const registrarSelect = document.getElementById("registrar-select");
+        data.forEach(registrar => {
+            const option = document.createElement("option");
+            option.value = registrar.name;
+            option.textContent = registrar.name;
+            registrarSelect.appendChild(option);
+        });
+
+        registrarSelect.addEventListener("change", () => {
+            const selectedRegistrar = data.find(registrar => registrar.name === registrarSelect.value);
+            if (selectedRegistrar) {
+                showSections();
+                displayRegistrarDetails(selectedRegistrar);
+            } else {
+                hideSections();
+            }
+        });
+    }
+
     function displayRegistrarDetails(registrar) {
         const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
-        annualLeaveAllowance.textContent = totalAnnualLeave || 0;
-        studyLeave.textContent = registrar.study_leave || 0;
+        document.getElementById("annual-leave-allowance").textContent = totalAnnualLeave || 0;
+        document.getElementById("study-leave").textContent = registrar.study_leave || 0;
 
+        const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
         leaveRecordsTable.innerHTML = "";
         let studyDays = 0, annualDays = 0, otherDays = 0;
 
@@ -82,16 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
             leaveRecordsTable.appendChild(row);
         });
 
-        const studyRemaining = registrar.study_leave - studyDays;
-        const annualRemaining = totalAnnualLeave - annualDays;
-        const otherRemaining = 0 - otherDays;
-
-        studyLeaveUsed.textContent = studyDays || 0;
-        studyLeaveRemaining.textContent = studyRemaining || 0;
-        annualLeaveUsed.textContent = annualDays || 0;
-        annualLeaveRemaining.textContent = annualRemaining || 0;
-        otherLeaveUsed.textContent = otherDays || 0;
-        otherLeaveRemaining.textContent = otherRemaining || 0;
+        document.getElementById("study-leave-used").textContent = studyDays || 0;
+        document.getElementById("study-leave-remaining").textContent = registrar.study_leave - studyDays || 0;
+        document.getElementById("annual-leave-used").textContent = annualDays || 0;
+        document.getElementById("annual-leave-remaining").textContent = totalAnnualLeave - annualDays || 0;
+        document.getElementById("other-leave-used").textContent = otherDays || 0;
+        document.getElementById("other-leave-remaining").textContent = 0 - otherDays || 0;
     }
 
     function calculateWeekdaysBetween(startDate, endDate) {
@@ -110,14 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function hideSections() {
-        leaveDetails.classList.add("hidden");
-        leaveRecords.classList.add("hidden");
-        leaveSummary.classList.add("hidden");
+        document.getElementById("leave-details").classList.add("hidden");
+        document.getElementById("leave-records").classList.add("hidden");
+        document.getElementById("leave-summary").classList.add("hidden");
     }
 
     function showSections() {
-        leaveDetails.classList.remove("hidden");
-        leaveRecords.classList.remove("hidden");
-        leaveSummary.classList.remove("hidden");
+        document.getElementById("leave-details").classList.remove("hidden");
+        document.getElementById("leave-records").classList.remove("hidden");
+        document.getElementById("leave-summary").classList.remove("hidden");
     }
 });
