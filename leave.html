@@ -11,7 +11,7 @@
         <h1>Registrar Leave Records</h1>
         <label for="registrar-select">Select Registrar:</label>
         <select id="registrar-select">
-            <option value="" disabled selected>-- Choose a Registrar --</option>
+            <option value="" disabled selected>-- Please select a registrar to view records --</option>
         </select>
 
         <!-- Leave Records Section -->
@@ -32,7 +32,7 @@
         </div>
 
         <!-- Leave Details Table -->
-        <div id="leave-details-summary">
+        <div id="leave-details-summary" class="hidden">
             <h2>Leave Summary</h2>
             <table>
                 <thead>
@@ -66,8 +66,8 @@
             </table>
             <p>Leave counts don't include weekends.</p>
         </div>
-        
     </div>
+
     <!-- Include token.js for dynamic token -->
     <script type="module" src="leave.js"></script>
 </body>
