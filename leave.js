@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const registrarSelect = document.getElementById("registrar-select");
-    const leaveDetails = document.getElementById("leave-details-summary"); // Corrected
+    const leaveDetails = document.getElementById("leave-details");
     const leaveRecords = document.getElementById("leave-records");
-    const leaveSummary = document.getElementById("leave-details-summary"); // Corrected
+    const leaveSummary = document.getElementById("leave-summary");
     const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
     const studyLeave = document.getElementById("study-leave");
     const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
@@ -13,17 +13,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
     const otherLeaveRemaining = document.getElementById("other-leave-remaining");
 
-    function hideSections() {
-        leaveDetails?.classList.add("hidden");
-        leaveRecords?.classList.add("hidden");
-        leaveSummary?.classList.add("hidden");
-    }
+    const apiUrl = "https://your-secure-api-endpoint.com/registrars_data.json"; // Replace with your API URL
 
-    hideSections()
+    // Hide sections by default
+    hideSections();
 
     // Fetch the JSON data
-    fetch('registrars_data.json')
-        .then(response => response.json())
+    fetch(apiUrl, {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer YOUR_SECURE_TOKEN" // Replace with the actual method for secure token
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch registrar data");
+            }
+            return response.json();
+        })
         .then(data => {
             // Populate the dropdown
             data.forEach(registrar => {
@@ -47,14 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(error => console.error("Error loading data:", error));
 
     function displayRegistrarDetails(registrar) {
-        // Combine leave allowances into Annual Leave
         const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
-
-        // Update Leave Allowance
         annualLeaveAllowance.textContent = totalAnnualLeave || 0;
         studyLeave.textContent = registrar.study_leave || 0;
 
-        // Update Leave Records
         leaveRecordsTable.innerHTML = "";
         let studyDays = 0, annualDays = 0, otherDays = 0;
 
@@ -81,17 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
             leaveRecordsTable.appendChild(row);
         });
 
-        // Update Summary with Remaining Leave
         const studyRemaining = registrar.study_leave - studyDays;
         const annualRemaining = totalAnnualLeave - annualDays;
-        const otherRemaining = "NA";
+        const otherRemaining = 0 - otherDays;
 
         studyLeaveUsed.textContent = studyDays || 0;
         studyLeaveRemaining.textContent = studyRemaining || 0;
-
         annualLeaveUsed.textContent = annualDays || 0;
         annualLeaveRemaining.textContent = annualRemaining || 0;
-
         otherLeaveUsed.textContent = otherDays || 0;
         otherLeaveRemaining.textContent = otherRemaining || 0;
     }
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
             const day = date.getDay();
-            if (day !== 0 && day !== 6) { // Exclude weekends
+            if (day !== 0 && day !== 6) {
                 count++;
             }
         }
@@ -111,6 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return count;
     }
 
+    function hideSections() {
+        leaveDetails.classList.add("hidden");
+        leaveRecords.classList.add("hidden");
+        leaveSummary.classList.add("hidden");
+    }
 
     function showSections() {
         leaveDetails.classList.remove("hidden");
