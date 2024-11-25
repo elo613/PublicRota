@@ -1,3 +1,4 @@
+// DOM Elements
 const rotaTableBody = document.querySelector("#rota-table tbody");
 const weekTitle = document.getElementById("week-title");
 const prevWeekButton = document.getElementById("prev-week");
@@ -12,16 +13,17 @@ let rotaData = [];
 let firstDate = null; // Earliest date in JSON
 let lastDate = null;  // Latest date in JSON
 
-// Login functionality
+// Helper: Hash input using SHA-256
 async function hashInput(input) {
     const encoder = new TextEncoder();
     const data = encoder.encode(input);
     const hashBuffer = await crypto.subtle.digest("SHA-256", data);
     return Array.from(new Uint8Array(hashBuffer))
-        .map(b => b.toString(16).padStart(2, "0"))
+        .map((b) => b.toString(16).padStart(2, "0"))
         .join("");
 }
 
+// Verify login credentials
 async function verifyLogin(username, password) {
     const storedUsernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032";
     const storedPasswordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c";
@@ -32,6 +34,7 @@ async function verifyLogin(username, password) {
     return usernameHash === storedUsernameHash && passwordHash === storedPasswordHash;
 }
 
+// Set token with expiry
 function setToken() {
     const token = {
         value: "userLoggedIn",
@@ -40,22 +43,39 @@ function setToken() {
     localStorage.setItem("loginToken", JSON.stringify(token));
 }
 
+// Check token validity
+function checkLogin() {
+    const tokenString = localStorage.getItem("loginToken");
+    if (!tokenString) return false;
+
+    const token = JSON.parse(tokenString);
+    if (Date.now() > token.expiry) {
+        localStorage.removeItem("loginToken");
+        return false;
+    }
+    return true;
+}
+
+// Toggle visibility of login or rota view
+function toggleLoginView(isLoggedIn) {
+    if (isLoggedIn) {
+        loginContainer.style.display = "none";
+        rotaContainer.style.display = "block";
+        loadRotaData();
+    } else {
+        loginContainer.style.display = "block";
+        rotaContainer.style.display = "none";
+    }
+}
+
 // Format date to "Day, dd Month yyyy"
 function formatDate(date) {
     return date.toLocaleDateString("en-GB", {
         weekday: "long",
         day: "2-digit",
         month: "long",
-        year: "numeric"
+        year: "numeric",
     });
-}
-
-function openBlocksPage() {
-    window.location.href = "blocks.html"; // Redirects to Blocks.html
-}
-
-function openLeave() {
-    window.location.href = "leave.html"; // Redirects to Leave.html
 }
 
 // Parse a date string in "dd Month yyyy" format
@@ -64,27 +84,23 @@ function parseDateString(dateString) {
     return new Date(`${month} ${day}, ${year}`);
 }
 
-// Helper to get Monday of the current week
+// Get the Monday of the current week
 function getWeekStart(date) {
     const day = date.getDay();
     const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
     return new Date(date.setDate(diff));
 }
 
-// Enable or disable navigation buttons
+// Update navigation button states
 function updateButtonStates() {
     const weekStart = getWeekStart(new Date(currentDate));
-
-    // Disable "Previous" button if the current week is the earliest week
     prevWeekButton.disabled = weekStart <= firstDate;
-
-    // Disable "Next" button if the current week is more than 2 weeks beyond the last week
     const nextWeekStart = new Date(weekStart);
     nextWeekStart.setDate(nextWeekStart.getDate() + 14);
     nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
-// Render rota for the current week
+// Display the rota for the current week
 function displayRota() {
     const weekStart = getWeekStart(new Date(currentDate));
     weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
@@ -96,8 +112,12 @@ function displayRota() {
         const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
         const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
-        const amShift = rotaData.find(item => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("AM"));
-        const pmShift = rotaData.find(item => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM"));
+        const amShift = rotaData.find((item) =>
+            parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("AM")
+        );
+        const pmShift = rotaData.find((item) =>
+            parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM")
+        );
 
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -107,11 +127,10 @@ function displayRota() {
         `;
         rotaTableBody.appendChild(row);
     }
-
-    updateButtonStates(); // Update button states after rendering
+    updateButtonStates();
 }
 
-// Load rota data
+// Load rota data from JSON
 async function loadRotaData() {
     try {
         const response = await fetch("rota.json");
@@ -119,16 +138,16 @@ async function loadRotaData() {
         rotaData = await response.json();
         firstDate = getWeekStart(parseDateString(rotaData[0].Date));
         lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
-        lastDate.setDate(lastDate.getDate() + 14); 
+        lastDate.setDate(lastDate.getDate() + 14);
         displayRota();
     } catch (error) {
         console.error("Error loading rota.json:", error);
     }
 }
 
-// Login form event listener
+// Initialise the page
 document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("login-form");
+    toggleLoginView(checkLogin());
 
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
@@ -138,22 +157,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (await verifyLogin(username, password)) {
                 setToken();
-                alert("Login successful!");
-                window.location.href = "blocks.html"; // Redirect on success
+                toggleLoginView(true);
             } else {
-                document.getElementById("login-error").textContent = "Invalid username or password";
+                loginError.textContent = "Invalid username or password";
             }
         });
     }
-});
 
-// Navigation buttons
-prevWeekButton.addEventListener("click", () => {
-    currentDate.setDate(currentDate.getDate() - 7);
-    displayRota();
-});
+    prevWeekButton.addEventListener("click", () => {
+        currentDate.setDate(currentDate.getDate() - 7);
+        displayRota();
+    });
 
-nextWeekButton.addEventListener("click", () => {
-    currentDate.setDate(currentDate.getDate() + 7);
-    displayRota();
+    nextWeekButton.addEventListener("click", () => {
+        currentDate.setDate(currentDate.getDate() + 7);
+        displayRota();
+    });
 });
