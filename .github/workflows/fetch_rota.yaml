@@ -1,0 +1,26 @@
+name: Fetch Rota Data
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  fetch-rota:
+    runs-on: ubuntu-latest
+
+    env:
+      ROTA_TOKEN: ${{ secrets.ROTA_TOKEN }} # Securely pass the secret
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: npm install # Adjust this if using yarn or another package manager
+
+    - name: Run Script
+      run: node index.js
+      env:
+        ROTA_TOKEN: ${{ secrets.ROTA_TOKEN }}
