@@ -11,7 +11,7 @@ const loginError = document.getElementById("login-error");
 let currentDate = new Date(); // Default current date
 let rotaData = [];
 let firstDate = null; // Earliest date in JSON
-let lastDate = null;  // Latest date in JSON
+let lastDate = null; // Latest date in JSON
 
 // Helper: Hash input using SHA-256
 async function hashInput(input) {
@@ -140,19 +140,32 @@ function openLeave() {
     window.location.href = "leave.html"; // Ensure leave.html exists in the same directory
 }
 
-
-// Load rota data from JSON
+// Load rota data from API
 async function loadRotaData() {
+    const apiUrl = "https://us-central1-radrota.cloudfunctions.net/getRotaData";
+    const rotaToken = process.env.ROTA_TOKEN; // Ensure ROTA_TOKEN is set in the environment
+
     try {
-        const response = await fetch("rota.json");
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!rotaToken) {
+            throw new Error("ROTA_TOKEN is not defined in the environment");
+        }
+
+        const response = await fetch(apiUrl, {
+            headers: {
+                "Authorization": `Bearer ${rotaToken}`
+            }
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         rotaData = await response.json();
+
         firstDate = getWeekStart(parseDateString(rotaData[0].Date));
         lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
         lastDate.setDate(lastDate.getDate() + 14);
+
         displayRota();
     } catch (error) {
-        console.error("Error loading rota.json:", error);
+        console.error("Error loading rota data:", error);
     }
 }
 
