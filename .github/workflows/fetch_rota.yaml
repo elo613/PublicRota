@@ -16,16 +16,16 @@ jobs:
 
     - name: Fetch rota data
       env:
-        ROTA_TOKEN: ${{ secrets.ROTA_TOKEN }} # Your GitHub secret
+        ROTA_TOKEN: ${{ secrets.ROTA_TOKEN }} # Access the secret securely
       run: |
-        # Fetch the rota data using the token
+        # Use the token to fetch data from the API
         curl -H "Authorization: $ROTA_TOKEN" https://us-central1-radrota.cloudfunctions.net/getRotaData -o rota.json
 
-        # Ensure rota.json is included in the deployment
+        # Move rota.json to the public directory (or your deployment directory)
         mkdir -p public && mv rota.json public/
 
-    - name: Build site (if necessary)
-      run: npm run build # Adjust for your project or skip if unnecessary
+    - name: Build static site (optional)
+      run: npm run build # Adjust this for your static site generator or skip if unnecessary
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
