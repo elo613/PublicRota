@@ -1,4 +1,4 @@
-name: Fetch Rota Data
+name: Fetch and Build Rota Data
 
 on:
   push:
@@ -7,20 +7,28 @@ on:
   workflow_dispatch: # Allows manual triggering
 
 jobs:
-  fetch-rota:
+  fetch-and-build:
     runs-on: ubuntu-latest
 
-    env:
-      ROTA_TOKEN: ${{ secrets.ROTA_TOKEN }} # Securely pass the secret
-
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: npm install # Adjust this if using yarn or another package manager
-
-    - name: Run Script
-      run: node index.js
+    - name: Fetch rota data
       env:
-        ROTA_TOKEN: ${{ secrets.ROTA_TOKEN }}
+        ROTA_TOKEN: ${{ secrets.ROTA_TOKEN }} # Your GitHub secret
+      run: |
+        # Fetch the rota data using the token
+        curl -H "Authorization: $ROTA_TOKEN" https://us-central1-radrota.cloudfunctions.net/getRotaData -o rota.json
+
+        # Ensure rota.json is included in the deployment
+        mkdir -p public && mv rota.json public/
+
+    - name: Build site (if necessary)
+      run: npm run build # Adjust for your project or skip if unnecessary
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
