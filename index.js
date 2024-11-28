@@ -13,6 +13,9 @@ let rotaData = [];
 let firstDate = null; // Earliest date in JSON
 let lastDate = null;  // Latest date in JSON
 
+const API_URL = "https://us-central1-radrota.cloudfunctions.net/getRotaData";
+const API_TOKEN = "my-secret-token"; // Hardcoded token
+
 // Helper: Hash input using SHA-256
 async function hashInput(input) {
     const encoder = new TextEncoder();
@@ -130,18 +133,31 @@ function displayRota() {
     updateButtonStates();
 }
 
-// Load rota data from the deployed rota.json
+// Load rota data from the API
 async function loadRotaData() {
     try {
-        const response = await fetch("rota.json");
+        // Fetch rota data from the API with the hardcoded token
+        const response = await fetch(API_URL, {
+            method: "GET",
+            headers: {
+                "Authorization": API_TOKEN, // Include the hardcoded token in the header
+            },
+        });
+
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        // Parse and process rota data
         rotaData = await response.json();
+
+        // Set boundaries for navigation (based on rota data)
         firstDate = getWeekStart(parseDateString(rotaData[0].Date));
         lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
         lastDate.setDate(lastDate.getDate() + 14);
+
+        // Display the rota for the current week
         displayRota();
     } catch (error) {
-        console.error("Error loading rota.json:", error);
+        console.error("Error loading rota data:", error);
     }
 }
 
