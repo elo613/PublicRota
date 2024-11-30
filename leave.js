@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
     const otherLeaveRemaining = document.getElementById("other-leave-remaining");
 
+    let authToken = ""; // To store the JWT token
+
     // Hide all sections by default
     function hideSections() {
         leaveDetails?.classList.add("hidden");
@@ -40,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 redirectToLogin();
                 return false;
             }
+            authToken = token.value; // Set the global authToken
             return true;
         } catch (e) {
             console.error("Error parsing token:", e);
@@ -111,33 +114,50 @@ document.addEventListener("DOMContentLoaded", () => {
         otherLeaveRemaining.textContent = "N/A";
     }
 
+    // Fetch registrars data securely
+    async function fetchRegistrarData() {
+        try {
+            const response = await fetch("https://radrota.onrender.com/get-json/registrars_data.json", {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${authToken}`, // Use the token for authentication
+                },
+            });
+
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error loading registrar data:", error);
+            alert("Failed to load registrar data. Please try again later.");
+            redirectToLogin();
+        }
+    }
+
     // Main initialisation
-    function initialise() {
+    async function initialise() {
         hideSections();
 
         if (!checkLogin()) return;
 
-        fetch("registrars_data.json")
-            .then((response) => response.json())
-            .then((data) => {
-                // Populate registrar dropdown
-                data.forEach((registrar) => {
-                    const option = document.createElement("option");
-                    option.value = registrar.name;
-                    option.textContent = registrar.name;
-                    registrarSelect.appendChild(option);
-                });
+        const data = await fetchRegistrarData();
 
-                // Event listener for registrar selection
-                registrarSelect.addEventListener("change", () => {
-                    const selectedRegistrar = data.find((registrar) => registrar.name === registrarSelect.value);
-                    if (selectedRegistrar) {
-                        showSections();
-                        displayRegistrarDetails(selectedRegistrar);
-                    }
-                });
-            })
-            .catch((error) => console.error("Error loading registrar data:", error));
+        // Populate registrar dropdown
+        data.forEach((registrar) => {
+            const option = document.createElement("option");
+            option.value = registrar.name;
+            option.textContent = registrar.name;
+            registrarSelect.appendChild(option);
+        });
+
+        // Event listener for registrar selection
+        registrarSelect.addEventListener("change", () => {
+            const selectedRegistrar = data.find((registrar) => registrar.name === registrarSelect.value);
+            if (selectedRegistrar) {
+                showSections();
+                displayRegistrarDetails(selectedRegistrar);
+            }
+        });
     }
 
     initialise();
