@@ -148,32 +148,34 @@ async function loadRotaData() {
 document.addEventListener("DOMContentLoaded", () => {
     toggleLoginView(checkLogin());
 
-    if (loginForm) {
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
-            try {
-                const response = await fetch("https://radrota.onrender.com/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ username, password }),
-                });
+        try {
+            const response = await fetch("https://radrota.onrender.com/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    setToken(data.token);
-                    toggleLoginView(true);
-                } else {
-                    loginError.textContent = "Invalid username or password";
-                }
-            } catch (error) {
-                console.error("Login error:", error);
-                loginError.textContent = "Error during login. Please try again.";
+            if (response.ok) {
+                const data = await response.json();
+                setToken(data.token); // Save the token
+                authToken = data.token; // Set the global authToken
+                toggleLoginView(true); // Load rota after token is set
+            } else {
+                loginError.textContent = "Invalid username or password";
             }
-        });
-    }
+        } catch (error) {
+            console.error("Login error:", error);
+            loginError.textContent = "Error during login. Please try again.";
+        }
+    });
+}
+
 
     prevWeekButton.addEventListener("click", () => {
         currentDate.setDate(currentDate.getDate() - 7);
