@@ -11,36 +11,30 @@ const loginError = document.getElementById("login-error");
 let currentDate = new Date(); // Default current date
 let rotaData = [];
 let firstDate = null; // Earliest date in JSON
-let lastDate = null;  // Latest date in JSON
+let lastDate = null; // Latest date in JSON
 
-// Helper: Hash input using SHA-256
-async function hashInput(input) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(input);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(hashBuffer))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-}
+// Global token for authenticated requests
+let authToken = "";
 
-// Verify login credentials
-async function verifyLogin(username, password) {
-    const storedUsernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032";
-    const storedPasswordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c";
-
-    const usernameHash = await hashInput(username.trim().toLowerCase());
-    const passwordHash = await hashInput(password);
-
-    return usernameHash === storedUsernameHash && passwordHash === storedPasswordHash;
+// Toggle visibility of login or rota view
+function toggleLoginView(isLoggedIn) {
+    if (isLoggedIn) {
+        loginContainer.style.display = "none";
+        rotaContainer.style.display = "block";
+        loadRotaData();
+    } else {
+        loginContainer.style.display = "block";
+        rotaContainer.style.display = "none";
+    }
 }
 
 // Set token with expiry
-function setToken() {
-    const token = {
-        value: "userLoggedIn",
+function setToken(token) {
+    const data = {
+        value: token,
         expiry: Date.now() + 10 * 60 * 1000, // 10 minutes
     };
-    localStorage.setItem("loginToken", JSON.stringify(token));
+    localStorage.setItem("loginToken", JSON.stringify(data));
 }
 
 // Check token validity
@@ -53,19 +47,9 @@ function checkLogin() {
         localStorage.removeItem("loginToken");
         return false;
     }
-    return true;
-}
 
-// Toggle visibility of login or rota view
-function toggleLoginView(isLoggedIn) {
-    if (isLoggedIn) {
-        loginContainer.style.display = "none";
-        rotaContainer.style.display = "block";
-        loadRotaData();
-    } else {
-        loginContainer.style.display = "block";
-        rotaContainer.style.display = "none";
-    }
+    authToken = token.value; // Store the valid token globally
+    return true;
 }
 
 // Format date to "Day, dd Month yyyy"
@@ -112,11 +96,11 @@ function displayRota() {
         const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
         const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
-        const amShift = rotaData.find((item) =>
-            parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("AM")
+        const amShift = rotaData.find(
+            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("AM")
         );
-        const pmShift = rotaData.find((item) =>
-            parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM")
+        const pmShift = rotaData.find(
+            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM")
         );
 
         const row = document.createElement("tr");
@@ -130,21 +114,25 @@ function displayRota() {
     updateButtonStates();
 }
 
-// Redirect to the blocks.html page
+// Redirect to blocks.html
 function openBlocksPage() {
-    window.location.href = "blocks.html"; // Ensure blocks.html exists in the same directory
+    window.location.href = "blocks.html";
 }
 
-// Redirect to the leave.html page
+// Redirect to leave.html
 function openLeave() {
-    window.location.href = "leave.html"; // Ensure leave.html exists in the same directory
+    window.location.href = "leave.html";
 }
 
-
-// Load rota data from JSON
+// Load rota data from the backend
 async function loadRotaData() {
     try {
-        const response = await fetch("rota.json");
+        const response = await fetch("https://radrota.onrender.com/get-json/rota.json", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${authToken}`, // Use the token for authentication
+            },
+        });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         rotaData = await response.json();
         firstDate = getWeekStart(parseDateString(rotaData[0].Date));
@@ -166,11 +154,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            if (await verifyLogin(username, password)) {
-                setToken();
-                toggleLoginView(true);
-            } else {
-                loginError.textContent = "Invalid username or password";
+            try {
+                const response = await fetch("https://radrota.onrender.com/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setToken(data.token);
+                    toggleLoginView(true);
+                } else {
+                    loginError.textContent = "Invalid username or password";
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                loginError.textContent = "Error during login. Please try again.";
             }
         });
     }
