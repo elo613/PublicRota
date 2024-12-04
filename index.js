@@ -156,20 +156,37 @@ document.addEventListener("DOMContentLoaded", () => {
 if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
+
+        // User input
+        const usernameInput = document.getElementById("username").value.trim().toLowerCase();
+        const passwordInput = document.getElementById("password").value;
+
+        // Hardcoded hashes for username and password
+        const usernameHash = "ba7c7a43cf6f5cf00ec4ba93b64a94d1"; 
+        const passwordHash = "fc5e038d38a57032085441e7fe7010b0"; 
+
+        // Function to hash input values
+        function hashValue(value) {
+            return crypto.subtle.digest("MD5", new TextEncoder().encode(value))
+                .then((hashBuffer) => {
+                    return Array.from(new Uint8Array(hashBuffer))
+                        .map(b => b.toString(16).padStart(2, "0"))
+                        .join("");
+                });
+        }
 
         try {
-            const response = await fetch("https://radrota.onrender.com/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
-            });
+            // Hash the username and password inputs
+            const [hashedUsername, hashedPassword] = await Promise.all([
+                hashValue(usernameInput),
+                hashValue(passwordInput)
+            ]);
 
-            if (response.ok) {
-                const data = await response.json();
-                setToken(data.token); // Save the token
-                authToken = data.token; // Set the global authToken
+            // Validate hashed inputs against hardcoded hashes
+            if (hashedUsername === usernameHash && hashedPassword === passwordHash) {
+                const token = "dummy-token"; // Generate a dummy token (could be a random string in a real app)
+                setToken(token); // Save the token
+                authToken = token; // Set the global authToken
                 toggleLoginView(true); // Load rota after token is set
             } else {
                 loginError.textContent = "Invalid username or password";
@@ -180,6 +197,7 @@ if (loginForm) {
         }
     });
 }
+
 
 
     prevWeekButton.addEventListener("click", () => {
