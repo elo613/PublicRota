@@ -124,25 +124,31 @@ function openLeave() {
     window.location.href = "leave.html";
 }
 
-// Load rota data from the local file
 async function loadRotaData() {
     try {
-        // Use a relative path to fetch rota.json from the same directory
+        // Use relative path to fetch rota.json
         const response = await fetch("./rota.json");
 
         // Check for a successful response
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         // Parse the JSON data
-        const rotaData = await response.json();
-        
-        // Process the data (e.g., calculate date ranges)
-        const firstDate = getWeekStart(parseDateString(rotaData[0].Date));
-        const lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
+        rotaData = await response.json();
+
+        // Validate rotaData
+        if (!rotaData || !rotaData.length) {
+            throw new Error("rota.json is empty or not formatted correctly.");
+        }
+
+        // Process dates
+        firstDate = getWeekStart(parseDateString(rotaData[0].Date));
+        lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
         lastDate.setDate(lastDate.getDate() + 14);
-        
+
         // Display the rota
-        displayRota(rotaData, firstDate, lastDate);
+        displayRota();
     } catch (error) {
         console.error("Error loading rota.json:", error);
     }
