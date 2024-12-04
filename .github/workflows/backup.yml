@@ -1,0 +1,55 @@
+name: Backup JSON Files Hourly
+
+on:
+  schedule:
+    - cron: "0 * * * *" # Runs every hour
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install jq
+      run: |
+        sudo apt-get update && sudo apt-get install -y jq
+
+    - name: Replace Terms in JSON Files
+      env:
+        REPLACEMENT_TERMS: ${{ secrets.REPLACEMENT_TERMS }}
+      run: |
+        # Define input and backup directories
+        INPUT_DIR="./json_files"
+        BACKUP_DIR="./backup"
+
+        # Create backup directory
+        mkdir -p $BACKUP_DIR
+
+        # Parse REPLACEMENT_TERMS secret into a jq filter
+        jq_filter=$(echo $REPLACEMENT_TERMS | sed -e 's/,/;/g' -e 's/=/":"/g' -e 's/;/","/g' -e 's/^/{"'/ -e 's/$/"} /')
+
+        # Replace terms in each JSON file
+        for file in blocks.json registrars_data.json rota.json; do
+          jq "reduce (to_entries | .[]) as {key, value} (.; .[] |= gsub(key; value))" <<<"$jq_filter" <"$INPUT_DIR/$file" >"$BACKUP_DIR/$file"
+        done
+
+    - name: Commit and Push Backup
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+        # Add changes and commit
+        git add backup/
+        git commit -m "Hourly backup with term replacements [skip ci]" || echo "No changes to commit."
+
+        # Push changes
+        git push origin HEAD
