@@ -37,21 +37,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fetch blocks data securely
     async function fetchBlocksData() {
         try {
-            const response = await fetch("https://radrota.onrender.com/get-json/blocks.json", {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${authToken}`, // Use the token for authentication
-                },
-            });
-
+            // Use a relative path for fetching blocks.json from the same directory
+            const response = await fetch("./blocks.json");
+    
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
         } catch (error) {
             console.error("Error loading blocks.json:", error);
             alert("Failed to load block data. Please try again later.");
-            redirectToLogin();
         }
     }
+
 
     // Update schedule table
     function updateScheduleTable(blockData) {
