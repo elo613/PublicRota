@@ -168,3 +168,19 @@ tbody tr:nth-child(even) {
 tbody tr:hover {
     background-color: #f1f1f1;
 }
+
+.leave-today-container {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.leave-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.leave-input {
+    padding: 5px;
+    width: 200px;
+}
+
