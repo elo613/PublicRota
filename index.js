@@ -106,8 +106,8 @@ function displayRota() {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
-            <td>${amShift ? amShift.Registrar : "N/A"}</td>
-            <td>${pmShift ? pmShift.Registrar : "N/A"}</td>
+            <td>${amShift ? amShift.Registrar : "-"}</td>
+            <td>${pmShift ? pmShift.Registrar : "-"}</td>
         `;
         rotaTableBody.appendChild(row);
     }
