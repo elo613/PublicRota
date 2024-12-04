@@ -161,18 +161,18 @@ if (loginForm) {
         const usernameInput = document.getElementById("username").value.trim().toLowerCase();
         const passwordInput = document.getElementById("password").value;
 
-        // Hardcoded hashes for username and password
-        const usernameHash = "ba7c7a43cf6f5cf00ec4ba93b64a94d1"; 
-        const passwordHash = "fc5e038d38a57032085441e7fe7010b0"; 
+        // Hardcoded SHA-256 hashes for username and password
+        const usernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032"; 
+        const passwordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c"; 
 
-        // Function to hash input values
-        function hashValue(value) {
-            return crypto.subtle.digest("MD5", new TextEncoder().encode(value))
-                .then((hashBuffer) => {
-                    return Array.from(new Uint8Array(hashBuffer))
-                        .map(b => b.toString(16).padStart(2, "0"))
-                        .join("");
-                });
+        // Function to hash input values using SHA-256
+        async function hashValue(value) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(value);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+            return Array.from(new Uint8Array(hashBuffer))
+                .map(b => b.toString(16).padStart(2, "0"))
+                .join("");
         }
 
         try {
