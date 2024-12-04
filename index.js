@@ -127,22 +127,27 @@ function openLeave() {
 // Load rota data from the backend
 async function loadRotaData() {
     try {
-        const response = await fetch("https://radrota.onrender.com/get-json/rota.json", {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${authToken}`, // Use the token for authentication
-            },
-        });
+        // Define the raw GitHub URL for rota.json
+        const response = await fetch("https://raw.githubusercontent.com/elo613/PublicRadRota/main/rota.json");
+        
+        // Check for a successful response
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        rotaData = await response.json();
-        firstDate = getWeekStart(parseDateString(rotaData[0].Date));
-        lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
+        
+        // Parse the JSON data
+        const rotaData = await response.json();
+        
+        // Process the data (e.g., calculate date ranges)
+        const firstDate = getWeekStart(parseDateString(rotaData[0].Date));
+        const lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
         lastDate.setDate(lastDate.getDate() + 14);
-        displayRota();
+        
+        // Display the rota
+        displayRota(rotaData, firstDate, lastDate);
     } catch (error) {
         console.error("Error loading rota.json:", error);
     }
 }
+
 
 // Initialise the page
 document.addEventListener("DOMContentLoaded", () => {
