@@ -115,24 +115,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Fetch registrars data securely
-    async function fetchRegistrarData() {
-        try {
-            const response = await fetch("https://radrota.onrender.com/get-json/registrars_data.json", {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${authToken}`, // Use the token for authentication
-                },
-            });
+ // Fetch registrar data securely
+async function fetchRegistrarData() {
+    try {
+        // Use a relative path to fetch the JSON file from the same directory
+        const response = await fetch("./registrars_data.json");
 
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-            return await response.json();
-        } catch (error) {
-            console.error("Error loading registrar data:", error);
-            alert("Failed to load registrar data. Please try again later.");
-            redirectToLogin();
-        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error loading registrar data:", error);
+        alert("Failed to load registrar data. Please try again later.");
     }
+}
+
 
     // Main initialisation
     async function initialise() {
