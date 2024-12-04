@@ -7,6 +7,7 @@ const loginForm = document.getElementById("login-form");
 const loginContainer = document.getElementById("login-container");
 const rotaContainer = document.getElementById("rota-container");
 const loginError = document.getElementById("login-error");
+const leaveTodayInput = document.getElementById("on-leave-today");
 
 let currentDate = new Date(); // Default current date
 let rotaData = [];
@@ -154,6 +155,47 @@ async function loadRotaData() {
     }
 }
 
+
+async function loadLeaveData() {
+    try {
+        // Fetch the JSON file
+        const response = await fetch("./registrars_data.json");
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const registrarsData = await response.json();
+
+        // Get today's date
+        const today = new Date();
+        const todayString = today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+
+        // Check who is on leave today
+        const onLeave = registrarsData.filter((registrar) =>
+            registrar.leave_records.some((leave) => {
+                const leaveStart = new Date(leave.start);
+                const leaveEnd = new Date(leave.end);
+
+                // Check if today falls within the leave range
+                return leaveStart <= today && leaveEnd >= today;
+            })
+        );
+
+        // Populate the "On Leave Today" textbox
+        leaveTodayInput.value = onLeave.length
+            ? onLeave.map((registrar) => registrar.name).join(", ")
+            : "No one on leave today";
+    } catch (error) {
+        console.error("Error loading leave data:", error);
+        leaveTodayInput.value = "Error loading data";
+    }
+}
+
+// Add this to your initialization function
+document.addEventListener("DOMContentLoaded", () => {
+    loadLeaveData(); // Load leave data when the page loads
+});
 
 // Initialise the page
 document.addEventListener("DOMContentLoaded", () => {
