@@ -89,7 +89,7 @@ function updateButtonStates() {
 function displayRota() {
     const weekStart = getWeekStart(new Date(currentDate));
     weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
-    rotaTableBody.innerHTML = "";
+    rotaTableBody.innerHTML = ""; // Clear existing rows
 
     for (let i = 0; i < 7; i++) {
         const currentDay = new Date(weekStart);
@@ -105,15 +105,26 @@ function displayRota() {
         );
 
         const row = document.createElement("tr");
+
+        // Reset any existing highlighting
+        row.style.backgroundColor = ""; // Clear inline background
+
+        // Apply highlighting for the current date
+        if (currentDay.toDateString() === new Date().toDateString()) {
+            row.style.backgroundColor = "lightblue"; // Highlight today's row
+        }
+
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
             <td>${amShift ? amShift.Registrar : "-"}</td>
             <td>${pmShift ? pmShift.Registrar : "-"}</td>
         `;
+
         rotaTableBody.appendChild(row);
     }
     updateButtonStates();
 }
+
 
 // Redirect to blocks.html
 function openBlocksPage() {
