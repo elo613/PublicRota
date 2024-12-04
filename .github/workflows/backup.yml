@@ -23,7 +23,7 @@ jobs:
       run: |
         curl -H "Authorization: token $GITHUB_TOKEN" \
         -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/elo613/radrota/contents/rota.json \
+        https://api.github.com/repos/elo613/radrota/contents/json_files/rota.json \
         --output rota.json
     - name: Fetch registrars_data.json from Private Repository
       env:
@@ -31,7 +31,7 @@ jobs:
       run: |
         curl -H "Authorization: token $GITHUB_TOKEN" \
         -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/elo613/radrota/contents/registrars_data.json \
+        https://api.github.com/repos/elo613/radrota/contents/json_files/registrars_data.json \
         --output registrars_data.json
     - name: Fetch blocks.json from Private Repository
       env:
@@ -39,7 +39,7 @@ jobs:
       run: |
         curl -H "Authorization: token $GITHUB_TOKEN" \
         -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/elo613/radrota/contents/blocks.json \
+        https://api.github.com/repos/elo613/radrota/contents/json_files/blocks.json \
         --output blocks.json
     - name: Replace Full Names with Abbreviations
       env:
