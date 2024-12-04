@@ -124,12 +124,12 @@ function openLeave() {
     window.location.href = "leave.html";
 }
 
-// Load rota data from the backend
+// Load rota data from the local file
 async function loadRotaData() {
     try {
-        // Define the raw GitHub URL for rota.json
-        const response = await fetch("https://raw.githubusercontent.com/elo613/PublicRadRota/main/rota.json");
-        
+        // Use a relative path to fetch rota.json from the same directory
+        const response = await fetch("./rota.json");
+
         // Check for a successful response
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
