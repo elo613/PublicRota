@@ -182,6 +182,7 @@ async function loadLeaveData() {
 
         // Get today's date
         const today = new Date();
+        today.setHours(23, 59, 59, 999); // Set to the end of today
         const todayString = today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
 
         // Check who is on leave today
