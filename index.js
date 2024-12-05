@@ -182,33 +182,38 @@ async function loadLeaveData() {
 
         // Get today's date
         const today = new Date();
-        today.setHours(0, 0, 0);
-        const todayString = today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+        today.setHours(0, 0, 0, 0); // Set to the start of today
 
-        // Check who is on leave today
-        const onLeave = registrarsData.filter((registrar) =>
-            registrar.leave_records.some((leave) => {
+        // Collect registrars who are on leave today
+        const onLeave = [];
+
+        // Loop through each registrar
+        registrarsData.forEach((registrar) => {
+            // Loop through each leave record of the registrar
+            registrar.leave_records.forEach((leave) => {
                 const leaveStart = new Date(leave.start);
-                leaveStart.setHours(0, 0, 0, 0); // Set to the start of the leave.start day
+                leaveStart.setHours(0, 0, 0, 0); // Start of the leave day
 
                 const leaveEnd = new Date(leave.end);
-                leaveEnd.setHours(23, 59, 59, 999); // Set to the end of the leave.end day
+                leaveEnd.setHours(23, 59, 59, 999); // End of the leave day
 
-
-                // Check if today falls within the leave range
-                return leaveStart <= today && leaveEnd >= today;
-            })
-        );
+                // Check if today falls within the leave period
+                if (leaveStart <= today && leaveEnd >= today) {
+                    onLeave.push(registrar.name);
+                }
+            });
+        });
 
         // Populate the "On Leave Today" textbox
         leaveTodayInput.value = onLeave.length
-            ? onLeave.map((registrar) => registrar.name).join(", ")
+            ? onLeave.join(", ")
             : "No one on leave today";
     } catch (error) {
         console.error("Error loading leave data:", error);
         leaveTodayInput.value = "Error loading data";
     }
 }
+
 
 // Add this to your initialization function
 document.addEventListener("DOMContentLoaded", () => {
