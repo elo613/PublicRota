@@ -182,14 +182,18 @@ async function loadLeaveData() {
 
         // Get today's date
         const today = new Date();
-        today.setHours(23, 59, 59, 999); // Set to the end of today
+        today.setHours(0, 0, 0);
         const todayString = today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
 
         // Check who is on leave today
         const onLeave = registrarsData.filter((registrar) =>
             registrar.leave_records.some((leave) => {
                 const leaveStart = new Date(leave.start);
+                leaveStart.setHours(0, 0, 0, 0); // Set to the start of the leave.start day
+
                 const leaveEnd = new Date(leave.end);
+                leaveEnd.setHours(23, 59, 59, 999); // Set to the end of the leave.end day
+
 
                 // Check if today falls within the leave range
                 return leaveStart <= today && leaveEnd >= today;
