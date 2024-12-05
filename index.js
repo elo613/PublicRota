@@ -114,11 +114,13 @@ function displayRota() {
             row.style.backgroundColor = "lightblue"; // Highlight today's row
         }
 
+        
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
-            <td>${amShift ? amShift.Registrar : "-"}</td>
-            <td>${pmShift ? pmShift.Registrar : "-"}</td>
+            <td>${amShift && amShift.Registrar ? amShift.Registrar : "-"}</td>
+            <td>${pmShift && pmShift.Registrar ? pmShift.Registrar : "-"}</td>
         `;
+
 
         rotaTableBody.appendChild(row);
     }
