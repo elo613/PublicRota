@@ -197,9 +197,14 @@ async function loadLeaveData() {
                 const leaveEnd = new Date(leave.end);
                 leaveEnd.setHours(23, 59, 59, 999); // End of the leave day
 
+                let halfDay = ""
+                if (leave.half_day == true) {
+                    halfDay = "(0.5)"
+                }
+
                 // Check if today falls within the leave period
                 if (leaveStart <= today && leaveEnd >= today) {
-                    onLeave.push(registrar.name);
+                    onLeave.push(registrar.name + halfDay);
                 }
             });
         });
