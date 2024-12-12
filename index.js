@@ -114,42 +114,49 @@ function displayRota() {
             row.style.backgroundColor = "lightblue"; // Highlight today's row
         }
 
-        
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
             <td>${amShift && amShift.Registrar ? amShift.Registrar : "-"}</td>
             <td>${pmShift && pmShift.Registrar ? pmShift.Registrar : "-"}</td>
         `;
 
-
         rotaTableBody.appendChild(row);
     }
     updateButtonStates();
 }
 
+// Decrypt rota.json.enc with AES-256-CBC
+async function decryptRotaData(encryptedData, ivHex) {
+    const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex'); // AES-256 requires a 32-byte key
+    const iv = Buffer.from(ivHex, 'hex'); // Initialization vector
 
-// Redirect to blocks.html
-function openBlocksPage() {
-    window.location.href = "blocks.html";
-}
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
 
-// Redirect to leave.html
-function openLeave() {
-    window.location.href = "leave.html";
+    return JSON.parse(decrypted);
 }
 
 async function loadRotaData() {
     try {
-        // Use relative path to fetch rota.json
-        const response = await fetch("./rota.json");
+        // Fetch the encrypted rota.json.enc
+        const response = await fetch("./rota.json.enc");
 
-        // Check for a successful response
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        // Parse the JSON data
-        rotaData = await response.json();
+        // Get the encrypted data (Assumes the response contains the encrypted string in 'hex' format)
+        const encryptedData = await response.text();
+
+        // Extract the IV (assuming it is the first 16 bytes of the encrypted data)
+        const ivHex = encryptedData.slice(0, 32); // First 16 bytes as the IV (in hex)
+
+        // Decrypt the data
+        const decryptedData = await decryptRotaData(encryptedData.slice(32), ivHex);
+
+        // Assign decrypted data to rotaData
+        rotaData = decryptedData;
 
         // Validate rotaData
         if (!rotaData || !rotaData.length) {
@@ -167,7 +174,6 @@ async function loadRotaData() {
         console.error("Error loading rota.json:", error);
     }
 }
-
 
 async function loadLeaveData() {
     try {
