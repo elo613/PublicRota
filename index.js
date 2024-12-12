@@ -125,16 +125,33 @@ function displayRota() {
     updateButtonStates();
 }
 
-// Decrypt rota.json.enc with AES-256-CBC
+// Decrypt rota.json.enc with AES-256-CBC (Browser-compatible)
 async function decryptRotaData(encryptedData, ivHex) {
-    const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex'); // AES-256 requires a 32-byte key
-    const iv = Buffer.from(ivHex, 'hex'); // Initialization vector
+    const key = new TextEncoder().encode(process.env.ENCRYPTION_KEY); // Use TextEncoder to encode the secret key
+    const iv = new Uint8Array(16); // Initialization vector
 
-    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-    let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
+    // Convert hex string to bytes for the IV
+    for (let i = 0; i < ivHex.length; i += 2) {
+        iv[i / 2] = parseInt(ivHex.slice(i, i + 2), 16);
+    }
 
-    return JSON.parse(decrypted);
+    const decoder = new TextDecoder();
+    const cryptoKey = await crypto.subtle.importKey(
+        "raw",
+        key,
+        { name: "AES-CBC" },
+        false,
+        ["decrypt"]
+    );
+
+    const encryptedBytes = new Uint8Array(encryptedData.match(/.{1,2}/g).map(byte => parseInt(byte, 16))); // Convert hex to bytes
+    const decryptedBytes = await crypto.subtle.decrypt(
+        { name: "AES-CBC", iv: iv },
+        cryptoKey,
+        encryptedBytes
+    );
+
+    return JSON.parse(decoder.decode(decryptedBytes));
 }
 
 async function loadRotaData() {
