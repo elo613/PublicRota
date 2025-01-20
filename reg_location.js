@@ -20,7 +20,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         fetchJSON(files.regBlocks),
     ]);
 
-    const parseDate = (dateString) => new Date(dateString);
+    const parseDate = (dateString) => {
+        const [day, month, year] = dateString.split('/');
+        return new Date(year, month - 1, day); // Adjust month (0-indexed)
+    };
 
     const isWeekend = (date) => {
         const day = date.getDay();
@@ -45,9 +48,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         return null;
     };
 
-    // Set today's date as the default value in the date input
-    const today = new Date().toISOString().split("T")[0]; // Get YYYY-MM-DD format
-    dateInput.value = today;
+    // Set today's date as the default value in the date input (dd/mm/yyyy format)
+    const today = new Date();
+    const todayFormatted = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`;
+    dateInput.value = todayFormatted;
 
     const loadDataForToday = () => {
         const selectedDate = parseDate(dateInput.value);
