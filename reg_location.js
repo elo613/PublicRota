@@ -12,14 +12,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         registrars: "registrars_data.json",
         rota: "rota.json",
         regBlocks: "reg_blocks.json",
-        blocks: "blocks.json",
     };
 
-    const [registrars, rota, regBlocks, blocks] = await Promise.all([
+    const [registrars, rota, regBlocks] = await Promise.all([
         fetchJSON(files.registrars),
         fetchJSON(files.rota),
         fetchJSON(files.regBlocks),
-        fetchJSON(files.blocks),
     ]);
 
     const parseDate = (dateString) => new Date(dateString);
@@ -33,12 +31,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     };
 
-const getAAUShift = (date, session) => {
-    const formattedDate = date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" }); // Correctly formats date as "07 August 2024"
-    const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`; // Correctly gets the weekday
-    return rota.find((shift) => shift["Date"] === formattedDate && shift["Shift Type"] === shiftType)?.Registrar || null;
-};
-
+    const getAAUShift = (date, session) => {
+        const formattedDate = date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
+        const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`;
+        return rota.find((shift) => shift["Date"] === formattedDate && shift["Shift Type"] === shiftType)?.Registrar || null;
+    };
 
     const getBlock = (registrar, date) => {
         const blocksData = regBlocks[registrar]?.Blocks || [];
@@ -52,10 +49,6 @@ const getAAUShift = (date, session) => {
         return null;
     };
 
-    const getBlockActivity = (blockName, weekday, session) => {
-        return blocks[blockName]?.[weekday]?.[session]?.value || "No Activity";
-    };
-
     dateInput.addEventListener("change", () => {
         const selectedDate = parseDate(dateInput.value);
         tbody.innerHTML = "";
@@ -64,23 +57,27 @@ const getAAUShift = (date, session) => {
 
         registrars.forEach((registrar) => {
             const registrarName = registrar.name;
-            let amActivity = "Not Assigned";
-            let pmActivity = "Not Assigned";
+            let amActivity = "";
+            let pmActivity = "";
 
             if (isLeave(registrar, selectedDate)) {
                 amActivity = "Leave";
                 pmActivity = "Leave";
             } else {
-                const weekday = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
                 const aauAM = getAAUShift(selectedDate, "AM");
                 const aauPM = getAAUShift(selectedDate, "PM");
 
                 if (aauAM === registrarName) amActivity = "AAU";
                 if (aauPM === registrarName) pmActivity = "AAU";
 
-                const blockName = getBlock(registrarName, selectedDate);
-                if (blockName && amActivity !== "AAU") amActivity = getBlockActivity(blockName, weekday, "AM");
-                if (blockName && pmActivity !== "AAU") pmActivity = getBlockActivity(blockName, weekday, "PM");
+                if (!amActivity) {
+                    const blockName = getBlock(registrarName, selectedDate);
+                    amActivity = blockName || "";
+                }
+                if (!pmActivity) {
+                    const blockName = getBlock(registrarName, selectedDate);
+                    pmActivity = blockName || "";
+                }
             }
 
             const row = document.createElement("tr");
