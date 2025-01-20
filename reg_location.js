@@ -33,10 +33,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     };
 
-    const getAAUShift = (date, session) => {
-        const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`;
-        return rota.find((shift) => shift["Date"] === date.toLocaleDateString("dd MMMM yyyy") && shift["Shift Type"] === shiftType)?.Registrar || null;
-    };
+const getAAUShift = (date, session) => {
+    const formattedDate = date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" }); // Correctly formats date as "07 August 2024"
+    const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`; // Correctly gets the weekday
+    return rota.find((shift) => shift["Date"] === formattedDate && shift["Shift Type"] === shiftType)?.Registrar || null;
+};
+
 
     const getBlock = (registrar, date) => {
         const blocksData = regBlocks[registrar]?.Blocks || [];
