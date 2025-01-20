@@ -111,11 +111,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             const registrarName = registrar.name;
             let amActivity = "";
             let pmActivity = "";
+            let isLeave = false;
 
             // Check for leave first
             if (isOnLeave(registrarName, selectedDate)) {
                 amActivity = "Leave";
                 pmActivity = "Leave";
+                isLeave = true;
             } else {
                 if (isWeekend(selectedDate)) {
                     const aauAM = getAAUShift(selectedDate, "AM");
@@ -143,8 +145,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${registrarName}</td>
-                <td class="${amActivity === "AAU" ? "aau-highlight" : ""}">${amActivity}</td>
-                <td class="${pmActivity === "AAU" ? "aau-highlight" : ""}">${pmActivity}</td>
+                <td class="${amActivity === "AAU" ? "aau-highlight" : ""} ${isLeave ? "leave-highlight" : ""}">${amActivity}</td>
+                <td class="${pmActivity === "AAU" ? "aau-highlight" : ""} ${isLeave ? "leave-highlight" : ""}">${pmActivity}</td>
             `;
             tbody.appendChild(row);
         });
