@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 0
             );
             if (date >= startDate && date <= endDate) {
-                return block.block_name;
+                return block.block_name + "block";
             }
         }
         return null;
