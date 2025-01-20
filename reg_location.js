@@ -33,11 +33,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     const getAAUShift = (date, session) => {
-        const formattedDate = date.toLocaleDateString("en-GB", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        });
+        // Updated date formatting to include leading zeros for days
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = date.toLocaleDateString("en-GB", { month: "long" });
+        const year = date.getFullYear();
+        const formattedDate = `${day} ${month} ${year}`;
+        
         const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`;
         return rota.find((shift) => 
             shift["Date"] === formattedDate && 
