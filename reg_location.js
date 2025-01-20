@@ -57,18 +57,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             let pmActivity = "";
 
             if (isWeekend(selectedDate)) {
-                // Show AAU data for weekends only
+                // On weekends, only show AAU activities and highlight them
                 const aauAM = getAAUShift(selectedDate, "AM");
                 const aauPM = getAAUShift(selectedDate, "PM");
 
                 amActivity = aauAM === registrarName ? "AAU" : "";
                 pmActivity = aauPM === registrarName ? "AAU" : "";
-
-                // Leave other cells blank
-                if (amActivity !== "AAU") amActivity = "";
-                if (pmActivity !== "AAU") pmActivity = "";
             } else {
-                // Show AAU data for weekdays and use blocks data for non-AAU entries
+                // On weekdays, show both AAU and Block activities
                 const aauAM = getAAUShift(selectedDate, "AM");
                 const aauPM = getAAUShift(selectedDate, "PM");
 
