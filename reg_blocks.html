@@ -4,23 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Blocks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        thead th {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>Registrar Blocks</h1>
-    <label for="registrars">Select a Registrar:</label>
-    <select id="registrars">
-        <option value="">--Select Registrar--</option>
-    </select>
-    <table id="blockTable" border="1" style="margin-top: 20px; display: none;">
-        <thead>
-            <tr>
-                <th>Start (Month/Year)</th>
-                <th>End (Month/Year)</th>
-                <th>Block Name</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <script src="reg_script.js"></script>
+    <div class="container">
+        <h1>Registrar Blocks</h1>
+        <label for="registrars">Select a Registrar:</label>
+        <select id="registrars">
+            <option value="">--Select Registrar--</option>
+        </select>
+        <table id="blockTable" border="1" style="margin-top: 20px; display: none;">
+            <thead>
+                <tr>
+                    <th>Start (Month/Year)</th>
+                    <th>End (Month/Year)</th>
+                    <th>Block Name</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
