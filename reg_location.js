@@ -28,9 +28,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     const getAAUShift = (date, session) => {
-        const formattedDate = date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
+        // Format the input date as dd/mm/yyyy
+        const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+        
+        // Build the shift type string (e.g., "Saturday AM")
         const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`;
-        return rota.find((shift) => shift["Date"] === formattedDate && shift["Shift Type"] === shiftType)?.Registrar || null;
+
+        // Look for a match in the JSON data
+        return rota.find((shift) => {
+            // Convert JSON date to dd/mm/yyyy
+            const shiftDateParts = shift["Date"].split(" ");
+            const shiftDate = `${String(shiftDateParts[0]).padStart(2, '0')}/${shiftDateParts[1]}/${shiftDateParts[2]}`;
+
+            return shiftDate === formattedDate && shift["Shift Type"] === shiftType;
+        })?.Registrar || null;
     };
 
     const getBlock = (registrar, date) => {
@@ -57,14 +68,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             let pmActivity = "";
 
             if (isWeekend(selectedDate)) {
-                // On weekends, only show AAU activities and highlight them
                 const aauAM = getAAUShift(selectedDate, "AM");
                 const aauPM = getAAUShift(selectedDate, "PM");
 
                 amActivity = aauAM === registrarName ? "AAU" : "";
                 pmActivity = aauPM === registrarName ? "AAU" : "";
             } else {
-                // On weekdays, show both AAU and Block activities
                 const aauAM = getAAUShift(selectedDate, "AM");
                 const aauPM = getAAUShift(selectedDate, "PM");
 
