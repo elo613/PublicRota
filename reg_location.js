@@ -45,7 +45,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         return null;
     };
 
-    dateInput.addEventListener("change", () => {
+    // Set today's date as the default value in the date input
+    const today = new Date().toISOString().split("T")[0]; // Get YYYY-MM-DD format
+    dateInput.value = today;
+
+    const loadDataForToday = () => {
         const selectedDate = parseDate(dateInput.value);
         tbody.innerHTML = "";
 
@@ -89,5 +93,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         scheduleTable.style.display = "table";
-    });
+    };
+
+    // Automatically load data for today's date
+    loadDataForToday();
+
+    dateInput.addEventListener("change", loadDataForToday);
 });
