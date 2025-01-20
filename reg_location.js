@@ -20,28 +20,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         fetchJSON(files.regBlocks),
     ]);
 
-    // Function to parse the date from dd/mm/yyyy format to Date object
-    const parseDate = (dateString) => {
-        const [day, month, year] = dateString.split("/").map((part) => parseInt(part, 10));
-        return new Date(year, month - 1, day); // Month is 0-based in JavaScript
+    const parseDate = (dateString) => new Date(dateString);
+
+    const isWeekend = (date) => {
+        const day = date.getDay();
+        return day === 0 || day === 6; // Sunday (0) or Saturday (6)
     };
 
-    // Convert the 'dd Month yyyy' format to Date object for comparison
-    const parseRotaDate = (rotaDateString) => {
-        const [day, month, year] = rotaDateString.split(" ");
-        const monthIndex = new Date(`${month} 1, 2020`).getMonth(); // Get month index from month name
-        return new Date(year, monthIndex, parseInt(day, 10));
-    };
-
-    // Function to highlight AAU data
     const getAAUShift = (date, session) => {
-        const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+        const formattedDate = date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
         const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`;
-
-        return rota.find((shift) => {
-            const shiftDate = parseRotaDate(shift["Date"]);
-            return shiftDate.getTime() === date.getTime() && shift["Shift Type"] === shiftType;
-        })?.Registrar || null;
+        return rota.find((shift) => shift["Date"] === formattedDate && shift["Shift Type"] === shiftType)?.Registrar || null;
     };
 
     const getBlock = (registrar, date) => {
@@ -67,19 +56,27 @@ document.addEventListener("DOMContentLoaded", async () => {
             let amActivity = "";
             let pmActivity = "";
 
-            const aauAM = getAAUShift(selectedDate, "AM");
-            const aauPM = getAAUShift(selectedDate, "PM");
+            if (isWeekend(selectedDate)) {
+                const aauAM = getAAUShift(selectedDate, "AM");
+                const aauPM = getAAUShift(selectedDate, "PM");
 
-            if (aauAM === registrarName) amActivity = "AAU";
-            if (aauPM === registrarName) pmActivity = "AAU";
+                amActivity = aauAM === registrarName ? "AAU" : "";
+                pmActivity = aauPM === registrarName ? "AAU" : "";
+            } else {
+                const aauAM = getAAUShift(selectedDate, "AM");
+                const aauPM = getAAUShift(selectedDate, "PM");
 
-            if (!amActivity) {
-                const blockName = getBlock(registrarName, selectedDate);
-                amActivity = blockName || "";
-            }
-            if (!pmActivity) {
-                const blockName = getBlock(registrarName, selectedDate);
-                pmActivity = blockName || "";
+                if (aauAM === registrarName) amActivity = "AAU";
+                if (aauPM === registrarName) pmActivity = "AAU";
+
+                if (!amActivity) {
+                    const blockName = getBlock(registrarName, selectedDate);
+                    amActivity = blockName || "";
+                }
+                if (!pmActivity) {
+                    const blockName = getBlock(registrarName, selectedDate);
+                    pmActivity = blockName || "";
+                }
             }
 
             const row = document.createElement("tr");
