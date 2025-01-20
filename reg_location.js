@@ -25,7 +25,42 @@ document.addEventListener("DOMContentLoaded", async () => {
         fetchJSON(files.regBlocks),
     ]);
 
-    const parseDate = (dateString) => new Date(dateString);
+    const parseDate = (dateString) => {
+        // Parse dates like "16 Sep 2024"
+        const [day, month, year] = dateString.split(' ');
+        const monthNames = {
+            'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
+            'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+        };
+        return new Date(year, monthNames[month], parseInt(day));
+    };
+
+    const formatDateForComparison = (date) => {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const day = date.getDate().toString();
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+        return `${day} ${month} ${year}`;
+    };
+
+    const isOnLeave = (registrar, date) => {
+        const registrarData = registrars.find(r => r.name === registrar);
+        if (!registrarData || !registrarData.leave_records) return null;
+
+        const formattedDate = formatDateForComparison(date);
+        
+        for (const leave of registrarData.leave_records) {
+            const startDate = parseDate(leave.start);
+            const endDate = parseDate(leave.end);
+            const checkDate = parseDate(formattedDate);
+            
+            if (checkDate >= startDate && checkDate <= endDate) {
+                return leave.type;
+            }
+        }
+        return null;
+    };
 
     const isWeekend = (date) => {
         const day = date.getDay();
@@ -60,14 +95,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 0
             );
             if (date >= startDate && date <= endDate) {
-                return block.block_name + "block";
+                return block.block_name;
             }
         }
         return null;
     };
 
     const updateSchedule = () => {
-        const selectedDate = parseDate(dateInput.value);
+        const selectedDate = new Date(dateInput.value);
         tbody.innerHTML = "";
         
         if (!selectedDate) return;
@@ -77,25 +112,32 @@ document.addEventListener("DOMContentLoaded", async () => {
             let amActivity = "";
             let pmActivity = "";
 
-            if (isWeekend(selectedDate)) {
-                const aauAM = getAAUShift(selectedDate, "AM");
-                const aauPM = getAAUShift(selectedDate, "PM");
-                amActivity = aauAM === registrarName ? "AAU" : "";
-                pmActivity = aauPM === registrarName ? "AAU" : "";
+            // Check for leave first
+            const leaveType = isOnLeave(registrarName, selectedDate);
+            if (leaveType) {
+                amActivity = leaveType;
+                pmActivity = leaveType;
             } else {
-                const aauAM = getAAUShift(selectedDate, "AM");
-                const aauPM = getAAUShift(selectedDate, "PM");
-                
-                if (aauAM === registrarName) amActivity = "AAU";
-                if (aauPM === registrarName) pmActivity = "AAU";
-                
-                if (!amActivity) {
-                    const blockName = getBlock(registrarName, selectedDate);
-                    amActivity = blockName || "";
-                }
-                if (!pmActivity) {
-                    const blockName = getBlock(registrarName, selectedDate);
-                    pmActivity = blockName || "";
+                if (isWeekend(selectedDate)) {
+                    const aauAM = getAAUShift(selectedDate, "AM");
+                    const aauPM = getAAUShift(selectedDate, "PM");
+                    amActivity = aauAM === registrarName ? "AAU" : "";
+                    pmActivity = aauPM === registrarName ? "AAU" : "";
+                } else {
+                    const aauAM = getAAUShift(selectedDate, "AM");
+                    const aauPM = getAAUShift(selectedDate, "PM");
+                    
+                    if (aauAM === registrarName) amActivity = "AAU";
+                    if (aauPM === registrarName) pmActivity = "AAU";
+                    
+                    if (!amActivity) {
+                        const blockName = getBlock(registrarName, selectedDate);
+                        amActivity = blockName || "";
+                    }
+                    if (!pmActivity) {
+                        const blockName = getBlock(registrarName, selectedDate);
+                        pmActivity = blockName || "";
+                    }
                 }
             }
 
