@@ -142,8 +142,6 @@ function openShowRegLocation() {
     window.location.href = "reg_location.html";
 }
 
-openShowRegLocation
-
 function openRegBlocks() {
     window.location.href = "reg_blocks.html";
 }
