@@ -3,8 +3,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const scheduleTable = document.getElementById("scheduleTable");
     const tbody = scheduleTable.querySelector("tbody");
 
+    // Set today's date in the date picker
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    dateInput.value = formattedDate;
+
     const fetchJSON = async (file) => {
-        const response = await fetch(./${file});
+        const response = await fetch(`./${file}`);
         return await response.json();
     };
 
@@ -28,16 +33,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     const getAAUShift = (date, session) => {
-        const formattedDate = date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
-        const shiftType = ${date.toLocaleDateString("en-US", { weekday: "long" })} ${session};
-        return rota.find((shift) => shift["Date"] === formattedDate && shift["Shift Type"] === shiftType)?.Registrar || null;
+        const formattedDate = date.toLocaleDateString("en-GB", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+        const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`;
+        return rota.find((shift) => 
+            shift["Date"] === formattedDate && 
+            shift["Shift Type"] === shiftType
+        )?.Registrar || null;
     };
 
     const getBlock = (registrar, date) => {
         const blocksData = regBlocks[registrar]?.Blocks || [];
         for (let block of blocksData) {
-            const startDate = new Date(block.start_year, new Date(${block.start_month} 1).getMonth(), 1);
-            const endDate = new Date(block.end_year, new Date(${block.end_month} 1).getMonth() + 1, 0);
+            const startDate = new Date(
+                block.start_year, 
+                new Date(`${block.start_month} 1`).getMonth(), 
+                1
+            );
+            const endDate = new Date(
+                block.end_year, 
+                new Date(`${block.end_month} 1`).getMonth() + 1, 
+                0
+            );
             if (date >= startDate && date <= endDate) {
                 return block.block_name;
             }
@@ -45,10 +65,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         return null;
     };
 
-    dateInput.addEventListener("change", () => {
+    const updateSchedule = () => {
         const selectedDate = parseDate(dateInput.value);
         tbody.innerHTML = "";
-
+        
         if (!selectedDate) return;
 
         registrars.forEach((registrar) => {
@@ -59,16 +79,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (isWeekend(selectedDate)) {
                 const aauAM = getAAUShift(selectedDate, "AM");
                 const aauPM = getAAUShift(selectedDate, "PM");
-
                 amActivity = aauAM === registrarName ? "AAU" : "";
                 pmActivity = aauPM === registrarName ? "AAU" : "";
             } else {
                 const aauAM = getAAUShift(selectedDate, "AM");
                 const aauPM = getAAUShift(selectedDate, "PM");
-
+                
                 if (aauAM === registrarName) amActivity = "AAU";
                 if (aauPM === registrarName) pmActivity = "AAU";
-
+                
                 if (!amActivity) {
                     const blockName = getBlock(registrarName, selectedDate);
                     amActivity = blockName || "";
@@ -80,14 +99,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             const row = document.createElement("tr");
-            row.innerHTML = 
+            row.innerHTML = `
                 <td>${registrarName}</td>
                 <td class="${amActivity === "AAU" ? "aau-highlight" : ""}">${amActivity}</td>
                 <td class="${pmActivity === "AAU" ? "aau-highlight" : ""}">${pmActivity}</td>
-            ;
+            `;
             tbody.appendChild(row);
         });
-
         scheduleTable.style.display = "table";
-    });
+    };
+
+    // Add event listener for date changes
+    dateInput.addEventListener("change", updateSchedule);
+
+    // Initial load with today's data
+    updateSchedule();
 });
