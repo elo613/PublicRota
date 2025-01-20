@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tbody = scheduleTable.querySelector("tbody");
 
     const fetchJSON = async (file) => {
-        const response = await fetch(`./${file}`);
+        const response = await fetch(./${file});
         return await response.json();
     };
 
@@ -20,10 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         fetchJSON(files.regBlocks),
     ]);
 
-    const parseDate = (dateString) => {
-        const [day, month, year] = dateString.split('/');
-        return new Date(year, month - 1, day); // Adjust month (0-indexed)
-    };
+    const parseDate = (dateString) => new Date(dateString);
 
     const isWeekend = (date) => {
         const day = date.getDay();
@@ -32,15 +29,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const getAAUShift = (date, session) => {
         const formattedDate = date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
-        const shiftType = `${date.toLocaleDateString("en-US", { weekday: "long" })} ${session}`;
+        const shiftType = ${date.toLocaleDateString("en-US", { weekday: "long" })} ${session};
         return rota.find((shift) => shift["Date"] === formattedDate && shift["Shift Type"] === shiftType)?.Registrar || null;
     };
 
     const getBlock = (registrar, date) => {
         const blocksData = regBlocks[registrar]?.Blocks || [];
         for (let block of blocksData) {
-            const startDate = new Date(block.start_year, new Date(`${block.start_month} 1`).getMonth(), 1);
-            const endDate = new Date(block.end_year, new Date(`${block.end_month} 1`).getMonth() + 1, 0);
+            const startDate = new Date(block.start_year, new Date(${block.start_month} 1).getMonth(), 1);
+            const endDate = new Date(block.end_year, new Date(${block.end_month} 1).getMonth() + 1, 0);
             if (date >= startDate && date <= endDate) {
                 return block.block_name;
             }
@@ -48,12 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return null;
     };
 
-    // Set today's date as the default value in the date input (dd/mm/yyyy format)
-    const today = new Date();
-    const todayFormatted = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`;
-    dateInput.value = todayFormatted;
-
-    const loadDataForToday = () => {
+    dateInput.addEventListener("change", () => {
         const selectedDate = parseDate(dateInput.value);
         tbody.innerHTML = "";
 
@@ -88,19 +80,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             const row = document.createElement("tr");
-            row.innerHTML = `
+            row.innerHTML = 
                 <td>${registrarName}</td>
                 <td class="${amActivity === "AAU" ? "aau-highlight" : ""}">${amActivity}</td>
                 <td class="${pmActivity === "AAU" ? "aau-highlight" : ""}">${pmActivity}</td>
-            `;
+            ;
             tbody.appendChild(row);
         });
 
         scheduleTable.style.display = "table";
-    };
-
-    // Automatically load data for today's date
-    loadDataForToday();
-
-    dateInput.addEventListener("change", loadDataForToday);
+    });
 });
