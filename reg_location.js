@@ -22,13 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const parseDate = (dateString) => new Date(dateString);
 
-    const isLeave = (registrar, selectedDate) => {
-        const leaveRecords = registrar.leave_records || [];
-        return leaveRecords.some((record) => {
-            const start = parseDate(record.start);
-            const end = parseDate(record.end);
-            return selectedDate >= start && selectedDate <= end;
-        });
+    const isWeekend = (date) => {
+        const day = date.getDay();
+        return day === 0 || day === 6; // Sunday (0) or Saturday (6)
     };
 
     const getAAUShift = (date, session) => {
@@ -60,9 +56,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             let amActivity = "";
             let pmActivity = "";
 
-            if (isLeave(registrar, selectedDate)) {
-                amActivity = "Leave";
-                pmActivity = "Leave";
+            if (isWeekend(selectedDate)) {
+                const aauAM = getAAUShift(selectedDate, "AM");
+                const aauPM = getAAUShift(selectedDate, "PM");
+
+                amActivity = aauAM === registrarName ? "AAU" : "";
+                pmActivity = aauPM === registrarName ? "AAU" : "";
             } else {
                 const aauAM = getAAUShift(selectedDate, "AM");
                 const aauPM = getAAUShift(selectedDate, "PM");
@@ -83,8 +82,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${registrarName}</td>
-                <td>${amActivity}</td>
-                <td>${pmActivity}</td>
+                <td class="${amActivity === "AAU" ? "aau-highlight" : ""}">${amActivity}</td>
+                <td class="${pmActivity === "AAU" ? "aau-highlight" : ""}">${pmActivity}</td>
             `;
             tbody.appendChild(row);
         });
