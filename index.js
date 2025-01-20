@@ -138,6 +138,10 @@ function openLeave() {
     window.location.href = "leave.html";
 }
 
+function openRegBlocks() {
+    window.location.href = "reg_blocks.html";
+}
+
 async function loadRotaData() {
     try {
         // Use relative path to fetch rota.json
