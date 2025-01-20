@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const isOnLeave = (registrar, date) => {
         const registrarData = registrars.find(r => r.name === registrar);
-        if (!registrarData || !registrarData.leave_records) return null;
+        if (!registrarData || !registrarData.leave_records) return false;
 
         const formattedDate = formatDateForComparison(date);
         
@@ -56,10 +56,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             const checkDate = parseDate(formattedDate);
             
             if (checkDate >= startDate && checkDate <= endDate) {
-                return leave.type;
+                return true;
             }
         }
-        return null;
+        return false;
     };
 
     const isWeekend = (date) => {
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 0
             );
             if (date >= startDate && date <= endDate) {
-                return block.block_name;
+                return `${block.block_name} block`;
             }
         }
         return null;
@@ -113,10 +113,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             let pmActivity = "";
 
             // Check for leave first
-            const leaveType = isOnLeave(registrarName, selectedDate);
-            if (leaveType) {
-                amActivity = leaveType;
-                pmActivity = leaveType;
+            if (isOnLeave(registrarName, selectedDate)) {
+                amActivity = "Leave";
+                pmActivity = "Leave";
             } else {
                 if (isWeekend(selectedDate)) {
                     const aauAM = getAAUShift(selectedDate, "AM");
