@@ -90,19 +90,22 @@ async function get_who_on_leave(weekStart) {
     const leaveData = await response.json(); // Parse the JSON data
     const registrarsOnLeave = [];
 
+    // Iterate through the registrar data to check each registrar's leave records
     leaveData.forEach((registrar) => {
         registrar.leave_records.forEach((leave) => {
             const leaveStartDate = new Date(leave.start);
             const leaveEndDate = new Date(leave.end);
 
-            // Check if leave overlaps with the week
-            if (
-                (leaveStartDate >= weekStart && leaveStartDate <= new Date(weekStart).setDate(weekStart.getDate() + 6)) ||
-                (leaveEndDate >= weekStart && leaveEndDate <= new Date(weekStart).setDate(weekStart.getDate() + 6)) ||
-                (leaveStartDate <= weekStart && leaveEndDate >= new Date(weekStart).setDate(weekStart.getDate() + 6))
-            ) {
-                if (!registrarsOnLeave.includes(registrar.name)) {
-                    registrarsOnLeave.push(registrar.name);
+            // Check if the leave overlaps with any day in the week
+            for (let i = 0; i < 7; i++) {
+                const currentDay = new Date(weekStart);
+                currentDay.setDate(weekStart.getDate() + i); // Get the specific day in the week
+
+                // Check if the current day is within the leave period
+                if (currentDay >= leaveStartDate && currentDay <= leaveEndDate) {
+                    if (!registrarsOnLeave.includes(registrar.name)) {
+                        registrarsOnLeave.push(registrar.name); // Add registrar to the list if on leave
+                    }
                 }
             }
         });
