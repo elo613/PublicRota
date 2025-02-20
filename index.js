@@ -85,11 +85,40 @@ function updateButtonStates() {
     nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
+function get_who_on_leave(weekStart) {
+    const leaveData = JSON.parse(localStorage.getItem("registrars_rota")); // Load the leave data from registrars_rota.json
+    const registrarsOnLeave = [];
+
+    leaveData.forEach((registrar) => {
+        registrar.leave_records.forEach((leave) => {
+            const leaveStartDate = new Date(leave.start);
+            const leaveEndDate = new Date(leave.end);
+
+            // Check if leave overlaps with the week
+            if (
+                (leaveStartDate >= weekStart && leaveStartDate <= new Date(weekStart).setDate(weekStart.getDate() + 6)) ||
+                (leaveEndDate >= weekStart && leaveEndDate <= new Date(weekStart).setDate(weekStart.getDate() + 6)) ||
+                (leaveStartDate <= weekStart && leaveEndDate >= new Date(weekStart).setDate(weekStart.getDate() + 6))
+            ) {
+                if (!registrarsOnLeave.includes(registrar.name)) {
+                    registrarsOnLeave.push(registrar.name);
+                }
+            }
+        });
+    });
+
+    return registrarsOnLeave;
+}
+
+
+
 // Display the rota for the current week
 function displayRota() {
     const weekStart = getWeekStart(new Date(currentDate));
     weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
     rotaTableBody.innerHTML = ""; // Clear existing rows
+
+    const registrarsOnLeave = get_who_on_leave(weekStart); // Get registrars on leave for the week
 
     for (let i = 0; i < 7; i++) {
         const currentDay = new Date(weekStart);
@@ -114,13 +143,15 @@ function displayRota() {
             row.style.backgroundColor = "lightblue"; // Highlight today's row
         }
 
-        
+        // Get the registrars on leave
+        const onLeave = registrarsOnLeave.join(", ");
+
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
             <td>${amShift && amShift.Registrar ? amShift.Registrar : "-"}</td>
             <td>${pmShift && pmShift.Registrar ? pmShift.Registrar : "-"}</td>
+            <td>${onLeave}</td> <!-- Added the registrars on leave to the final column -->
         `;
-
 
         rotaTableBody.appendChild(row);
     }
