@@ -85,8 +85,9 @@ function updateButtonStates() {
     nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
-function get_who_on_leave(weekStart) {
-    const leaveData = JSON.parse(localStorage.getItem("registrars_rota")); // Load the leave data from registrars_rota.json
+async function get_who_on_leave(weekStart) {
+    const response = await fetch('registrars_rota.json'); // Assuming the JSON file is in the same directory as the website
+    const leaveData = await response.json(); // Parse the JSON data
     const registrarsOnLeave = [];
 
     leaveData.forEach((registrar) => {
@@ -109,6 +110,7 @@ function get_who_on_leave(weekStart) {
 
     return registrarsOnLeave;
 }
+
 
 
 
