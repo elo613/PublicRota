@@ -264,10 +264,6 @@ async function loadLeaveData() {
 }
 
 
-// Add this to your initialization function
-document.addEventListener("DOMContentLoaded", () => {
-    loadLeaveData(); // Load leave data when the page loads
-});
 
 // Initialise the page
 document.addEventListener("DOMContentLoaded", () => {
