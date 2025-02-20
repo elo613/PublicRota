@@ -146,7 +146,7 @@ function displayRota() {
         }
 
         // Get the registrars on leave
-        const onLeave = registrarsOnLeave.join(", ");
+        const onLeave = registrarsOnLeave.length > 0 ? registrarsOnLeave.join(", ") : "None";
 
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
