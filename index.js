@@ -91,8 +91,6 @@ async function displayRota() {
     weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
     rotaTableBody.innerHTML = ""; // Clear existing rows
 
-    const registrarsOnLeave = await get_who_on_leave(weekStart); // Get registrars on leave for the week (async)
-
     // Loop through each day of the week (7 days)
     for (let i = 0; i < 7; i++) {
         const currentDay = new Date(weekStart);
@@ -108,6 +106,9 @@ async function displayRota() {
             (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM")
         );
 
+        // Get registrars on leave for the current day
+        const registrarsOnLeave = await get_who_on_leave(currentDay); // Check who is on leave for the specific day
+
         const row = document.createElement("tr");
 
         // Reset any existing highlighting
@@ -118,7 +119,7 @@ async function displayRota() {
             row.style.backgroundColor = "lightblue"; // Highlight today's row
         }
 
-        // Get the registrars on leave for the current day
+        // Get the list of registrars on leave
         const onLeave = registrarsOnLeave.length > 0 ? registrarsOnLeave.join(", ") : "None";
 
         // Populate row with data
@@ -134,8 +135,8 @@ async function displayRota() {
     updateButtonStates();
 }
 
-// Function to get the registrars on leave for the week
-async function get_who_on_leave(weekStart) {
+// Function to get the registrars on leave for a specific day
+async function get_who_on_leave(currentDay) {
     const response = await fetch('registrars_data.json'); // Assuming the JSON file is in the same directory as the website
     const leaveData = await response.json(); // Parse the JSON data
     const registrarsOnLeave = [];
@@ -146,16 +147,10 @@ async function get_who_on_leave(weekStart) {
             const leaveStartDate = new Date(leave.start);
             const leaveEndDate = new Date(leave.end);
 
-            // Check if the leave overlaps with any day in the week
-            for (let i = 0; i < 7; i++) {
-                const currentDay = new Date(weekStart);
-                currentDay.setDate(weekStart.getDate() + i); // Get the specific day in the week
-
-                // Check if the current day is within the leave period
-                if (currentDay >= leaveStartDate && currentDay <= leaveEndDate) {
-                    if (!registrarsOnLeave.includes(registrar.name)) {
-                        registrarsOnLeave.push(registrar.name); // Add registrar to the list if on leave
-                    }
+            // Check if the current day is within the leave period
+            if (currentDay >= leaveStartDate && currentDay <= leaveEndDate) {
+                if (!registrarsOnLeave.includes(registrar.name)) {
+                    registrarsOnLeave.push(registrar.name); // Add registrar to the list if on leave
                 }
             }
         });
