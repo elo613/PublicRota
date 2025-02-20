@@ -86,7 +86,7 @@ function updateButtonStates() {
 }
 
 async function get_who_on_leave(weekStart) {
-    const response = await fetch('registrars_rota.json'); // Assuming the JSON file is in the same directory as the website
+    const response = await fetch('registrars_data.json'); // Assuming the JSON file is in the same directory as the website
     const leaveData = await response.json(); // Parse the JSON data
     const registrarsOnLeave = [];
 
