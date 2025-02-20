@@ -85,6 +85,56 @@ function updateButtonStates() {
     nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
+// Function to display the rota
+async function displayRota() {
+    const weekStart = getWeekStart(new Date(currentDate));
+    weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
+    rotaTableBody.innerHTML = ""; // Clear existing rows
+
+    const registrarsOnLeave = await get_who_on_leave(weekStart); // Get registrars on leave for the week (async)
+
+    // Loop through each day of the week (7 days)
+    for (let i = 0; i < 7; i++) {
+        const currentDay = new Date(weekStart);
+        currentDay.setDate(weekStart.getDate() + i);
+        const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
+        const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+
+        // Fetch shifts for AM and PM
+        const amShift = rotaData.find(
+            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("AM")
+        );
+        const pmShift = rotaData.find(
+            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM")
+        );
+
+        const row = document.createElement("tr");
+
+        // Reset any existing highlighting
+        row.style.backgroundColor = ""; // Clear inline background
+
+        // Apply highlighting for the current date
+        if (currentDay.toDateString() === new Date().toDateString()) {
+            row.style.backgroundColor = "lightblue"; // Highlight today's row
+        }
+
+        // Get the registrars on leave for the current day
+        const onLeave = registrarsOnLeave.length > 0 ? registrarsOnLeave.join(", ") : "None";
+
+        // Populate row with data
+        row.innerHTML = `
+            <td>${dayName} (${dayDate})</td>
+            <td>${amShift && amShift.Registrar ? amShift.Registrar : "-"}</td>
+            <td>${pmShift && pmShift.Registrar ? pmShift.Registrar : "-"}</td>
+            <td>${onLeave}</td> <!-- Added the registrars on leave to the final column -->
+        `;
+
+        rotaTableBody.appendChild(row);
+    }
+    updateButtonStates();
+}
+
+// Function to get the registrars on leave for the week
 async function get_who_on_leave(weekStart) {
     const response = await fetch('registrars_data.json'); // Assuming the JSON file is in the same directory as the website
     const leaveData = await response.json(); // Parse the JSON data
@@ -112,55 +162,6 @@ async function get_who_on_leave(weekStart) {
     });
 
     return registrarsOnLeave;
-}
-
-
-
-
-// Display the rota for the current week
-function displayRota() {
-    const weekStart = getWeekStart(new Date(currentDate));
-    weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
-    rotaTableBody.innerHTML = ""; // Clear existing rows
-
-    const registrarsOnLeave = get_who_on_leave(weekStart); // Get registrars on leave for the week
-
-    for (let i = 0; i < 7; i++) {
-        const currentDay = new Date(weekStart);
-        currentDay.setDate(weekStart.getDate() + i);
-        const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
-        const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-
-        const amShift = rotaData.find(
-            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("AM")
-        );
-        const pmShift = rotaData.find(
-            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM")
-        );
-
-        const row = document.createElement("tr");
-
-        // Reset any existing highlighting
-        row.style.backgroundColor = ""; // Clear inline background
-
-        // Apply highlighting for the current date
-        if (currentDay.toDateString() === new Date().toDateString()) {
-            row.style.backgroundColor = "lightblue"; // Highlight today's row
-        }
-
-        // Get the registrars on leave
-        const onLeave = registrarsOnLeave.length > 0 ? registrarsOnLeave.join(", ") : "None";
-
-        row.innerHTML = `
-            <td>${dayName} (${dayDate})</td>
-            <td>${amShift && amShift.Registrar ? amShift.Registrar : "-"}</td>
-            <td>${pmShift && pmShift.Registrar ? pmShift.Registrar : "-"}</td>
-            <td>${onLeave}</td> <!-- Added the registrars on leave to the final column -->
-        `;
-
-        rotaTableBody.appendChild(row);
-    }
-    updateButtonStates();
 }
 
 
