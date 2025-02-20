@@ -146,6 +146,9 @@ async function get_who_on_leave(currentDay) {
         registrar.leave_records.forEach((leave) => {
             const leaveStartDate = new Date(leave.start);
             const leaveEndDate = new Date(leave.end);
+            
+            // Set the leave end date to the very last moment of the last day (23:59:59.999)
+            leaveEndDate.setHours(23, 59, 59, 999);
 
             // Check if the current day is within the leave period
             if (currentDay >= leaveStartDate && currentDay <= leaveEndDate) {
@@ -158,6 +161,7 @@ async function get_who_on_leave(currentDay) {
 
     return registrarsOnLeave;
 }
+
 
 
 // Redirect to blocks.html
