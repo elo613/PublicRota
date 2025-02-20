@@ -71,48 +71,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Populate registrar details
-    function displayRegistrarDetails(registrar) {
-        const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
+function displayRegistrarDetails(registrar) {
+    const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
 
-        // Update Leave Allowance
-        annualLeaveAllowance.textContent = totalAnnualLeave || 0;
-        studyLeave.textContent = registrar.study_leave || 0;
+    // Update Leave Allowance
+    annualLeaveAllowance.textContent = totalAnnualLeave || 0;
+    studyLeave.textContent = registrar.study_leave || 0;
 
-        // Update Leave Records
-        leaveRecordsTable.innerHTML = "";
-        let studyDays = 0, annualDays = 0, otherDays = 0;
+    // Extract leave records, sort them by start date
+    let sortedLeaveRecords = [...registrar.leave_records];
+    sortedLeaveRecords.sort((a, b) => new Date(a.start) - new Date(b.start));
 
-        registrar.leave_records.forEach((record) => {
-            const row = document.createElement("tr");
+    // Update Leave Records
+    leaveRecordsTable.innerHTML = "";
+    let studyDays = 0, annualDays = 0, otherDays = 0;
 
-            const startCell = document.createElement("td");
-            startCell.textContent = record.start;
-            row.appendChild(startCell);
+    sortedLeaveRecords.forEach((record) => {
+        const row = document.createElement("tr");
 
-            const endCell = document.createElement("td");
-            endCell.textContent = record.end;
-            row.appendChild(endCell);
+        const startCell = document.createElement("td");
+        startCell.textContent = record.start;
+        row.appendChild(startCell);
 
-            const typeCell = document.createElement("td");
-            typeCell.textContent = record.type;
-            row.appendChild(typeCell);
+        const endCell = document.createElement("td");
+        endCell.textContent = record.end;
+        row.appendChild(endCell);
 
-            const leaveDays = calculateWeekdaysBetween(record.start, record.end);
-            if (record.type === "Study") studyDays += leaveDays;
-            else if (record.type === "Annual") annualDays += leaveDays;
-            else otherDays += leaveDays;
+        const typeCell = document.createElement("td");
+        typeCell.textContent = record.type;
+        row.appendChild(typeCell);
 
-            leaveRecordsTable.appendChild(row);
-        });
+        const leaveDays = calculateWeekdaysBetween(record.start, record.end);
+        if (record.type === "Study") studyDays += leaveDays;
+        else if (record.type === "Annual") annualDays += leaveDays;
+        else otherDays += leaveDays;
 
-        // Update Summary with Remaining Leave
-        studyLeaveUsed.textContent = studyDays || 0;
-        studyLeaveRemaining.textContent = registrar.study_leave - studyDays || 0;
-        annualLeaveUsed.textContent = annualDays || 0;
-        annualLeaveRemaining.textContent = totalAnnualLeave - annualDays || 0;
-        otherLeaveUsed.textContent = otherDays || 0;
-        otherLeaveRemaining.textContent = "N/A";
-    }
+        leaveRecordsTable.appendChild(row);
+    });
+
+    // Update Summary with Remaining Leave
+    studyLeaveUsed.textContent = studyDays || 0;
+    studyLeaveRemaining.textContent = registrar.study_leave - studyDays || 0;
+    annualLeaveUsed.textContent = annualDays || 0;
+    annualLeaveRemaining.textContent = totalAnnualLeave - annualDays || 0;
+    otherLeaveUsed.textContent = otherDays || 0;
+    otherLeaveRemaining.textContent = "N/A";
+}
+
 
     // Fetch registrars data securely
  // Fetch registrar data securely
