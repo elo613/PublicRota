@@ -72,11 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Populate registrar details
 function displayRegistrarDetails(registrar) {
-    const totalAnnualLeave = registrar.statutory_leave + registrar.carried_over_leave + registrar.days_off_in_lieu;
+    // Extract leave allowances from the registrar record
+    const studyLeaveAllowance = registrar.allowance.study || 0;
+    const annualLeaveAllowance = registrar.allowance.annual || 0;
 
     // Update Leave Allowance
-    annualLeaveAllowance.textContent = totalAnnualLeave || 0;
-    studyLeave.textContent = registrar.study_leave || 0;
+    annualLeaveAllowance.textContent = annualLeaveAllowance || 0;
+    studyLeave.textContent = studyLeaveAllowance || 0;
 
     // Extract leave records, sort them by start date
     let sortedLeaveRecords = [...registrar.leave_records];
@@ -108,6 +110,16 @@ function displayRegistrarDetails(registrar) {
 
         leaveRecordsTable.appendChild(row);
     });
+
+    // Update Summary with Remaining Leave
+    studyLeaveUsed.textContent = studyDays || 0;
+    studyLeaveRemaining.textContent = studyLeaveAllowance - studyDays || 0;
+    annualLeaveUsed.textContent = annualDays || 0;
+    annualLeaveRemaining.textContent = annualLeaveAllowance - annualDays || 0;
+    otherLeaveUsed.textContent = otherDays || 0;
+    otherLeaveRemaining.textContent = "N/A";
+}
+
 
     // Update Summary with Remaining Leave
     studyLeaveUsed.textContent = studyDays || 0;
