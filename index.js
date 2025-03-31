@@ -98,13 +98,16 @@ async function displayRota() {
         const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
         const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
-        // Fetch shifts for AM and PM
-        const amShift = rotaData.find(
-            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("AM")
+        // Find the shift data for the current day
+        const shiftData = rotaData.find(
+            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString()
         );
-        const pmShift = rotaData.find(
-            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString() && item["Shift Type"].includes("PM")
-        );
+
+        // Get AM and PM shift details
+        const amDuty = shiftData && shiftData.Shifts && shiftData.Shifts.AM ? shiftData.Shifts.AM.Duty : "-";
+        const amReporting = shiftData && shiftData.Shifts && shiftData.Shifts.AM ? shiftData.Shifts.AM.Reporting : "-";
+        const pmDuty = shiftData && shiftData.Shifts && shiftData.Shifts.PM ? shiftData.Shifts.PM.Duty : "-";
+        const pmReporting = shiftData && shiftData.Shifts && shiftData.Shifts.PM ? shiftData.Shifts.PM.Reporting : "-";
 
         // Get registrars on leave for the current day
         const registrarsOnLeave = await get_who_on_leave(currentDay); // Check who is on leave for the specific day
@@ -122,11 +125,13 @@ async function displayRota() {
         // Get the list of registrars on leave
         const onLeave = registrarsOnLeave.length > 0 ? registrarsOnLeave.join(", ") : "None";
 
-        // Populate row with data
+        // Populate row with data in the order of AM Duty, AM Reporting, PM Duty, PM Reporting
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
-            <td>${amShift && amShift.Registrar ? amShift.Registrar : "-"}</td>
-            <td>${pmShift && pmShift.Registrar ? pmShift.Registrar : "-"}</td>
+            <td>${amDuty}</td>
+            <td>${amReporting}</td>
+            <td>${pmDuty}</td>
+            <td>${pmReporting}</td>
             <td>${onLeave}</td> <!-- Added the registrars on leave to the final column -->
         `;
 
@@ -134,6 +139,7 @@ async function displayRota() {
     }
     updateButtonStates();
 }
+
 
 // Function to get the registrars on leave for a specific day
 async function get_who_on_leave(currentDay) {
