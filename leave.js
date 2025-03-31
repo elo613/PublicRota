@@ -122,11 +122,11 @@ function displayRegistrarDetails(registrar) {
 
 
     // Update Summary with Remaining Leave
-    studyLeaveUsed.textContent = studyDays || 0;
-    studyLeaveRemaining.textContent = registrar.study_leave - studyDays || 0;
-    annualLeaveUsed.textContent = annualDays || 0;
-    annualLeaveRemaining.textContent = totalAnnualLeave - annualDays || 0;
-    otherLeaveUsed.textContent = otherDays || 0;
+    studyLeaveUsed.textContent = (studyDays || 0);
+    studyLeaveRemaining.textContent = (studyLeaveAllowance - studyDays) || 0;
+    annualLeaveUsed.textContent = (annualDays || 0);
+    annualLeaveRemaining.textContent = (annualLeaveAllowance - annualDays) || 0;
+    otherLeaveUsed.textContent = (otherDays || 0);
     otherLeaveRemaining.textContent = "N/A";
 }
 
