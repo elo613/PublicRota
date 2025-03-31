@@ -71,80 +71,69 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Populate registrar details
-function displayRegistrarDetails(registrar) {
-    // Extract leave allowances from the registrar record
-    const studyLeaveAllowance = registrar.allowance.study || 0;
-    const annualLeaveAllowance = registrar.allowance.annual || 0;
+    function displayRegistrarDetails(registrar) {
+        // Extract leave allowances from the registrar record
+        const studyLeaveAllowance = registrar.allowance.study || 0;
+        const annualLeaveAllowanceValue = registrar.allowance.annual || 0;
 
-    // Assuming `annualLeaveAllowance` and `studyLeave` are DOM elements to display these values
-    annualLeaveAllowanceElement.textContent = annualLeaveAllowance || 0;  // Corrected: assumed DOM element
-    studyLeaveElement.textContent = studyLeaveAllowance || 0;  // Corrected: assumed DOM element
+        // Update the DOM elements with the allowance values
+        annualLeaveAllowance.textContent = annualLeaveAllowanceValue;
+        studyLeave.textContent = studyLeaveAllowance;
 
-    // Extract leave records, sort them by start date
-    let sortedLeaveRecords = [...registrar.leave_records];
-    sortedLeaveRecords.sort((a, b) => new Date(a.start) - new Date(b.start));
+        // Extract leave records, sort them by start date
+        let sortedLeaveRecords = [...registrar.leave_records];
+        sortedLeaveRecords.sort((a, b) => new Date(a.start) - new Date(b.start));
 
-    // Update Leave Records
-    leaveRecordsTable.innerHTML = "";
-    let studyDays = 0, annualDays = 0, otherDays = 0;
+        // Update Leave Records
+        leaveRecordsTable.innerHTML = "";
+        let studyDays = 0, annualDays = 0, otherDays = 0;
 
-    sortedLeaveRecords.forEach((record) => {
-        const row = document.createElement("tr");
+        sortedLeaveRecords.forEach((record) => {
+            const row = document.createElement("tr");
 
-        const startCell = document.createElement("td");
-        startCell.textContent = record.start;
-        row.appendChild(startCell);
+            const startCell = document.createElement("td");
+            startCell.textContent = record.start;
+            row.appendChild(startCell);
 
-        const endCell = document.createElement("td");
-        endCell.textContent = record.end;
-        row.appendChild(endCell);
+            const endCell = document.createElement("td");
+            endCell.textContent = record.end;
+            row.appendChild(endCell);
 
-        const typeCell = document.createElement("td");
-        typeCell.textContent = record.type;
-        row.appendChild(typeCell);
+            const typeCell = document.createElement("td");
+            typeCell.textContent = record.type;
+            row.appendChild(typeCell);
 
-        const leaveDays = calculateWeekdaysBetween(record.start, record.end);
-        if (record.type === "Study") studyDays += leaveDays;
-        else if (record.type === "Annual") annualDays += leaveDays;
-        else otherDays += leaveDays;
+            const leaveDays = calculateWeekdaysBetween(record.start, record.end);
+            if (record.type === "Study") studyDays += leaveDays;
+            else if (record.type === "Annual") annualDays += leaveDays;
+            else otherDays += leaveDays;
 
-        leaveRecordsTable.appendChild(row);
-    });
+            leaveRecordsTable.appendChild(row);
+        });
 
-    // Update Summary with Remaining Leave
-    studyLeaveUsed.textContent = studyDays || 0;
-    studyLeaveRemaining.textContent = studyLeaveAllowance - studyDays || 0;
-    annualLeaveUsed.textContent = annualDays || 0;
-    annualLeaveRemaining.textContent = annualLeaveAllowance - annualDays || 0;
-    otherLeaveUsed.textContent = otherDays || 0;
-    otherLeaveRemaining.textContent = "N/A";  // No parentheses error here
-}
-
-
-    // Update Summary with Remaining Leave
-    studyLeaveUsed.textContent = (studyDays || 0);
-    studyLeaveRemaining.textContent = (studyLeaveAllowance - studyDays) || 0;
-    annualLeaveUsed.textContent = (annualDays || 0);
-    annualLeaveRemaining.textContent = (annualLeaveAllowance - annualDays) || 0;
-    otherLeaveUsed.textContent = (otherDays || 0);
-    otherLeaveRemaining.textContent = "N/A";
+        // Update Summary with Remaining Leave
+        studyLeaveUsed.textContent = studyDays;
+        studyLeaveRemaining.textContent = studyLeaveAllowance - studyDays;
+        annualLeaveUsed.textContent = annualDays;
+        annualLeaveRemaining.textContent = annualLeaveAllowanceValue - annualDays;
+        otherLeaveUsed.textContent = otherDays;
+        otherLeaveRemaining.textContent = "N/A";
+    }
 
     // Fetch registrars data securely
- // Fetch registrar data securely
-async function fetchRegistrarData() {
-    try {
-        // Use a relative path to fetch the JSON file from the same directory
-        const response = await fetch("./registrars_data.json");
+    async function fetchRegistrarData() {
+        try {
+            // Use a relative path to fetch the JSON file from the same directory
+            const response = await fetch("./registrars_data.json");
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-        return await response.json();
-    } catch (error) {
-        console.error("Error loading registrar data:", error);
-        alert("Failed to load registrar data. Please try again later.");
+            return await response.json();
+        } catch (error) {
+            console.error("Error loading registrar data:", error);
+            alert("Failed to load registrar data. Please try again later.");
+        }
     }
-}
-
 
     // Main initialisation
     async function initialise() {
