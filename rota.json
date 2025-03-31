@@ -2797,11 +2797,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "KA"
             },
             "PM": {
                 "Duty": "SR",
-                "Reporting": ""
+                "Reporting": "EL"
             }
         }
     },
@@ -2810,11 +2810,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "HA",
-                "Reporting": ""
+                "Reporting": "SR"
             },
             "PM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "HA"
             }
         }
     },
@@ -2836,7 +2836,7 @@
         "Shifts": {
             "AM": {
                 "Duty": "SR",
-                "Reporting": ""
+                "Reporting": "MM"
             },
             "PM": {
                 "Duty": "QO",
@@ -2867,11 +2867,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "KA",
-                "Reporting": ""
+                "Reporting": "KB"
             },
             "PM": {
                 "Duty": "KB",
-                "Reporting": ""
+                "Reporting": "QO"
             }
         }
     },
@@ -2880,11 +2880,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "MM"
             },
             "PM": {
                 "Duty": "HA",
-                "Reporting": ""
+                "Reporting": "EL"
             }
         }
     },
@@ -2897,7 +2897,7 @@
             },
             "PM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "HA"
             }
         }
     },
@@ -2906,11 +2906,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "QO",
-                "Reporting": ""
+                "Reporting": "SR"
             },
             "PM": {
                 "Duty": "MM",
-                "Reporting": ""
+                "Reporting": "KA"
             }
         }
     },
@@ -2950,11 +2950,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "QO",
-                "Reporting": ""
+                "Reporting": "KB"
             },
             "PM": {
                 "Duty": "MM",
-                "Reporting": ""
+                "Reporting": "QO"
             }
         }
     },
@@ -2963,11 +2963,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "KA"
             },
             "PM": {
                 "Duty": "HA",
-                "Reporting": ""
+                "Reporting": "EL"
             }
         }
     },
@@ -2980,7 +2980,7 @@
             },
             "PM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "HA"
             }
         }
     },
@@ -2989,11 +2989,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "SR",
-                "Reporting": ""
+                "Reporting": "SH"
             },
             "PM": {
                 "Duty": "SH",
-                "Reporting": ""
+                "Reporting": "SR"
             }
         }
     },
@@ -3038,11 +3038,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "KA"
             },
             "PM": {
                 "Duty": "HA",
-                "Reporting": ""
+                "Reporting": "EL"
             }
         }
     },
@@ -3055,7 +3055,7 @@
             },
             "PM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "HA"
             }
         }
     },
@@ -3064,11 +3064,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "HA",
-                "Reporting": ""
+                "Reporting": "SH"
             },
             "PM": {
                 "Duty": "SH",
-                "Reporting": ""
+                "Reporting": "SR"
             }
         }
     },
@@ -3077,7 +3077,7 @@
         "Shifts": {
             "AM": {
                 "Duty": "SR",
-                "Reporting": ""
+                "Reporting": "MM"
             },
             "PM": {
                 "Duty": "QO",
@@ -3108,11 +3108,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "SH",
-                "Reporting": ""
+                "Reporting": "KB"
             },
             "PM": {
                 "Duty": "KB",
-                "Reporting": ""
+                "Reporting": "QO"
             }
         }
     },
@@ -3121,11 +3121,11 @@
         "Shifts": {
             "AM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "KA"
             },
             "PM": {
                 "Duty": "HA",
-                "Reporting": ""
+                "Reporting": "EL"
             }
         }
     },
@@ -3138,7 +3138,7 @@
             },
             "PM": {
                 "Duty": "EL",
-                "Reporting": ""
+                "Reporting": "HA"
             }
         }
     },
