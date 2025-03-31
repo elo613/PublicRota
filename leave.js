@@ -128,8 +128,6 @@ function displayRegistrarDetails(registrar) {
     annualLeaveRemaining.textContent = (annualLeaveAllowance - annualDays) || 0;
     otherLeaveUsed.textContent = (otherDays || 0);
     otherLeaveRemaining.textContent = "N/A";
-}
-
 
     // Fetch registrars data securely
  // Fetch registrar data securely
