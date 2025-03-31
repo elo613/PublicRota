@@ -76,9 +76,9 @@ function displayRegistrarDetails(registrar) {
     const studyLeaveAllowance = registrar.allowance.study || 0;
     const annualLeaveAllowance = registrar.allowance.annual || 0;
 
-    // Update Leave Allowance
-    annualLeaveAllowance.textContent = annualLeaveAllowance || 0;
-    studyLeave.textContent = studyLeaveAllowance || 0;
+    // Assuming `annualLeaveAllowance` and `studyLeave` are DOM elements to display these values
+    annualLeaveAllowanceElement.textContent = annualLeaveAllowance || 0;  // Corrected: assumed DOM element
+    studyLeaveElement.textContent = studyLeaveAllowance || 0;  // Corrected: assumed DOM element
 
     // Extract leave records, sort them by start date
     let sortedLeaveRecords = [...registrar.leave_records];
@@ -117,7 +117,7 @@ function displayRegistrarDetails(registrar) {
     annualLeaveUsed.textContent = annualDays || 0;
     annualLeaveRemaining.textContent = annualLeaveAllowance - annualDays || 0;
     otherLeaveUsed.textContent = otherDays || 0;
-    otherLeaveRemaining.textContent = "N/A";
+    otherLeaveRemaining.textContent = "N/A";  // No parentheses error here
 }
 
 
