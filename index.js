@@ -161,6 +161,7 @@ function parseDateString(dateString) {
 
 
 
+
 // Function to get the registrars on leave for a specific day
 async function get_who_on_leave(currentDay) {
     const response = await fetch('registrars_data.json'); // Assuming the JSON file is in the same directory as the website
