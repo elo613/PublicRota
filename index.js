@@ -98,16 +98,30 @@ async function displayRota() {
         const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
         const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
+        // Debugging: Log the current date
+        console.log('Current day:', currentDay.toLocaleDateString("en-GB"));
+
         // Find the shift data for the current day
         const shiftData = rotaData.find(
-            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString()
+            (item) => {
+                const parsedDate = parseDateString(item.Date);
+                console.log('Comparing:', parsedDate.toLocaleDateString("en-GB"), currentDay.toLocaleDateString("en-GB"));
+                return parsedDate.toDateString() === currentDay.toDateString();
+            }
         );
 
+        // Debugging: Log shift data found for the day
+        console.log('Shift data for the day:', shiftData);
+
+        if (!shiftData) {
+            continue; // Skip to the next day if no data is found for the current day
+        }
+
         // Get AM and PM shift details
-        const amDuty = shiftData && shiftData.Shifts && shiftData.Shifts.AM ? shiftData.Shifts.AM.Duty : "-";
-        const amReporting = shiftData && shiftData.Shifts && shiftData.Shifts.AM ? shiftData.Shifts.AM.Reporting : "-";
-        const pmDuty = shiftData && shiftData.Shifts && shiftData.Shifts.PM ? shiftData.Shifts.PM.Duty : "-";
-        const pmReporting = shiftData && shiftData.Shifts && shiftData.Shifts.PM ? shiftData.Shifts.PM.Reporting : "-";
+        const amDuty = shiftData.Shifts.AM ? shiftData.Shifts.AM.Duty : "-";
+        const amReporting = shiftData.Shifts.AM ? shiftData.Shifts.AM.Reporting : "-";
+        const pmDuty = shiftData.Shifts.PM ? shiftData.Shifts.PM.Duty : "-";
+        const pmReporting = shiftData.Shifts.PM ? shiftData.Shifts.PM.Reporting : "-";
 
         // Get registrars on leave for the current day
         const registrarsOnLeave = await get_who_on_leave(currentDay); // Check who is on leave for the specific day
@@ -139,6 +153,7 @@ async function displayRota() {
     }
     updateButtonStates();
 }
+
 
 
 // Function to get the registrars on leave for a specific day
