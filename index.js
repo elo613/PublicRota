@@ -154,6 +154,11 @@ async function displayRota() {
     updateButtonStates();
 }
 
+function parseDateString(dateString) {
+    const [day, month, year] = dateString.split("/"); // Split the date into day, month, year
+    return new Date(`${month}/${day}/${year}`); // Construct a Date object in MM/DD/YYYY format
+}
+
 
 
 // Function to get the registrars on leave for a specific day
