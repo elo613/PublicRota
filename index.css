@@ -190,3 +190,14 @@ tbody tr:hover {
 }
 
 
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+}
+
+#rota-table {
+    width: 100%;
+    min-width: 600px; /* Adjust based on your table content */
+    border-collapse: collapse;
+}
