@@ -163,6 +163,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 leaveRecordsTable.appendChild(row);
             }
+        if (leaveRecordsTable.children.length === 0) {
+            const emptyRow = document.createElement("tr");
+            const emptyCell = document.createElement("td");
+            emptyCell.colSpan = 3;
+            emptyCell.textContent = "No leave records for current cycle";
+            emptyCell.className = "empty-cycle-message";
+            emptyRow.appendChild(emptyCell);
+            leaveRecordsTable.appendChild(emptyRow);
+}
         });
 
         // Update Summary with Remaining Leave for current cycle
