@@ -128,12 +128,16 @@ async function displayRota() {
         const pmDuty = rotaDayData?.Shifts?.PM?.Duty || "-";
         const pmReporting = rotaDayData?.Shifts?.PM?.Reporting || "-";
 
-        // Format ultrasound data
-        let ultrasoundText = "None";
+        let ultrasoundText = "-";
         if (dayUltrasound.length > 0) {
-            ultrasoundText = dayUltrasound.map(us => 
-                `${us.Session}: ${us["Registrar name"]}`
-            ).join(", ");
+            // Create separate lines for AM and PM
+            const amEntry = dayUltrasound.find(us => us.Session === "AM");
+            const pmEntry = dayUltrasound.find(us => us.Session === "PM");
+            
+            ultrasoundText = [
+                amEntry ? `AM: ${amEntry["Registrar name"]}` : "AM: -",
+                pmEntry ? `PM: ${pmEntry["Registrar name"]}` : "PM: -"
+            ].join('\n'); // Using newline character
         }
 
         // Get registrars on leave for the current day
@@ -159,7 +163,7 @@ async function displayRota() {
             <td>${amReporting}</td>
             <td>${pmDuty}</td>
             <td>${pmReporting}</td>
-            <td>${ultrasoundText}</td>
+            <td style="white-space: pre-line">${ultrasoundText}</td>
             <td>${onLeave}</td>
         `;
 
