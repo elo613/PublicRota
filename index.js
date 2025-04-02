@@ -85,7 +85,8 @@ function updateButtonStates() {
     nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
-// Function to display the rota
+// [Previous code remains the same until displayRota function]
+
 async function displayRota() {
     const weekStart = getWeekStart(new Date(currentDate));
     weekTitle.textContent = `Week of: ${formatDate(weekStart)}`;
@@ -110,8 +111,8 @@ async function displayRota() {
         const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
         const dateKey = formatDateForComparison(currentDay); // Format as "dd/mm/yyyy"
 
-        // Find the shift data for the current day
-        const shiftData = rotaData.find(item => {
+        // Find the rota data for the current day
+        const rotaDayData = rotaData.find(item => {
             const itemDate = parseDateString(item.Date);
             return itemDate.toDateString() === currentDay.toDateString();
         });
@@ -121,11 +122,11 @@ async function displayRota() {
             return item.Date === dateKey;
         });
 
-        // Get AM and PM shift details
-        const amDuty = shiftData?.Shifts?.AM?.Duty || "-";
-        const amReporting = shiftData?.Shifts?.AM?.Reporting || "-";
-        const pmDuty = shiftData?.Shifts?.PM?.Duty || "-";
-        const pmReporting = shiftData?.Shifts?.PM?.Reporting || "-";
+        // Get AM and PM shift details from rota.json
+        const amDuty = rotaDayData?.Shifts?.AM?.Duty || "-";
+        const amReporting = rotaDayData?.Shifts?.AM?.Reporting || "-";
+        const pmDuty = rotaDayData?.Shifts?.PM?.Duty || "-";
+        const pmReporting = rotaDayData?.Shifts?.PM?.Reporting || "-";
 
         // Format ultrasound data
         let ultrasoundText = "None";
@@ -151,7 +152,7 @@ async function displayRota() {
         // Get the list of registrars on leave
         const onLeave = registrarsOnLeave.length > 0 ? registrarsOnLeave.join(", ") : "None";
 
-        // Populate row with data
+        // Populate row with data - now showing both rota and ultrasound info
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
             <td>${amDuty}</td>
@@ -174,6 +175,8 @@ function formatDateForComparison(date) {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
 }
+
+// [Rest of the code remains the same]
 
 
 function parseDateString(dateString) {
