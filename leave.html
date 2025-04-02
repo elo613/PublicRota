@@ -14,22 +14,25 @@
             <option value="" disabled selected>-- Please select a registrar to view records --</option>
         </select>
 
-        <!-- Leave Records Section -->
+        <!-- Current Leave Cycle Display -->
+        <div id="current-cycle-container" class="hidden">
+            <h3>Current Leave Cycle: <span id="current-cycle-display"></span></h3>
+            <p>Leave cycle runs from 1st Wednesday in August to 1st Tuesday in August the following year</p>
+        </div>
 
+        <!-- Leave Records Section -->
         <div id="leave-records" class="hidden">
-            <h2>Leave Records</h2>
-            <div id="current-cycle-container">
-                <h3>Current Leave Cycle: <span id="current-cycle-display"></span></h3>
-            </div>
+            <h2>Leave Records (Current Cycle Only)</h2>
             <table id="leave-records-table">
                 <thead>
                     <tr>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Leave Type</th>
+                        <th>Duration (Days)</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="leave-records-table-body">
                     <!-- Leave records will be dynamically populated -->
                 </tbody>
             </table>
@@ -37,7 +40,7 @@
 
         <!-- Leave Details Table -->
         <div id="leave-details-summary" class="hidden">
-            <h2>Leave Summary</h2>
+            <h2>Leave Summary (Current Cycle)</h2>
             <table>
                 <thead>
                     <tr>
@@ -50,29 +53,39 @@
                 <tbody>
                     <tr>
                         <td>Annual Leave</td>
-                        <td><span id="annual-leave-allowance"></span></td>
-                        <td><span id="annual-leave-used">0</span></td>
-                        <td><span id="annual-leave-remaining">0</span></td>
+                        <td><span id="annual-leave-allowance"></span> days</td>
+                        <td><span id="annual-leave-used">0</span> days</td>
+                        <td><span id="annual-leave-remaining">0</span> days</td>
                     </tr>
                     <tr>
                         <td>Study Leave</td>
-                        <td><span id="study-leave"></span></td>
-                        <td><span id="study-leave-used">0</span></td>
-                        <td><span id="study-leave-remaining">0</span></td>
+                        <td><span id="study-leave"></span> days</td>
+                        <td><span id="study-leave-used">0</span> days</td>
+                        <td><span id="study-leave-remaining">0</span> days</td>
                     </tr>
                     <tr>
                         <td>Other Leave</td>
                         <td>N/A</td>
-                        <td><span id="other-leave-used">0</span></td>
-                        <td><span id="other-leave-remaining">0</span></td>
+                        <td><span id="other-leave-used">0</span> days</td>
+                        <td><span id="other-leave-remaining">N/A</span></td>
                     </tr>
                 </tbody>
             </table>
-            <p>Leave counts don't include weekends.</p>
+            <p class="note">Note: Leave counts exclude weekends and only include dates within the current leave cycle.</p>
         </div>
     </div>
 
-    <!-- Include token.js for dynamic token -->
-    <script type="module" src="leave.js"></script>
+    <script>
+        // This script handles the login token validation
+        document.addEventListener("DOMContentLoaded", function() {
+            const tokenString = localStorage.getItem("loginToken");
+            if (!tokenString) {
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+    
+    <!-- Main application script -->
+    <script src="leave.js"></script>
 </body>
 </html>
