@@ -149,8 +149,9 @@ async function displayRota() {
             <td>${amReporting}</td>
             <td>${pmDuty}</td>
             <td>${pmReporting}</td>
-            <td>${onLeave}</td> <!-- Added the registrars on leave to the final column -->
             <td>${ultrasoundDuty}</td> <!-- Added the Ultrasound Duty column -->
+            <td>${onLeave}</td> <!-- Added the registrars on leave to the final column -->
+
         `;
 
         rotaTableBody.appendChild(row);
