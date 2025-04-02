@@ -23,7 +23,7 @@ function toggleLoginView(isLoggedIn) {
     if (isLoggedIn) {
         loginContainer.style.display = "none";
         rotaContainer.style.display = "block";
-        loadRotaData();
+        loadRotaData();  // Load rota data when logged in
         loadUltrasoundData();  // Load ultrasound data when logged in
     } else {
         loginContainer.style.display = "block";
@@ -151,12 +151,34 @@ async function displayRota() {
             <td>${pmReporting}</td>
             <td>${ultrasoundDuty}</td> <!-- Added the Ultrasound Duty column -->
             <td>${onLeave}</td> <!-- Added the registrars on leave to the final column -->
-
         `;
 
         rotaTableBody.appendChild(row);
     }
     updateButtonStates();
+}
+
+// Function to load rota data (existing function, make sure it's called)
+async function loadRotaData() {
+    try {
+        const response = await fetch("./rota.json");
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse and store rota data
+        rotaData = await response.json();
+
+        // Validate rota data
+        if (!rotaData || !rotaData.length) {
+            throw new Error("rota.json is empty or not formatted correctly.");
+        }
+
+        // Display the rota after loading rota data
+        displayRota();
+    } catch (error) {
+        console.error("Error loading rota data:", error);
+    }
 }
 
 // Function to load ultrasound data
@@ -229,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                const [hashedUsername, hashedPassword] = await Promise.all([
+                const [hashedUsername, hashedPassword] = await Promise.all([ 
                     hashValue(usernameInput),
                     hashValue(passwordInput)
                 ]);
