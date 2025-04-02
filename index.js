@@ -13,6 +13,7 @@ let currentDate = new Date(); // Default current date
 let rotaData = [];
 let firstDate = null; // Earliest date in JSON
 let lastDate = null; // Latest date in JSON
+let ultrasoundData = []; // Variable to store ultrasound data
 
 // Global token for authenticated requests
 let authToken = "";
@@ -23,6 +24,7 @@ function toggleLoginView(isLoggedIn) {
         loginContainer.style.display = "none";
         rotaContainer.style.display = "block";
         loadRotaData();
+        loadUltrasoundData();  // Load ultrasound data when logged in
     } else {
         loginContainer.style.display = "block";
         rotaContainer.style.display = "none";
@@ -98,20 +100,13 @@ async function displayRota() {
         const dayName = currentDay.toLocaleDateString("en-GB", { weekday: "long" });
         const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
-        // Debugging: Log the current date
-        console.log('Current day:', currentDay.toLocaleDateString("en-GB"));
-
         // Find the shift data for the current day
         const shiftData = rotaData.find(
             (item) => {
                 const parsedDate = parseDateString(item.Date);
-                console.log('Comparing:', parsedDate.toLocaleDateString("en-GB"), currentDay.toLocaleDateString("en-GB"));
                 return parsedDate.toDateString() === currentDay.toDateString();
             }
         );
-
-        // Debugging: Log shift data found for the day
-        console.log('Shift data for the day:', shiftData);
 
         if (!shiftData) {
             continue; // Skip to the next day if no data is found for the current day
@@ -124,7 +119,15 @@ async function displayRota() {
         const pmReporting = shiftData.Shifts.PM ? shiftData.Shifts.PM.Reporting : "-";
 
         // Get registrars on leave for the current day
-        const registrarsOnLeave = await get_who_on_leave(currentDay); // Check who is on leave for the specific day
+        const registrarsOnLeave = await get_who_on_leave(currentDay);
+
+        // Check ultrasound data for the current day
+        const ultrasoundShift = ultrasoundData.find(
+            (item) => parseDateString(item.Date).toDateString() === currentDay.toDateString()
+        );
+
+        // Prepare ultrasound duty value
+        const ultrasoundDuty = ultrasoundShift ? `${ultrasoundShift.Session} - ${ultrasoundShift['Registrar name']}` : "-";
 
         const row = document.createElement("tr");
 
@@ -139,7 +142,7 @@ async function displayRota() {
         // Get the list of registrars on leave
         const onLeave = registrarsOnLeave.length > 0 ? registrarsOnLeave.join(", ") : "None";
 
-        // Populate row with data in the order of AM Duty, AM Reporting, PM Duty, PM Reporting
+        // Populate row with data in the order of AM Duty, AM Reporting, PM Duty, PM Reporting, and Ultrasound Duty
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
             <td>${amDuty}</td>
@@ -147,6 +150,7 @@ async function displayRota() {
             <td>${pmDuty}</td>
             <td>${pmReporting}</td>
             <td>${onLeave}</td> <!-- Added the registrars on leave to the final column -->
+            <td>${ultrasoundDuty}</td> <!-- Added the Ultrasound Duty column -->
         `;
 
         rotaTableBody.appendChild(row);
@@ -154,33 +158,44 @@ async function displayRota() {
     updateButtonStates();
 }
 
-function parseDateString(dateString) {
-    const [day, month, year] = dateString.split("/"); // Split the date into day, month, year
-    return new Date(`${month}/${day}/${year}`); // Construct a Date object in MM/DD/YYYY format
+// Function to load ultrasound data
+async function loadUltrasoundData() {
+    try {
+        const response = await fetch("./ultrasound.json");
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the ultrasound data
+        ultrasoundData = await response.json();
+
+        // Validate ultrasound data
+        if (!ultrasoundData || !ultrasoundData.length) {
+            throw new Error("ultrasound.json is empty or not formatted correctly.");
+        }
+
+        // Display the rota after loading ultrasound data
+        displayRota();
+    } catch (error) {
+        console.error("Error loading ultrasound data:", error);
+    }
 }
-
-
-
 
 // Function to get the registrars on leave for a specific day
 async function get_who_on_leave(currentDay) {
-    const response = await fetch('registrars_data.json'); // Assuming the JSON file is in the same directory as the website
-    const leaveData = await response.json(); // Parse the JSON data
+    const response = await fetch('registrars_data.json');
+    const leaveData = await response.json();
     const registrarsOnLeave = [];
 
-    // Iterate through the registrar data to check each registrar's leave records
     leaveData.forEach((registrar) => {
         registrar.leave_records.forEach((leave) => {
             const leaveStartDate = new Date(leave.start);
             const leaveEndDate = new Date(leave.end);
-            
-            // Set the leave end date to the very last moment of the last day (23:59:59.999)
             leaveEndDate.setHours(23, 59, 59, 999);
 
-            // Check if the current day is within the leave period
             if (currentDay >= leaveStartDate && currentDay <= leaveEndDate) {
                 if (!registrarsOnLeave.includes(registrar.name)) {
-                    registrarsOnLeave.push(registrar.name); // Add registrar to the list if on leave
+                    registrarsOnLeave.push(registrar.name);
                 }
             }
         });
@@ -189,159 +204,49 @@ async function get_who_on_leave(currentDay) {
     return registrarsOnLeave;
 }
 
-
-
-// Redirect to blocks.html
-function openBlocksPage() {
-    window.location.href = "blocks.html";
-}
-
-// Redirect to leave.html
-function openLeave() {
-    window.location.href = "leave.html";
-}
-
-function openShowRegLocation() {
-    window.location.href = "reg_location.html";
-}
-
-function openRegBlocks() {
-    window.location.href = "reg_blocks.html";
-}
-
-async function loadRotaData() {
-    try {
-        // Use relative path to fetch rota.json
-        const response = await fetch("./rota.json");
-
-        // Check for a successful response
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        // Parse the JSON data
-        rotaData = await response.json();
-
-        // Validate rotaData
-        if (!rotaData || !rotaData.length) {
-            throw new Error("rota.json is empty or not formatted correctly.");
-        }
-
-        // Process dates
-        firstDate = getWeekStart(parseDateString(rotaData[0].Date));
-        lastDate = getWeekStart(parseDateString(rotaData[rotaData.length - 1].Date));
-        lastDate.setDate(lastDate.getDate() + 14);
-
-        // Display the rota
-        displayRota();
-    } catch (error) {
-        console.error("Error loading rota.json:", error);
-    }
-}
-
-
-async function loadLeaveData() {
-    try {
-        // Fetch the JSON file
-        const response = await fetch("./registrars_data.json");
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const registrarsData = await response.json();
-
-        // Get today's date
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // Set to the start of today
-
-        // Collect registrars who are on leave today
-        const onLeave = [];
-
-        // Loop through each registrar
-        registrarsData.forEach((registrar) => {
-            // Loop through each leave record of the registrar
-            registrar.leave_records.forEach((leave) => {
-                const leaveStart = new Date(leave.start);
-                leaveStart.setHours(0, 0, 0, 0); // Start of the leave day
-
-                const leaveEnd = new Date(leave.end);
-                leaveEnd.setHours(23, 59, 59, 999); // End of the leave day
-
-                let halfDay = ""
-                if (leave.half_day == true) {
-                    halfDay = "(0.5)"
-                }
-
-                // Check if today falls within the leave period
-                if (leaveStart <= today && leaveEnd >= today) {
-                    onLeave.push(registrar.name + halfDay);
-                }
-            });
-        });
-
-        // Populate the "On Leave Today" textbox
-        leaveTodayInput.value = onLeave.length
-            ? onLeave.join(", ")
-            : "No one on leave today";
-    } catch (error) {
-        console.error("Error loading leave data:", error);
-        leaveTodayInput.value = "Error loading data";
-    }
-}
-
-
-
 // Initialise the page
 document.addEventListener("DOMContentLoaded", () => {
     toggleLoginView(checkLogin());
 
-if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-        // User input
-        const usernameInput = document.getElementById("username").value.trim().toLowerCase();
-        const passwordInput = document.getElementById("password").value;
+            const usernameInput = document.getElementById("username").value.trim().toLowerCase();
+            const passwordInput = document.getElementById("password").value;
 
-        // Hardcoded SHA-256 hashes for username and password
-        const usernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032"; 
-        const passwordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c"; 
+            const usernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032"; 
+            const passwordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c"; 
 
-        // Function to hash input values using SHA-256
-        async function hashValue(value) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(value);
-            const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-            return Array.from(new Uint8Array(hashBuffer))
-                .map(b => b.toString(16).padStart(2, "0"))
-                .join("");
-        }
-
-        try {
-            // Hash the username and password inputs
-            const [hashedUsername, hashedPassword] = await Promise.all([
-                hashValue(usernameInput),
-                hashValue(passwordInput)
-            ]);
-
-            // Validate hashed inputs against hardcoded hashes
-            if (hashedUsername === usernameHash && hashedPassword === passwordHash) {
-                const token = "dummy-token"; // Generate a dummy token (could be a random string in a real app)
-                setToken(token); // Save the token
-                authToken = token; // Set the global authToken
-                toggleLoginView(true); // Load rota after token is set
-            } else {
-                loginError.textContent = "Invalid username or password";
+            async function hashValue(value) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(value);
+                const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                return Array.from(new Uint8Array(hashBuffer))
+                    .map(b => b.toString(16).padStart(2, "0"))
+                    .join("");
             }
-        } catch (error) {
-            console.error("Login error:", error);
-            loginError.textContent = "Error during login. Please try again.";
-        }
-    });
-}
 
+            try {
+                const [hashedUsername, hashedPassword] = await Promise.all([
+                    hashValue(usernameInput),
+                    hashValue(passwordInput)
+                ]);
 
+                if (hashedUsername === usernameHash && hashedPassword === passwordHash) {
+                    const token = "dummy-token";
+                    setToken(token);
+                    authToken = token;
+                    toggleLoginView(true);
+                } else {
+                    loginError.textContent = "Invalid username or password";
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                loginError.textContent = "Error during login. Please try again.";
+            }
+        });
+    }
 
     prevWeekButton.addEventListener("click", () => {
         currentDate.setDate(currentDate.getDate() - 7);
