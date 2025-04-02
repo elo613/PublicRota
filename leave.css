@@ -74,3 +74,25 @@ th, td {
 tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
+/* Add these to your existing CSS */
+#current-cycle-container {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    border-left: 4px solid #4CAF50;
+}
+
+#current-cycle-display {
+    font-weight: bold;
+    color: #2c7be5;
+}
+
+/* Optional: Style for when no leave records exist in current cycle */
+.empty-cycle-message {
+    color: #666;
+    font-style: italic;
+    padding: 10px;
+    text-align: center;
+}
