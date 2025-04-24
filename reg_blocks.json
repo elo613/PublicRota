@@ -1,5 +1,5 @@
 {
-  "message": "Not Found",
-  "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
-  "status": "404"
+  "message": "API rate limit exceeded for user ID 75640827. If you reach out to GitHub Support for help, please include the request ID 5843:2F58C5:4F0BD66:9D861D5:680A1DD2 and timestamp 2025-04-24 11:17:38 UTC.",
+  "documentation_url": "https://docs.github.com/rest/overview/rate-limits-for-the-rest-api",
+  "status": "403"
 }
