@@ -76,15 +76,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (d.getMonth() < 7) year--;
 
         const start = new Date(year, 7, 1);
-        while (start.getDay() !== 3) start.setDate(start.getDate() + 1); // 1st Wednesday
+        while (start.getDay() !== 3) start.setDate(start.getDate() + 1);
 
         const end = new Date(year + 1, 7, 1);
-        while (end.getDay() !== 2) end.setDate(end.getDate() + 1); // 1st Tuesday
+        while (end.getDay() !== 2) end.setDate(end.getDate() + 1);
 
         return {
             start,
             end,
-            key: `${start.toDateString()} to ${end.toDateString()}`,
+            key: `${start.toDateString()} to ${end.toDateString()}`
         };
     }
 
@@ -130,33 +130,25 @@ document.addEventListener("DOMContentLoaded", () => {
         annualLeaveAllowance.textContent = annualLeaveAllowanceValue;
         studyLeave.textContent = studyLeaveAllowance;
 
-        let sortedLeaveRecords = [...registrar.leave_records];
-        sortedLeaveRecords.sort((a, b) => new Date(a.start) - new Date(b.start));
+        const sortedLeaveRecords = [...registrar.leave_records].sort(
+            (a, b) => new Date(a.start) - new Date(b.start)
+        );
 
         leaveRecordsTable.innerHTML = "";
         let studyDays = 0, annualDays = 0, otherDays = 0;
 
-        sortedLeaveRecords.forEach((record) => {
+        sortedLeaveRecords.forEach(record => {
             if (isInCycle(record.start, record.end, currentCycle)) {
                 const row = document.createElement("tr");
 
-                const startCell = document.createElement("td");
-                startCell.textContent = record.start;
-                row.appendChild(startCell);
-
-                const endCell = document.createElement("td");
-                endCell.textContent = record.end;
-                row.appendChild(endCell);
-
-                const typeCell = document.createElement("td");
-                typeCell.textContent = record.type;
-                row.appendChild(typeCell);
+                row.innerHTML = `
+                    <td>${record.start}</td>
+                    <td>${record.end}</td>
+                    <td>${record.type}</td>
+                    <td>${calculateDaysInCycle(record.start, record.end, currentCycle)}</td>
+                `;
 
                 const leaveDays = calculateDaysInCycle(record.start, record.end, currentCycle);
-                const durationCell = document.createElement("td");
-                durationCell.textContent = leaveDays;
-                row.appendChild(durationCell);
-
                 if (record.type === "Study") studyDays += leaveDays;
                 else if (record.type === "Annual") annualDays += leaveDays;
                 else otherDays += leaveDays;
@@ -172,15 +164,13 @@ document.addEventListener("DOMContentLoaded", () => {
         otherLeaveUsed.textContent = otherDays;
         otherLeaveRemaining.textContent = "N/A";
 
-        // Populate leave per cycle table
+        // Populate all leave windows per cycle
         cycleTablesContainer.innerHTML = "";
         const grouped = groupLeaveByCycle(sortedLeaveRecords);
 
-        Object.keys(grouped).forEach(key => {
+        Object.entries(grouped).forEach(([key, group]) => {
             const section = document.createElement("div");
-            const heading = document.createElement("h4");
-            heading.textContent = `Cycle: ${key}`;
-            section.appendChild(heading);
+            section.innerHTML = `<h4>Cycle: ${key}</h4>`;
 
             const table = document.createElement("table");
             table.innerHTML = `
@@ -188,37 +178,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     <tr>
                         <th>Start Date</th>
                         <th>End Date</th>
-                        <th>Leave Type</th>
+                        <th>Type</th>
                         <th>Duration (Days)</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    ${group.records.map(record => `
+                        <tr>
+                            <td>${record.start}</td>
+                            <td>${record.end}</td>
+                            <td>${record.type}</td>
+                            <td>${calculateDaysInCycle(record.start, record.end, group.cycle)}</td>
+                        </tr>
+                    `).join("")}
+                </tbody>
             `;
-
-            const tbody = table.querySelector("tbody");
-
-            grouped[key].records.forEach(record => {
-                const row = document.createElement("tr");
-
-                const startCell = document.createElement("td");
-                startCell.textContent = record.start;
-                row.appendChild(startCell);
-
-                const endCell = document.createElement("td");
-                endCell.textContent = record.end;
-                row.appendChild(endCell);
-
-                const typeCell = document.createElement("td");
-                typeCell.textContent = record.type;
-                row.appendChild(typeCell);
-
-                const leaveDays = calculateDaysInCycle(record.start, record.end, grouped[key].cycle);
-                const durationCell = document.createElement("td");
-                durationCell.textContent = leaveDays;
-                row.appendChild(durationCell);
-
-                tbody.appendChild(row);
-            });
 
             section.appendChild(table);
             cycleTablesContainer.appendChild(section);
@@ -241,8 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!checkLogin()) return;
 
         const data = await fetchRegistrarData();
-
-        data.forEach((registrar) => {
+        data.forEach(registrar => {
             const option = document.createElement("option");
             option.value = registrar.name;
             option.textContent = registrar.name;
@@ -250,10 +223,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         registrarSelect.addEventListener("change", () => {
-            const selectedRegistrar = data.find((r) => r.name === registrarSelect.value);
-            if (selectedRegistrar) {
+            const selected = data.find(r => r.name === registrarSelect.value);
+            if (selected) {
                 showSections();
-                displayRegistrarDetails(selectedRegistrar);
+                displayRegistrarDetails(selected);
             }
         });
     }
