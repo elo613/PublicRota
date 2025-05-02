@@ -1,32 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
     const registrarSelect = document.getElementById("registrar-select");
-    const leaveDetails = document.getElementById("leave-details-summary");
-    const leaveRecords = document.getElementById("leave-records");
+    const currentCycleSection = document.getElementById("current-cycle-section");
+    const otherCyclesSection = document.getElementById("other-cycles-section");
+    const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
+    const currentCycleDisplay = document.getElementById("current-cycle-display");
+    const cycleTablesContainer = document.getElementById("cycle-tables-container");
+    
+    // Summary elements
     const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
     const studyLeave = document.getElementById("study-leave");
-    const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
     const studyLeaveUsed = document.getElementById("study-leave-used");
     const annualLeaveUsed = document.getElementById("annual-leave-used");
     const otherLeaveUsed = document.getElementById("other-leave-used");
     const studyLeaveRemaining = document.getElementById("study-leave-remaining");
     const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
     const otherLeaveRemaining = document.getElementById("other-leave-remaining");
-    const currentCycleDisplay = document.getElementById("current-cycle-display");
-    const allCyclesLeave = document.getElementById("all-cycles-leave");
-    const cycleTablesContainer = document.getElementById("cycle-tables-container");
 
     let authToken = "";
 
     function hideSections() {
-        leaveDetails?.classList.add("hidden");
-        leaveRecords?.classList.add("hidden");
-        allCyclesLeave?.classList.add("hidden");
+        currentCycleSection?.classList.add("hidden");
+        otherCyclesSection?.classList.add("hidden");
     }
 
     function showSections() {
-        leaveDetails?.classList.remove("hidden");
-        leaveRecords?.classList.remove("hidden");
-        allCyclesLeave?.classList.remove("hidden");
+        currentCycleSection?.classList.remove("hidden");
+        otherCyclesSection?.classList.remove("hidden");
     }
 
     function checkLogin() {
@@ -75,17 +74,22 @@ document.addEventListener("DOMContentLoaded", () => {
         let year = d.getFullYear();
         if (d.getMonth() < 7) year--;
 
-        const start = new Date(year, 7, 1);
-        while (start.getDay() !== 3) start.setDate(start.getDate() + 1);
+        const start = new Date(year, 7, 1); // August 1st
+        while (start.getDay() !== 3) start.setDate(start.getDate() + 1); // Find first Wednesday
 
-        const end = new Date(year + 1, 7, 1);
-        while (end.getDay() !== 2) end.setDate(end.getDate() + 1);
+        const end = new Date(year + 1, 7, 1); // August 1st next year
+        while (end.getDay() !== 2) end.setDate(end.getDate() + 1); // Find first Tuesday
 
         return {
             start,
             end,
-            key: `${start.toDateString()} to ${end.toDateString()}`
+            key: `${formatDate(start)} to ${formatDate(end)}`,
+            year: `${year}-${year + 1}`
         };
+    }
+
+    function formatDate(date) {
+        return date.toDateString();
     }
 
     function getCurrentLeaveCycle() {
@@ -109,69 +113,118 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function groupLeaveByCycle(records) {
         const grouped = {};
+        
+        // Initialize with the current cycle
+        const currentCycle = getCurrentLeaveCycle();
+        grouped[currentCycle.key] = { 
+            cycle: currentCycle, 
+            records: [],
+            isCurrent: true
+        };
+
+        // Process all leave records
         records.forEach(record => {
-            const cycle = getLeaveCycleForDate(record.start);
-            const key = cycle.key;
-            if (!grouped[key]) {
-                grouped[key] = { cycle, records: [] };
+            // Find which cycle(s) this leave record belongs to
+            let foundCycle = false;
+            
+            // Check if it belongs to existing cycles in our grouped object
+            for (const [key, group] of Object.entries(grouped)) {
+                if (isInCycle(record.start, record.end, group.cycle)) {
+                    // Create a copy of the record with days calculated for this specific cycle
+                    const recordCopy = {...record};
+                    recordCopy.daysInCycle = calculateDaysInCycle(record.start, record.end, group.cycle);
+                    group.records.push(recordCopy);
+                    foundCycle = true;
+                }
             }
-            grouped[key].records.push(record);
+            
+            // If it doesn't belong to any existing cycles, create a new one
+            if (!foundCycle) {
+                const recordCycle = getLeaveCycleForDate(record.start);
+                const key = recordCycle.key;
+                
+                if (!grouped[key]) {
+                    grouped[key] = { 
+                        cycle: recordCycle, 
+                        records: [],
+                        isCurrent: false 
+                    };
+                }
+                
+                const recordCopy = {...record};
+                recordCopy.daysInCycle = calculateDaysInCycle(record.start, record.end, recordCycle);
+                grouped[key].records.push(recordCopy);
+            }
         });
+        
         return grouped;
     }
 
-    function displayRegistrarDetails(registrar) {
-        const currentCycle = getCurrentLeaveCycle();
-        currentCycleDisplay.textContent = `${currentCycle.start.toDateString()} to ${currentCycle.end.toDateString()}`;
-
-        const studyLeaveAllowance = registrar.allowance.study || 0;
-        const annualLeaveAllowanceValue = registrar.allowance.annual || 0;
-
-        annualLeaveAllowance.textContent = annualLeaveAllowanceValue;
-        studyLeave.textContent = studyLeaveAllowance;
-
-        const sortedLeaveRecords = [...registrar.leave_records].sort(
+    function displayCurrentCycleLeave(cycleData, allowances) {
+        // Clear existing data
+        leaveRecordsTable.innerHTML = "";
+        
+        // Display leave records for current cycle
+        let studyDays = 0, annualDays = 0, otherDays = 0;
+        
+        // Sort by start date
+        const sortedRecords = [...cycleData.records].sort(
             (a, b) => new Date(a.start) - new Date(b.start)
         );
-
-        leaveRecordsTable.innerHTML = "";
-        let studyDays = 0, annualDays = 0, otherDays = 0;
-
-        sortedLeaveRecords.forEach(record => {
-            if (isInCycle(record.start, record.end, currentCycle)) {
-                const row = document.createElement("tr");
-
-                row.innerHTML = `
-                    <td>${record.start}</td>
-                    <td>${record.end}</td>
-                    <td>${record.type}</td>
-                    <td>${calculateDaysInCycle(record.start, record.end, currentCycle)}</td>
-                `;
-
-                const leaveDays = calculateDaysInCycle(record.start, record.end, currentCycle);
-                if (record.type === "Study") studyDays += leaveDays;
-                else if (record.type === "Annual") annualDays += leaveDays;
-                else otherDays += leaveDays;
-
-                leaveRecordsTable.appendChild(row);
-            }
+        
+        sortedRecords.forEach(record => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${record.start}</td>
+                <td>${record.end}</td>
+                <td>${record.type}</td>
+                <td>${record.daysInCycle}</td>
+            `;
+            
+            // Calculate totals for summary
+            if (record.type === "Study") studyDays += record.daysInCycle;
+            else if (record.type === "Annual") annualDays += record.daysInCycle;
+            else otherDays += record.daysInCycle;
+            
+            leaveRecordsTable.appendChild(row);
         });
-
+        
+        // Update summary section
         studyLeaveUsed.textContent = studyDays;
-        studyLeaveRemaining.textContent = studyLeaveAllowance - studyDays;
+        studyLeaveRemaining.textContent = allowances.study - studyDays;
         annualLeaveUsed.textContent = annualDays;
-        annualLeaveRemaining.textContent = annualLeaveAllowanceValue - annualDays;
+        annualLeaveRemaining.textContent = allowances.annual - annualDays;
         otherLeaveUsed.textContent = otherDays;
-        otherLeaveRemaining.textContent = "N/A";
+    }
 
-        // Populate all leave windows per cycle
+    function displayOtherCyclesLeave(groupedLeave) {
+        // Clear container
         cycleTablesContainer.innerHTML = "";
-        const grouped = groupLeaveByCycle(sortedLeaveRecords);
-
-        Object.entries(grouped).forEach(([key, group]) => {
+        
+        // Sort cycles by start date (descending - newest first)
+        const sortedCycles = Object.entries(groupedLeave)
+            .filter(([_, group]) => !group.isCurrent)
+            .sort(([_, groupA], [__, groupB]) => 
+                groupB.cycle.start.getTime() - groupA.cycle.start.getTime()
+            );
+            
+        // Display each cycle
+        sortedCycles.forEach(([key, group]) => {
             const section = document.createElement("div");
-            section.innerHTML = `<h4>Cycle: ${key}</h4>`;
-
+            section.className = "cycle-section";
+            section.innerHTML = `<h3>Cycle: ${group.cycle.year} (${key})</h3>`;
+            
+            if (group.records.length === 0) {
+                section.innerHTML += `<p>No leave records for this cycle.</p>`;
+                cycleTablesContainer.appendChild(section);
+                return;
+            }
+            
+            // Sort records by start date
+            const sortedRecords = [...group.records].sort(
+                (a, b) => new Date(a.start) - new Date(b.start)
+            );
+            
             const table = document.createElement("table");
             table.innerHTML = `
                 <thead>
@@ -183,20 +236,55 @@ document.addEventListener("DOMContentLoaded", () => {
                     </tr>
                 </thead>
                 <tbody>
-                    ${group.records.map(record => `
+                    ${sortedRecords.map(record => `
                         <tr>
                             <td>${record.start}</td>
                             <td>${record.end}</td>
                             <td>${record.type}</td>
-                            <td>${calculateDaysInCycle(record.start, record.end, group.cycle)}</td>
+                            <td>${record.daysInCycle}</td>
                         </tr>
                     `).join("")}
                 </tbody>
             `;
-
+            
             section.appendChild(table);
             cycleTablesContainer.appendChild(section);
         });
+        
+        // Show or hide the section based on whether we have any cycles to display
+        if (sortedCycles.length === 0) {
+            otherCyclesSection.classList.add("hidden");
+        } else {
+            otherCyclesSection.classList.remove("hidden");
+        }
+    }
+
+    function displayRegistrarDetails(registrar) {
+        const currentCycle = getCurrentLeaveCycle();
+        currentCycleDisplay.textContent = `${formatDate(currentCycle.start)} to ${formatDate(currentCycle.end)}`;
+
+        // Set allowance values
+        const allowances = {
+            study: registrar.allowance.study || 0,
+            annual: registrar.allowance.annual || 0
+        };
+        
+        annualLeaveAllowance.textContent = allowances.annual;
+        studyLeave.textContent = allowances.study;
+
+        // Group leave records by cycle
+        const groupedLeave = groupLeaveByCycle(registrar.leave_records);
+        
+        // Display current cycle data (including summary)
+        if (groupedLeave[currentCycle.key]) {
+            displayCurrentCycleLeave(groupedLeave[currentCycle.key], allowances);
+            currentCycleSection.classList.remove("hidden");
+        } else {
+            currentCycleSection.classList.add("hidden");
+        }
+        
+        // Display other cycles (no summary, just dates)
+        displayOtherCyclesLeave(groupedLeave);
     }
 
     async function fetchRegistrarData() {
@@ -227,6 +315,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (selected) {
                 showSections();
                 displayRegistrarDetails(selected);
+            } else {
+                hideSections();
             }
         });
     }
