@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Registrar Leave Records</title>
-    <link rel="stylesheet" href="leave.css">
+    <link rel="stylesheet" href="leave.css" />
 </head>
 <body>
     <div class="container">
         <h1>Registrar Leave Records</h1>
+
         <label for="registrar-select">Select Registrar:</label>
         <select id="registrar-select">
             <option value="" disabled selected>-- Please select a registrar to view records --</option>
@@ -16,11 +17,11 @@
 
         <div id="current-cycle-container">
             <h3>Current Leave Cycle: <span id="current-cycle-display"></span></h3>
-            <p>Leave cycle runs from 1st Wednesday in August to 1st Tuesday in August the following year</p>
+            <p>Leave cycle runs from 1st Wednesday in August to 1st Tuesday in August the following year.</p>
         </div>
 
         <div id="leave-records" class="hidden">
-            <h2>Leave Records (Current Cycle Only)</h2>
+            <h2>Leave Records (Current Cycle)</h2>
             <table id="leave-records-table">
                 <thead>
                     <tr>
@@ -70,20 +71,19 @@
         </div>
 
         <div id="all-cycles-leave" class="hidden">
-            <h2>Leave Records (All Cycles)</h2>
+            <h2>Leave Windows (All Cycles)</h2>
             <div id="cycle-tables-container"></div>
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const tokenString = localStorage.getItem("loginToken");
             if (!tokenString) {
                 window.location.href = "index.html";
             }
         });
     </script>
-
     <script src="leave.js"></script>
 </body>
 </html>
