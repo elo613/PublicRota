@@ -1,29 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Leave Records</title>
-    <link rel="stylesheet" href="leave.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Registrar Leave Records</h1>
-        <label for="registrar-select">Select Registrar:</label>
-        <select id="registrar-select">
-            <option value="" disabled selected>-- Please select a registrar to view records --</option>
-        </select>
+document.addEventListener("DOMContentLoaded", () => {
+    const registrarSelect = document.getElementById("registrar-select");
+    const leaveDetails = document.getElementById("leave-details-summary");
+    const leaveRecords = document.getElementById("leave-records");
+    const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
+    const studyLeave = document.getElementById("study-leave");
+    const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
+    const studyLeaveUsed = document.getElementById("study-leave-used");
+    const annualLeaveUsed = document.getElementById("annual-leave-used");
+    const otherLeaveUsed = document.getElementById("other-leave-used");
+    const studyLeaveRemaining = document.getElementById("study-leave-remaining");
+    const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
+    const otherLeaveRemaining = document.getElementById("other-leave-remaining");
+    const currentCycleDisplay = document.getElementById("current-cycle-display");
+    const allCyclesLeave = document.getElementById("all-cycles-leave");
+    const cycleTablesContainer = document.getElementById("cycle-tables-container");
 
-        <!-- Current Leave Cycle Display -->
-        <div id="current-cycle-container" class="hidden">
-            <h3>Current Leave Cycle: <span id="current-cycle-display"></span></h3>
-            <p>Leave cycle runs from 1st Wednesday in August to 1st Tuesday in August the following year</p>
-        </div>
+    let authToken = "";
 
-        <!-- Leave Records Section -->
-        <div id="leave-records" class="hidden">
-            <h2>Leave Records (Current Cycle Only)</h2>
-            <table id="leave-records-table">
+    function hideSections() {
+        leaveDetails?.classList.add("hidden");
+        leaveRecords?.classList.add("hidden");
+        allCyclesLeave?.classList.add("hidden");
+    }
+
+    function showSections() {
+        leaveDetails?.classList.remove("hidden");
+        leaveRecords?.classList.remove("hidden");
+        allCyclesLeave?.classList.remove("hidden");
+    }
+
+    function checkLogin() {
+        const tokenString = localStorage.getItem("loginToken");
+        if (!tokenString) {
+            redirectToLogin();
+            return false;
+        }
+
+        try {
+            const token = JSON.parse(tokenString);
+            if (Date.now() > token.expiry) {
+                alert("Session expired. Please log in again.");
+                localStorage.removeItem("loginToken");
+                redirectToLogin();
+                return false;
+            }
+            authToken = token.value;
+            return true;
+        } catch (e) {
+            console.error("Error parsing token:", e);
+            redirectToLogin();
+            return false;
+        }
+    }
+
+    function redirectToLogin() {
+        window.location.href = "index.html";
+    }
+
+    function calculateWeekdaysBetween(startDate, endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        let count = 0;
+
+        for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+            const day = date.getDay();
+            if (day !== 0 && day !== 6) count++;
+        }
+
+        return count;
+    }
+
+    function getLeaveCycleForDate(date) {
+        const d = new Date(date);
+        let year = d.getFullYear();
+        if (d.getMonth() < 7) year--;
+
+        const start = new Date(year, 7, 1);
+        while (start.getDay() !== 3) start.setDate(start.getDate() + 1); // 1st Wednesday
+
+        const end = new Date(year + 1, 7, 1);
+        while (end.getDay() !== 2) end.setDate(end.getDate() + 1); // 1st Tuesday
+
+        return {
+            start,
+            end,
+            key: `${start.toDateString()} to ${end.toDateString()}`,
+        };
+    }
+
+    function getCurrentLeaveCycle() {
+        return getLeaveCycleForDate(new Date());
+    }
+
+    function isInCycle(startDate, endDate, cycle) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return (start >= cycle.start && start <= cycle.end) ||
+               (end >= cycle.start && end <= cycle.end) ||
+               (start <= cycle.start && end >= cycle.end);
+    }
+
+    function calculateDaysInCycle(startDate, endDate, cycle) {
+        const start = new Date(Math.max(new Date(startDate).getTime(), cycle.start.getTime()));
+        const end = new Date(Math.min(new Date(endDate).getTime(), cycle.end.getTime()));
+        if (start > end) return 0;
+        return calculateWeekdaysBetween(start, end);
+    }
+
+    function groupLeaveByCycle(records) {
+        const grouped = {};
+        records.forEach(record => {
+            const cycle = getLeaveCycleForDate(record.start);
+            const key = cycle.key;
+            if (!grouped[key]) {
+                grouped[key] = { cycle, records: [] };
+            }
+            grouped[key].records.push(record);
+        });
+        return grouped;
+    }
+
+    function displayRegistrarDetails(registrar) {
+        const currentCycle = getCurrentLeaveCycle();
+        currentCycleDisplay.textContent = `${currentCycle.start.toDateString()} to ${currentCycle.end.toDateString()}`;
+
+        const studyLeaveAllowance = registrar.allowance.study || 0;
+        const annualLeaveAllowanceValue = registrar.allowance.annual || 0;
+
+        annualLeaveAllowance.textContent = annualLeaveAllowanceValue;
+        studyLeave.textContent = studyLeaveAllowance;
+
+        let sortedLeaveRecords = [...registrar.leave_records];
+        sortedLeaveRecords.sort((a, b) => new Date(a.start) - new Date(b.start));
+
+        leaveRecordsTable.innerHTML = "";
+        let studyDays = 0, annualDays = 0, otherDays = 0;
+
+        sortedLeaveRecords.forEach((record) => {
+            if (isInCycle(record.start, record.end, currentCycle)) {
+                const row = document.createElement("tr");
+
+                const startCell = document.createElement("td");
+                startCell.textContent = record.start;
+                row.appendChild(startCell);
+
+                const endCell = document.createElement("td");
+                endCell.textContent = record.end;
+                row.appendChild(endCell);
+
+                const typeCell = document.createElement("td");
+                typeCell.textContent = record.type;
+                row.appendChild(typeCell);
+
+                const leaveDays = calculateDaysInCycle(record.start, record.end, currentCycle);
+                const durationCell = document.createElement("td");
+                durationCell.textContent = leaveDays;
+                row.appendChild(durationCell);
+
+                if (record.type === "Study") studyDays += leaveDays;
+                else if (record.type === "Annual") annualDays += leaveDays;
+                else otherDays += leaveDays;
+
+                leaveRecordsTable.appendChild(row);
+            }
+        });
+
+        studyLeaveUsed.textContent = studyDays;
+        studyLeaveRemaining.textContent = studyLeaveAllowance - studyDays;
+        annualLeaveUsed.textContent = annualDays;
+        annualLeaveRemaining.textContent = annualLeaveAllowanceValue - annualDays;
+        otherLeaveUsed.textContent = otherDays;
+        otherLeaveRemaining.textContent = "N/A";
+
+        // Populate leave per cycle table
+        cycleTablesContainer.innerHTML = "";
+        const grouped = groupLeaveByCycle(sortedLeaveRecords);
+
+        Object.keys(grouped).forEach(key => {
+            const section = document.createElement("div");
+            const heading = document.createElement("h4");
+            heading.textContent = `Cycle: ${key}`;
+            section.appendChild(heading);
+
+            const table = document.createElement("table");
+            table.innerHTML = `
                 <thead>
                     <tr>
                         <th>Start Date</th>
@@ -32,60 +192,71 @@
                         <th>Duration (Days)</th>
                     </tr>
                 </thead>
-                <tbody id="leave-records-table-body">
-                    <!-- Leave records will be dynamically populated -->
-                </tbody>
-            </table>
-        </div>
+                <tbody></tbody>
+            `;
 
-        <!-- Leave Details Table -->
-        <div id="leave-details-summary" class="hidden">
-            <h2>Leave Summary (Current Cycle)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Type of Leave</th>
-                        <th>Allowance</th>
-                        <th>Used</th>
-                        <th>Remaining</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Annual Leave</td>
-                        <td><span id="annual-leave-allowance"></span> days</td>
-                        <td><span id="annual-leave-used">0</span> days</td>
-                        <td><span id="annual-leave-remaining">0</span> days</td>
-                    </tr>
-                    <tr>
-                        <td>Study Leave</td>
-                        <td><span id="study-leave"></span> days</td>
-                        <td><span id="study-leave-used">0</span> days</td>
-                        <td><span id="study-leave-remaining">0</span> days</td>
-                    </tr>
-                    <tr>
-                        <td>Other Leave</td>
-                        <td>N/A</td>
-                        <td><span id="other-leave-used">0</span> days</td>
-                        <td><span id="other-leave-remaining">N/A</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="note">Note: Leave counts exclude weekends and only include dates within the current leave cycle.</p>
-        </div>
-    </div>
+            const tbody = table.querySelector("tbody");
 
-    <script>
-        // This script handles the login token validation
-        document.addEventListener("DOMContentLoaded", function() {
-            const tokenString = localStorage.getItem("loginToken");
-            if (!tokenString) {
-                window.location.href = "index.html";
+            grouped[key].records.forEach(record => {
+                const row = document.createElement("tr");
+
+                const startCell = document.createElement("td");
+                startCell.textContent = record.start;
+                row.appendChild(startCell);
+
+                const endCell = document.createElement("td");
+                endCell.textContent = record.end;
+                row.appendChild(endCell);
+
+                const typeCell = document.createElement("td");
+                typeCell.textContent = record.type;
+                row.appendChild(typeCell);
+
+                const leaveDays = calculateDaysInCycle(record.start, record.end, grouped[key].cycle);
+                const durationCell = document.createElement("td");
+                durationCell.textContent = leaveDays;
+                row.appendChild(durationCell);
+
+                tbody.appendChild(row);
+            });
+
+            section.appendChild(table);
+            cycleTablesContainer.appendChild(section);
+        });
+    }
+
+    async function fetchRegistrarData() {
+        try {
+            const response = await fetch("./registrars_data.json");
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.error("Error loading registrar data:", error);
+            alert("Failed to load registrar data. Please try again later.");
+        }
+    }
+
+    async function initialise() {
+        hideSections();
+        if (!checkLogin()) return;
+
+        const data = await fetchRegistrarData();
+
+        data.forEach((registrar) => {
+            const option = document.createElement("option");
+            option.value = registrar.name;
+            option.textContent = registrar.name;
+            registrarSelect.appendChild(option);
+        });
+
+        registrarSelect.addEventListener("change", () => {
+            const selectedRegistrar = data.find((r) => r.name === registrarSelect.value);
+            if (selectedRegistrar) {
+                showSections();
+                displayRegistrarDetails(selectedRegistrar);
             }
         });
-    </script>
-    
-    <!-- Main application script -->
-    <script src="leave.js"></script>
-</body>
-</html>
+    }
+
+    initialise();
+});
