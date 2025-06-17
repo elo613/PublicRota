@@ -225,6 +225,10 @@ function openBlocksPage() {
     window.location.href = "blocks.html";
 }
 
+function openBlocksPage() {
+    window.location.href = "where_at.html";
+}
+
 // Redirect to leave.html
 function openLeave() {
     window.location.href = "leave.html";
