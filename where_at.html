@@ -61,6 +61,7 @@
         padding: 10px;
         text-align: center;
         font-size: 0.95rem;
+        white-space: pre-line; /* allow newlines in block values */
     }
     tbody tr:nth-child(even) {
         background: #f9f9f9;
@@ -129,7 +130,7 @@
 <script>
     let registrarsData = [];
     let rotaData = [];
-    let blocksData = [];
+    let blocksData = {};
     let currentDate = new Date();
 
     const DATA_SOURCES = {
@@ -161,12 +162,21 @@
         return date.toISOString().split('T')[0];
     }
 
-    function isDateInRange(checkDate, start, end) {
-        const c = new Date(checkDate);
-        return c >= new Date(start) && c <= new Date(end);
+    // Parse leave dates like "16 Sep 2024"
+    function parseLeaveDate(dateStr) {
+        return new Date(dateStr);
     }
 
-    // Get registrar's leave covering current date
+    // Inclusive date range check for leave and blocks
+    function isDateInRange(checkDateStr, startStr, endStr) {
+        const check = new Date(checkDateStr + 'T00:00:00');
+        const start = parseLeaveDate(startStr);
+        const end = parseLeaveDate(endStr);
+        end.setHours(23, 59, 59, 999);
+        return check >= start && check <= end;
+    }
+
+    // Check if registrar is on leave on the given date
     function checkLeave(registrar, dateISO) {
         for (const leave of registrar.leave_records) {
             if (isDateInRange(dateISO, leave.start, leave.end)) {
@@ -176,11 +186,24 @@
         return null;
     }
 
-    // Get block covering current date
-    function checkBlock(registrar, dateISO) {
+    // Check block info for the registrar on given date and session
+    function checkBlock(registrar, date, session) {
+        const dateISO = formatDateForISO(date);
+        const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        const dayName = dayNames[date.getDay()];
+
         for (const block of registrar.blocks) {
             if (isDateInRange(dateISO, block.start_date, block.end_date)) {
-                return "Block: " + block.block_name;
+                const blockName = block.block_name;
+                if (
+                    blocksData[blockName] &&
+                    blocksData[blockName][dayName] &&
+                    blocksData[blockName][dayName][session] &&
+                    blocksData[blockName][dayName][session].value
+                ) {
+                    return blocksData[blockName][dayName][session].value;
+                }
+                return `Block: ${blockName}`;
             }
         }
         return null;
@@ -201,12 +224,13 @@
         return null;
     }
 
+    // Compose status text and CSS class for a session
     function getSessionStatus(registrar, date, session, isWeekend) {
         const dateISO = formatDateForISO(date);
         const dateStr = formatDateForRota(date);
 
-        // Weekend logic: only show duty/reporting if AAU duty in AM
         if (isWeekend) {
+            // Weekend logic: only show AM Duty/Reporting if AAU duty; else "-"
             if (session === 'AM') {
                 const rotaStatus = checkRota(registrar.name, dateStr, session);
                 if (rotaStatus === "Duty") {
@@ -215,7 +239,6 @@
                 if (rotaStatus === "Reporting") {
                     return {text: "Reporting", cssClass: "status-reporting"};
                 }
-                return {text: "-", cssClass: "status-none"};
             }
             return {text: "-", cssClass: "status-none"};
         }
@@ -235,8 +258,8 @@
             return {text: "Reporting", cssClass: "status-reporting"};
         }
 
-        // Block check
-        const blockStatus = checkBlock(registrar, dateISO);
+        // Block check - pass session now
+        const blockStatus = checkBlock(registrar, date, session);
         if (blockStatus) return {text: blockStatus, cssClass: "status-block"};
 
         // None assigned
