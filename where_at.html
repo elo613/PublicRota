@@ -176,13 +176,25 @@
         return null;
     }
 
-    // Get block covering current date
-    function checkBlock(registrar, dateISO) {
-        for (const block of registrar.blocks) {
-            if (isDateInRange(dateISO, block.start_date, block.end_date)) {
-                return "Block: " + block.block_name;
-            }
+    // Extract block description dynamically from blocksData JSON by specialty/day/session
+    function getBlockDescription(registrar, dateISO, dayName, session) {
+        const currentBlock = registrar.blocks.find(block =>
+            isDateInRange(dateISO, block.start_date, block.end_date)
+        );
+        if (!currentBlock) return null;
+
+        const specialty = currentBlock.block_name;
+        if (!specialty) return null;
+
+        if (
+            blocksData[specialty] &&
+            blocksData[specialty][dayName] &&
+            blocksData[specialty][dayName][session] &&
+            blocksData[specialty][dayName][session].value
+        ) {
+            return blocksData[specialty][dayName][session].value;
         }
+
         return null;
     }
 
@@ -201,9 +213,14 @@
         return null;
     }
 
+    function isWeekend(dayOfWeek) {
+        return dayOfWeek === 0 || dayOfWeek === 6;
+    }
+
     function getSessionStatus(registrar, date, session, isWeekend) {
         const dateISO = formatDateForISO(date);
         const dateStr = formatDateForRota(date);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
 
         // Weekend logic: only show duty/reporting if AAU duty in AM
         if (isWeekend) {
@@ -215,6 +232,11 @@
                 if (rotaStatus === "Reporting") {
                     return {text: "Reporting", cssClass: "status-reporting"};
                 }
+                // Show AAU block if applicable
+                const blockDesc = getBlockDescription(registrar, dateISO, dayName, session);
+                if (blockDesc && registrar.blocks.some(b => b.block_name === "AAU" && isDateInRange(dateISO, b.start_date, b.end_date))) {
+                    return {text: blockDesc, cssClass: "status-block"};
+                }
                 return {text: "-", cssClass: "status-none"};
             }
             return {text: "-", cssClass: "status-none"};
@@ -222,11 +244,9 @@
 
         // Weekday priority: Leave > Duty/Reporting > Block > None
 
-        // Leave check
         const leaveStatus = checkLeave(registrar, dateISO);
         if (leaveStatus) return {text: leaveStatus, cssClass: 'status-leave'};
 
-        // Duty/Reporting check
         const rotaStatus = checkRota(registrar.name, dateStr, session);
         if (rotaStatus === "Duty") {
             return {text: "Duty", cssClass: "status-duty"};
@@ -235,11 +255,11 @@
             return {text: "Reporting", cssClass: "status-reporting"};
         }
 
-        // Block check
-        const blockStatus = checkBlock(registrar, dateISO);
-        if (blockStatus) return {text: blockStatus, cssClass: "status-block"};
+        const blockDesc = getBlockDescription(registrar, dateISO, dayName, session);
+        if (blockDesc) {
+            return {text: blockDesc, cssClass: "status-block"};
+        }
 
-        // None assigned
         return {text: "-", cssClass: "status-none"};
     }
 
@@ -249,11 +269,11 @@
         currentDateElem.textContent = formatDate(currentDate);
 
         const dayOfWeek = currentDate.getDay();
-        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+        const weekend = isWeekend(dayOfWeek);
 
         let html = '';
 
-        if (isWeekend) {
+        if (weekend) {
             html += `<div class="weekend-indicator">Weekend Schedule: only AM AAU duty/reporting shown; otherwise '-'</div>`;
         }
 
@@ -268,8 +288,8 @@
             <tbody>`;
 
         registrarsData.forEach(registrar => {
-            const amStatus = getSessionStatus(registrar, currentDate, "AM", isWeekend);
-            const pmStatus = getSessionStatus(registrar, currentDate, "PM", isWeekend);
+            const amStatus = getSessionStatus(registrar, currentDate, "AM", weekend);
+            const pmStatus = getSessionStatus(registrar, currentDate, "PM", weekend);
 
             html += `<tr>
                 <td>${registrar.name}</td>
