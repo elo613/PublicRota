@@ -1,258 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Registrar Daily Schedule</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .header {
-      background: #2c3e50;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      border-radius: 8px 8px 0 0;
-    }
-    .date-controls {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 10px;
-    }
-    .date-nav-btn {
-      background: #34495e;
-      border: none;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .current-date {
-      font-size: 1.2rem;
-      font-weight: bold;
-      min-width: 180px;
-      text-align: center;
-    }
-    .schedule-grid {
-      padding: 20px;
-    }
-    .registrar-card {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-    .registrar-header {
-      background: #34495e;
-      color: white;
-      padding: 12px 16px;
-      font-size: 1.1rem;
-    }
-    .schedule-row {
-      display: grid;
-      grid-template-columns: 60px 1fr 1fr;
-      align-items: center;
-      border-bottom: 1px solid #eee;
-    }
-    .schedule-row:last-child {
-      border-bottom: none;
-    }
-    .time-label {
-      background: #ecf0f1;
-      text-align: center;
-      font-weight: bold;
-      padding: 10px;
-    }
-    .status-cell {
-      padding: 10px;
-      font-size: 0.9rem;
-    }
-    .status-leave { background: #f8d7da; color: #721c24; }
-    .status-duty { background: #d4edda; color: #155724; font-weight: bold; }
-    .status-reporting { background: #fff3cd; color: #856404; font-weight: bold; }
-    .status-block { background: #cce5ff; color: #004085; }
-    .status-unavailable { background: #f8f9fa; color: #6c757d; }
-    .weekend-indicator {
-      text-align: center;
-      padding: 15px;
-      background: #17a2b8;
-      color: white;
-      font-weight: bold;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registrar Daily Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .date-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #34495e;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        button:hover {
+            background: #4a5f7a;
+        }
+        #currentDate {
+            font-weight: bold;
+            font-size: 1.2rem;
+            min-width: 180px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead tr {
+            background: #34495e;
+            color: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .status-leave {
+            background: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+        .status-duty {
+            background: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+        .status-reporting {
+            background: #fff3cd;
+            color: #856404;
+            font-weight: bold;
+        }
+        .status-block {
+            background: #cce5ff;
+            color: #004085;
+            font-weight: bold;
+        }
+        .status-none {
+            color: #6c757d;
+        }
+        .weekend-indicator {
+            text-align: center;
+            padding: 12px;
+            background: #17a2b8;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+        .loading, .error-message {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .loading {
+            color: #6c757d;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Registrar Daily Schedule</h1>
-      <div class="date-controls">
-        <button class="date-nav-btn" onclick="changeDate(-1)">← Previous</button>
-        <div class="current-date" id="currentDate"></div>
-        <button class="date-nav-btn" onclick="changeDate(1)">Next →</button>
-      </div>
+    <div class="container">
+        <h1>Registrar Daily Schedule</h1>
+        <div class="date-controls">
+            <button onclick="changeDate(-1)">← Previous</button>
+            <div id="currentDate"></div>
+            <button onclick="changeDate(1)">Next →</button>
+        </div>
+        <div id="scheduleContainer">
+            <div class="loading">Loading schedule...</div>
+        </div>
     </div>
-    <div class="schedule-grid" id="scheduleGrid">
-      <div class="loading">Loading schedule...</div>
-    </div>
-  </div>
 
-  <script>
-    const DATA_SOURCES = {
-      registrars: './registrars_data.json',
-      rota: './rota.json',
-      blocks: './blocks.json'
-    };
-
+<script>
     let registrarsData = [];
     let rotaData = [];
     let blocksData = [];
     let currentDate = new Date();
 
+    const DATA_SOURCES = {
+        registrars: './registrars_data.json',
+        rota: './rota.json',
+        blocks: './blocks.json'
+    };
+
     async function fetchData(url) {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`Failed to fetch ${url}`);
-      return res.json();
-    }
-
-    async function initializeApp() {
-      try {
-        const [registrars, rota, blocks] = await Promise.all([
-          fetchData(DATA_SOURCES.registrars),
-          fetchData(DATA_SOURCES.rota),
-          fetchData(DATA_SOURCES.blocks)
-        ]);
-        registrarsData = registrars;
-        rotaData = rota;
-        blocksData = blocks;
-        updateScheduleDisplay();
-      } catch (err) {
-        document.getElementById('scheduleGrid').innerHTML = 
-          `<div class="error-message">Error loading data.</div>`;
-      }
-    }
-
-    function changeDate(days) {
-      currentDate.setDate(currentDate.getDate() + days);
-      updateScheduleDisplay();
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Failed to load ${url}`);
+        return await response.json();
     }
 
     function formatDate(date) {
-      return date.toLocaleDateString('en-GB', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
+        return date.toLocaleDateString('en-US', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
     }
 
     function formatDateForRota(date) {
-      return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+        const d = date.getDate().toString().padStart(2, '0');
+        const m = (date.getMonth() + 1).toString().padStart(2, '0');
+        const y = date.getFullYear();
+        return `${d}/${m}/${y}`;
     }
 
-    function formatDateForComparison(date) {
-      return date.toISOString().split('T')[0];
+    function formatDateForISO(date) {
+        return date.toISOString().split('T')[0];
     }
 
-    function isDateInRange(dateStr, startStr, endStr) {
-      const d = new Date(dateStr);
-      return d >= new Date(startStr) && d <= new Date(endStr);
+    function isDateInRange(checkDate, start, end) {
+        const c = new Date(checkDate);
+        return c >= new Date(start) && c <= new Date(end);
     }
 
-    function getRotaAssignment(name, date, period) {
-      const formatted = formatDateForRota(date);
-      const rotaDay = rotaData.find(d => d.Date === formatted);
-      if (!rotaDay) return null;
-
-      const shift = rotaDay.Shifts?.[period];
-      if (!shift) return null;
-
-      if (shift.Duty === name) return { type: 'duty', details: 'AAU Duty' };
-      if (shift.Reporting === name) return { type: 'reporting', details: 'AAU Reporting' };
-      return null;
-    }
-
-    function getRegistrarStatus(registrar, date, period) {
-      const dateStr = formatDateForComparison(date);
-      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-
-      // 1. Leave
-      for (let leave of registrar.leave_records || []) {
-        if (isDateInRange(dateStr, leave.start, leave.end)) {
-          return { status: 'leave', details: `${leave.type} Leave` };
+    // Get registrar's leave covering current date
+    function checkLeave(registrar, dateISO) {
+        for (const leave of registrar.leave_records) {
+            if (isDateInRange(dateISO, leave.start, leave.end)) {
+                return leave.type + " Leave";
+            }
         }
-      }
-
-      // 2. Rota
-      const rota = getRotaAssignment(registrar.name, date, period);
-      if (rota) return { status: rota.type, details: rota.details };
-
-      // 3. Block
-      for (let block of registrar.blocks || []) {
-        if (isDateInRange(dateStr, block.start_date, block.end_date)) {
-          return { status: 'block', details: block.block_name };
-        }
-      }
-
-      // 4. Weekend fallback
-      if (isWeekend && period === 'PM') {
-        return { status: 'unavailable', details: '-' };
-      }
-
-      // 5. Default
-      return { status: 'unavailable', details: isWeekend ? '-' : 'No Assignment' };
+        return null;
     }
 
-    function updateScheduleDisplay() {
-      const grid = document.getElementById('scheduleGrid');
-      const currentDateEl = document.getElementById('currentDate');
-      currentDateEl.textContent = formatDate(currentDate);
-      const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
+    // Get block covering current date
+    function checkBlock(registrar, dateISO) {
+        for (const block of registrar.blocks) {
+            if (isDateInRange(dateISO, block.start_date, block.end_date)) {
+                return "Block: " + block.block_name;
+            }
+        }
+        return null;
+    }
 
-      let html = '';
-      if (isWeekend) {
-        html += `<div class="weekend-indicator">Weekend Schedule (AM only)</div>`;
-      }
+    // Check rota for a specific date and session ('AM' or 'PM')
+    // Returns "Duty", "Reporting" or null
+    function checkRota(registrarName, dateStr, session) {
+        for (const day of rotaData) {
+            if (day.Date === dateStr) {
+                const shifts = day.Shifts;
+                if (shifts[session]) {
+                    if (shifts[session].Duty === registrarName) return "Duty";
+                    if (shifts[session].Reporting === registrarName) return "Reporting";
+                }
+            }
+        }
+        return null;
+    }
 
-      registrarsData.forEach(registrar => {
-        const am = getRegistrarStatus(registrar, currentDate, 'AM');
-        const pm = isWeekend
-          ? { status: 'unavailable', details: '-' }
-          : getRegistrarStatus(registrar, currentDate, 'PM');
+    function getSessionStatus(registrar, date, session, isWeekend) {
+        const dateISO = formatDateForISO(date);
+        const dateStr = formatDateForRota(date);
 
-        html += `
-          <div class="registrar-card">
-            <div class="registrar-header">${registrar.name}</div>
-            <div class="schedule-row">
-              <div class="time-label">AM</div>
-              <div class="status-cell status-${am.status}">${am.details}</div>
-              <div class="status-cell status-${pm.status}">${pm.details}</div>
-            </div>
-            <div class="schedule-row">
-              <div class="time-label">PM</div>
-              <div class="status-cell status-${pm.status}">${pm.details}</div>
-              <div class="status-cell status-${am.status}">${am.details}</div>
-            </div>
-          </div>
-        `;
-      });
+        // Priority: Leave > Duty/Reporting > Block > "-" (none)
 
-      grid.innerHTML = html;
+        // Leave check
+        const leaveStatus = checkLeave(registrar, dateISO);
+        if (leaveStatus) return {text: leaveStatus, cssClass: 'status-leave'};
+
+        // For weekend, only show AM duty/reporting, PM is "-"
+        if (isWeekend && session === 'PM') {
+            return {text: "-", cssClass: "status-none"};
+        }
+
+        // Duty/Reporting check (rota)
+        const rotaStatus = checkRota(registrar.name, dateStr, session);
+        if (rotaStatus === "Duty") {
+            return {text: "Duty", cssClass: "status-duty"};
+        }
+        if (rotaStatus === "Reporting") {
+            return {text: "Reporting", cssClass: "status-reporting"};
+        }
+
+        // Block check
+        const blockStatus = checkBlock(registrar, dateISO);
+        if (blockStatus) return {text: blockStatus, cssClass: "status-block"};
+
+        // None assigned
+        return {text: "-", cssClass: "status-none"};
+    }
+
+    function renderSchedule() {
+        const container = document.getElementById('scheduleContainer');
+        const currentDateElem = document.getElementById('currentDate');
+        currentDateElem.textContent = formatDate(currentDate);
+
+        const dayOfWeek = currentDate.getDay();
+        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+
+        let html = '';
+
+        if (isWeekend) {
+            html += `<div class="weekend-indicator">Weekend Schedule: only AM duty/reporting shown; PM is "-".</div>`;
+        }
+
+        html += `<table>
+            <thead>
+                <tr>
+                    <th>Registrar</th>
+                    <th>AM</th>
+                    <th>PM</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        registrarsData.forEach(registrar => {
+            const amStatus = getSessionStatus(registrar, currentDate, "AM", isWeekend);
+            const pmStatus = getSessionStatus(registrar, currentDate, "PM", isWeekend);
+
+            html += `<tr>
+                <td>${registrar.name}</td>
+                <td class="${amStatus.cssClass}">${amStatus.text}</td>
+                <td class="${pmStatus.cssClass}">${pmStatus.text}</td>
+            </tr>`;
+        });
+
+        html += `</tbody></table>`;
+
+        container.innerHTML = html;
+    }
+
+    async function initializeApp() {
+        try {
+            registrarsData = await fetchData(DATA_SOURCES.registrars);
+            rotaData = await fetchData(DATA_SOURCES.rota);
+            blocksData = await fetchData(DATA_SOURCES.blocks);
+
+            // Inject blocksData into registrars if needed, or handle separately if your data structure requires.
+
+            // For this example, assuming blocks are already embedded in registrar.blocks
+
+            renderSchedule();
+        } catch (error) {
+            document.getElementById('scheduleContainer').innerHTML = `<div class="error-message">Failed to load schedule data.</div>`;
+            console.error(error);
+        }
+    }
+
+    function changeDate(days) {
+        currentDate.setDate(currentDate.getDate() + days);
+        renderSchedule();
     }
 
     window.addEventListener('DOMContentLoaded', initializeApp);
-  </script>
+</script>
 </body>
 </html>
