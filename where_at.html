@@ -12,98 +12,85 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
             padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: #2c3e50;
             color: white;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
+            border-radius: 8px 8px 0 0;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
         }
 
         .date-controls {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 15px;
         }
 
         .date-nav-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: #34495e;
+            border: none;
             color: white;
-            padding: 12px 16px;
-            border-radius: 50px;
+            padding: 8px 16px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
 
         .date-nav-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+            background: #4a5f7a;
         }
 
         .current-date {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            min-width: 200px;
+            min-width: 180px;
             text-align: center;
         }
 
         .schedule-grid {
-            padding: 30px;
+            padding: 20px;
         }
 
         .registrar-card {
             background: white;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 15px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .registrar-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .registrar-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #34495e;
             color: white;
-            padding: 20px;
-            font-size: 1.3rem;
+            padding: 12px 16px;
+            font-size: 1.1rem;
             font-weight: bold;
         }
 
         .schedule-row {
             display: grid;
-            grid-template-columns: 80px 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: 60px 1fr 1fr;
             align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #eee;
         }
 
         .schedule-row:last-child {
@@ -112,90 +99,74 @@
 
         .time-label {
             font-weight: bold;
-            color: #667eea;
+            color: #2c3e50;
             text-align: center;
-            font-size: 1.1rem;
+            padding: 15px 10px;
+            background: #ecf0f1;
+            font-size: 0.9rem;
         }
 
-        .location-info {
+        .status-cell {
             padding: 15px;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            position: relative;
-            overflow: hidden;
+            font-size: 0.9rem;
         }
 
-        .location-leave {
-            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-            color: #2d3436;
-            border-left: 4px solid #e17055;
+        .status-leave {
+            background: #f8d7da;
+            color: #721c24;
         }
 
-        .location-duty {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
-            border-left: 4px solid #0056b3;
-        }
-
-        .location-block {
-            background: linear-gradient(135deg, #a8e6cf, #88d8a3);
-            color: #2d3436;
-            border-left: 4px solid #00b894;
-        }
-
-        .location-unavailable {
-            background: linear-gradient(135deg, #ddd, #bbb);
-            color: #666;
-            border-left: 4px solid #999;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .status-duty {
+            background: #d4edda;
+            color: #155724;
             font-weight: bold;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .badge-leave {
-            background: #e17055;
-            color: white;
+        .status-reporting {
+            background: #fff3cd;
+            color: #856404;
+            font-weight: bold;
         }
 
-        .badge-duty {
-            background: #0056b3;
-            color: white;
+        .status-block {
+            background: #cce5ff;
+            color: #004085;
         }
 
-        .badge-block {
-            background: #00b894;
-            color: white;
+        .status-available {
+            background: #e8f5e8;
+            color: #2d5a2d;
+        }
+
+        .status-unavailable {
+            background: #f8f9fa;
+            color: #6c757d;
         }
 
         .weekend-indicator {
             text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+            padding: 15px;
+            background: #17a2b8;
             color: white;
-            font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 20px;
-            border-radius: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
         }
 
         .error-message {
             text-align: center;
             padding: 20px;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            border-radius: 15px;
+            background: #f8d7da;
+            color: #721c24;
+            border-radius: 6px;
+            margin: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1rem;
+            color: #6c757d;
         }
 
         @media (max-width: 768px) {
@@ -204,21 +175,15 @@
                 text-align: center;
             }
             
-            .header h1 {
-                font-size: 2rem;
+            .time-label {
+                background: #2c3e50;
+                color: white;
             }
             
             .date-controls {
                 flex-direction: column;
-                gap: 15px;
+                gap: 10px;
             }
-        }
-
-        .loading {
-            text-align: center;
-            padding: 50px;
-            font-size: 1.2rem;
-            color: #667eea;
         }
     </style>
 </head>
@@ -227,9 +192,9 @@
         <div class="header">
             <h1>Registrar Daily Schedule</h1>
             <div class="date-controls">
-                <button class="date-nav-btn" onclick="changeDate(-1)">← Previous Day</button>
+                <button class="date-nav-btn" onclick="changeDate(-1)">← Previous</button>
                 <div class="current-date" id="currentDate"></div>
-                <button class="date-nav-btn" onclick="changeDate(1)">Next Day →</button>
+                <button class="date-nav-btn" onclick="changeDate(1)">Next →</button>
             </div>
         </div>
         
@@ -314,6 +279,13 @@
             return date.toLocaleDateString('en-US', options);
         }
 
+        function formatDateForRota(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
         function formatDateForComparison(date) {
             return date.toISOString().split('T')[0];
         }
@@ -326,21 +298,44 @@
             return date >= start && date <= end;
         }
 
-        // Get registrar's status for a specific date
-        function getRegistrarStatus(registrar, date) {
-            const dateStr = formatDateForComparison(date);
-            const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
+        // Get rota assignment for a specific registrar and date
+        function getRotaAssignment(registrarName, date, period) {
+            const rotaDateStr = formatDateForRota(date);
             
-            // Check if it's weekend
-            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+            for (const daySchedule of rotaData) {
+                if (daySchedule.Date === rotaDateStr) {
+                    const shifts = daySchedule.Shifts;
+                    if (shifts[period]) {
+                        if (shifts[period].Duty === registrarName) {
+                            return { type: 'duty', details: 'AAU Duty' };
+                        }
+                        if (shifts[period].Reporting === registrarName) {
+                            return { type: 'reporting', details: 'AAU Reporting' };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Get registrar's status for a specific date and period
+        function getRegistrarStatus(registrar, date, period) {
+            const dateStr = formatDateForComparison(date);
+            
+            // Check for rota assignments first (highest priority)
+            const rotaAssignment = getRotaAssignment(registrar.name, date, period);
+            if (rotaAssignment) {
+                return {
+                    status: rotaAssignment.type,
+                    details: rotaAssignment.details
+                };
+            }
             
             // Check for leave
             for (const leave of registrar.leave_records) {
                 if (isDateInRange(dateStr, leave.start, leave.end)) {
                     return {
                         status: 'leave',
-                        type: leave.type,
-                        halfDay: leave.half_day || false,
                         details: `${leave.type} Leave`
                     };
                 }
@@ -351,27 +346,15 @@
                 if (isDateInRange(dateStr, block.start_date, block.end_date)) {
                     return {
                         status: 'block',
-                        type: block.block_name,
                         details: `Block: ${block.block_name}`
                     };
                 }
             }
             
-            // Check rota assignments
-            if (rotaData && rotaData.length > 0) {
-                for (const assignment of rotaData) {
-                    if (assignment.registrar === registrar.name && 
-                        isDateInRange(dateStr, assignment.start_date, assignment.end_date)) {
-                        return {
-                            status: 'duty',
-                            type: assignment.location || 'Duty',
-                            details: `Duty: ${assignment.location || 'Assigned'}`
-                        };
-                    }
-                }
-            }
+            // Check availability
+            const dayOfWeek = date.getDay();
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
             
-            // Check availability based on current week and day
             const weekNumber = Math.ceil(date.getDate() / 7);
             const availabilityWeek = weekNumber > 12 ? 12 : weekNumber;
             
@@ -382,14 +365,12 @@
                     if (availability.Weekends) {
                         return {
                             status: 'available',
-                            type: 'Weekend Available',
-                            details: 'Available for weekend duties'
+                            details: 'Available'
                         };
                     } else {
                         return {
                             status: 'unavailable',
-                            type: 'Weekend Unavailable',
-                            details: 'Not available for weekend duties'
+                            details: 'Not Available'
                         };
                     }
                 }
@@ -397,35 +378,24 @@
                 // Check weekday availability
                 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
                 const dayName = dayNames[dayOfWeek];
+                const periodAvailable = availability[`${dayName} ${period}`];
                 
-                const amAvailable = availability[`${dayName} AM`];
-                const pmAvailable = availability[`${dayName} PM`];
-                
-                if (amAvailable && pmAvailable) {
+                if (periodAvailable) {
                     return {
                         status: 'available',
-                        type: 'Full Day Available',
-                        details: 'Available AM & PM'
-                    };
-                } else if (amAvailable || pmAvailable) {
-                    return {
-                        status: 'available',
-                        type: 'Partial Day Available',
-                        details: `Available ${amAvailable ? 'AM' : 'PM'} only`
+                        details: 'Available'
                     };
                 } else {
                     return {
                         status: 'unavailable',
-                        type: 'Not Available',
-                        details: 'Not available this day'
+                        details: 'Not Available'
                     };
                 }
             }
             
             return {
                 status: 'unavailable',
-                type: 'No Data',
-                details: 'No availability data'
+                details: 'No Data'
             };
         }
 
@@ -449,21 +419,28 @@
             
             // Generate schedule for each registrar
             registrarsData.forEach(registrar => {
-                const amStatus = getRegistrarStatus(registrar, currentDate);
-                const pmStatus = getRegistrarStatus(registrar, currentDate);
+                const amStatus = getRegistrarStatus(registrar, currentDate, 'AM');
+                const pmStatus = getRegistrarStatus(registrar, currentDate, 'PM');
                 
                 html += `
                     <div class="registrar-card">
                         <div class="registrar-header">${registrar.name}</div>
                         <div class="schedule-row">
                             <div class="time-label">AM</div>
-                            <div class="location-info location-${amStatus.status}">
-                                <div class="status-badge badge-${amStatus.status}">${amStatus.type}</div>
-                                <div>${amStatus.details}</div>
+                            <div class="status-cell status-${amStatus.status}">
+                                ${amStatus.details}
                             </div>
-                            <div class="location-info location-${pmStatus.status}">
-                                <div class="status-badge badge-${pmStatus.status}">${pmStatus.type}</div>
-                                <div>${pmStatus.details}</div>
+                            <div class="status-cell status-${pmStatus.status}">
+                                ${pmStatus.details}
+                            </div>
+                        </div>
+                        <div class="schedule-row">
+                            <div class="time-label">PM</div>
+                            <div class="status-cell status-${pmStatus.status}">
+                                ${pmStatus.details}
+                            </div>
+                            <div class="status-cell status-${amStatus.status}">
+                                ${amStatus.details}
                             </div>
                         </div>
                     </div>
