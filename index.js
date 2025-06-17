@@ -225,7 +225,7 @@ function openBlocksPage() {
     window.location.href = "blocks.html";
 }
 
-function openBlocksPage() {
+function openRegLocation() {
     window.location.href = "where_at.html";
 }
 
