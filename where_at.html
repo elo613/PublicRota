@@ -252,10 +252,10 @@
         // Duty/Reporting check
         const rotaStatus = checkRota(registrar.name, dateStr, session);
         if (rotaStatus === "Duty") {
-            return {text: "Duty", cssClass: "status-duty"};
+            return {text: "AAU Duty", cssClass: "status-duty"};
         }
         if (rotaStatus === "Reporting") {
-            return {text: "Reporting", cssClass: "status-reporting"};
+            return {text: "AAU Reporting", cssClass: "status-reporting"};
         }
 
         // Block check - pass session now
