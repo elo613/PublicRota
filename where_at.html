@@ -216,8 +216,8 @@
             if (day.Date === dateStr) {
                 const shifts = day.Shifts;
                 if (shifts[session]) {
-                    if (shifts[session].Duty === registrarName) return "AAU Duty";
-                    if (shifts[session].Reporting === registrarName) return "AAU Reporting";
+                    if (shifts[session].Duty === registrarName) return "Duty";
+                    if (shifts[session].Reporting === registrarName) return "Reporting";
                 }
             }
         }
@@ -234,10 +234,10 @@
             if (session === 'AM') {
                 const rotaStatus = checkRota(registrar.name, dateStr, session);
                 if (rotaStatus === "Duty") {
-                    return {text: "Duty", cssClass: "status-duty"};
+                    return {text: "AAU Duty", cssClass: "status-duty"};
                 }
                 if (rotaStatus === "Reporting") {
-                    return {text: "Reporting", cssClass: "status-reporting"};
+                    return {text: "AAU Reporting", cssClass: "status-reporting"};
                 }
             }
             return {text: "-", cssClass: "status-none"};
