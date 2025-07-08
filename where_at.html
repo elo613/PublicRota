@@ -48,14 +48,18 @@
             min-width: 300px;
             text-align: center;
         }
-        .table-responsive {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+
+        /* NEW CSS for sticky header and column */
+        .table-container {
+            overflow: auto; /* This creates the scrollbar for the table */
+            max-height: 80vh; /* Optional: adds vertical scrolling if the table gets too long */
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1000px;
+            min-width: 1000px; /* Ensure table is wide enough to trigger scroll */
+            position: relative; /* Needed for sticky positioning context */
         }
         thead tr {
             background: #34495e;
@@ -70,6 +74,30 @@
             height: 40px;
             white-space: nowrap;
         }
+
+        /* Sticky header row */
+        thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2; /* Ensures it stays above body content */
+            background: #34495e; /* Ensure background color to hide content underneath */
+        }
+
+        /* Sticky first column */
+        th:first-child,
+        td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 1; /* Ensures it stays above other columns */
+            background: white; /* Match container background or specific for clarity */
+            min-width: 120px; /* Give some width for the name column */
+        }
+
+        /* Top-left corner (intersection of sticky row and column) */
+        thead th:first-child {
+            z-index: 3; /* Highest z-index for the corner */
+        }
+
         tbody tr:nth-child(even) {
             background: #f9f9f9;
         }
@@ -108,7 +136,8 @@
             <button onclick="rotaApp.changeWeek(-7)">← Previous Week</button>
             <div id="currentWeekRange">Loading...</div>
             <button onclick="rotaApp.changeWeek(7)">Next Week →</button>
-            <button onclick="rotaApp.copyTable()">Copy Table</button> </div>
+            <button onclick="rotaApp.copyTable()">Copy Table</button>
+        </div>
         <div id="rotaContainer">
             <div class="loading">Loading rota...</div>
         </div>
@@ -146,6 +175,7 @@
                     this.render();
                 } catch (e) {
                     console.error(e);
+                    document.getElementById("rotaContainer").innerHTML = '<div class="error-message">Failed to load rota data. Please try again later.</div>';
                 }
             }
 
@@ -237,14 +267,16 @@
                 // 4. Check for Blocks - ONLY if it's NOT Saturday (6) or Sunday (0)
                 if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Saturday or Sunday
                     const blocks = this.processedBlocks.get(registrar.name);
-                    for (const b of blocks) {
-                        if (date >= b.start && date <= b.end) {
-                            const day = date.toDateString().split(' ')[0];
-                            const val = b.definition?.[day]?.[session]?.value;
-                            return {
-                                text: val || `Block: ${b.blockName}`,
-                                cssClass: this.CSS_STATUS_CLASSES[val] || this.CSS_STATUS_CLASSES.Block
-                            };
+                    if (blocks) { // Ensure blocks exist for registrar
+                        for (const b of blocks) {
+                            if (date >= b.start && date <= b.end) {
+                                const day = date.toDateString().split(' ')[0];
+                                const val = b.definition?.[day]?.[session]?.value;
+                                return {
+                                    text: val || `Block: ${b.blockName}`,
+                                    cssClass: this.CSS_STATUS_CLASSES[val] || this.CSS_STATUS_CLASSES.Block
+                                };
+                            }
                         }
                     }
                 }
@@ -277,7 +309,7 @@
                 const currentWeekRange = `${week[0].toDateString()} - ${week[6].toDateString()}`;
                 document.getElementById("currentWeekRange").textContent = currentWeekRange;
 
-                let html = `<div class="table-responsive"><table id="rotaTable"><thead><tr><th>Registrar</th>`; // Added ID here
+                let html = `<div class="table-container"><table id="rotaTable"><thead><tr><th>Registrar</th>`; // Added ID here
                 week.forEach(d => {
                     html += `<th colspan="2">${d.toDateString()}</th>`;
                 });
