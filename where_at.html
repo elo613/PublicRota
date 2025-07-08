@@ -215,29 +215,41 @@
 
       _getShiftStatus(registrar, date, session) {
         const dateStr = date.toLocaleDateString('en-GB');
+        const dayOfWeek = date.getDay(); // 0 for Sunday, 6 for Saturday
+
+        // 1. Check for Leave first (highest priority)
         if (registrar.leave_records.some(l => date >= l.start && date <= l.end)) {
-          return { text: `${registrar.leave_records.find(l => date >= l.start && date <= l.end).type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
+          return { text: `${registrar.leave_records.find(l => date >= l.start && l.end).type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
         }
-        const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+
+        // 2. Check for Duty/Reporting
         const dayShifts = this.processedRota.get(dateStr);
         if (dayShifts && dayShifts[session]) {
           const shift = dayShifts[session];
           if (shift.Duty === registrar.name) return { text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES["AAU Duty"] };
           if (shift.Reporting === registrar.name) return { text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES["AAU Reporting"] };
         }
+
+        // 3. Check for Ultrasound
         const us = this.processedUltrasound.get(dateStr)?.get(session);
         if (us && us.has(registrar.name)) return { text: "Ultrasound", cssClass: this.CSS_STATUS_CLASSES["Ultrasound"] };
-        const blocks = this.processedBlocks.get(registrar.name);
-        for (const b of blocks) {
-          if (date >= b.start && date <= b.end) {
-            const day = date.toDateString().split(' ')[0];
-            const val = b.definition?.[day]?.[session]?.value;
-            return {
-              text: val || `Block: ${b.blockName}`,
-              cssClass: this.CSS_STATUS_CLASSES[val] || this.CSS_STATUS_CLASSES.Block
-            };
+
+        // 4. Check for Blocks - ONLY if it's NOT Saturday (6) or Sunday (0)
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Saturday or Sunday
+          const blocks = this.processedBlocks.get(registrar.name);
+          for (const b of blocks) {
+            if (date >= b.start && date <= b.end) {
+              const day = date.toDateString().split(' ')[0];
+              const val = b.definition?.[day]?.[session]?.value;
+              return {
+                text: val || `Block: ${b.blockName}`,
+                cssClass: this.CSS_STATUS_CLASSES[val] || this.CSS_STATUS_CLASSES.Block
+              };
+            }
           }
         }
+
+        // 5. Default to 'None' if no other status applies
         return { text: "-", cssClass: this.CSS_STATUS_CLASSES.None };
       }
 
