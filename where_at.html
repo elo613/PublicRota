@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Registrar Daily Schedule</title>
+<title>Registrar Weekly Rota</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -11,7 +11,7 @@
         padding: 20px;
     }
     .container {
-        max-width: 900px;
+        max-width: 1200px; /* Increased max-width for weekly view */
         margin: 0 auto;
         background: white;
         border-radius: 8px;
@@ -42,15 +42,16 @@
     button:hover {
         background: #4a5f7a;
     }
-    #currentDate {
+    #currentWeekRange {
         font-weight: bold;
         font-size: 1.2rem;
-        min-width: 180px;
+        min-width: 300px; /* Adjusted width for week range */
         text-align: center;
     }
     table {
         width: 100%;
         border-collapse: collapse;
+        table-layout: fixed; /* Ensures even column distribution */
     }
     thead tr {
         background: #34495e;
@@ -60,11 +61,24 @@
         border: 1px solid #ddd;
         padding: 10px;
         text-align: center;
-        font-size: 0.95rem;
-        white-space: pre-line; /* allow newlines in block values */
+        font-size: 0.85rem; /* Slightly smaller font for more content */
+        white-space: pre-line;
+        vertical-align: top; /* Align content to top for multi-line cells */
     }
     tbody tr:nth-child(even) {
         background: #f9f9f9;
+    }
+    .day-header {
+        background: #5c7b9e; /* Different background for day headers */
+        color: white;
+        font-weight: bold;
+        padding: 8px;
+    }
+    .session-cell {
+        min-height: 40px; /* Ensure consistent cell height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .status-leave {
         background: #f8d7da;
@@ -116,14 +130,14 @@
 </head>
 <body>
 <div class="container">
-    <h1>Registrar Daily Schedule</h1>
+    <h1>Registrar Weekly Rota</h1>
     <div class="date-controls">
-        <button onclick="changeDate(-1)">← Previous</button>
-        <div id="currentDate"></div>
-        <button onclick="changeDate(1)">Next →</button>
+        <button onclick="changeWeek(-7)">← Previous Week</button>
+        <div id="currentWeekRange"></div>
+        <button onclick="changeWeek(7)">Next Week →</button>
     </div>
-    <div id="scheduleContainer">
-        <div class="loading">Loading schedule...</div>
+    <div id="rotaContainer">
+        <div class="loading">Loading rota...</div>
     </div>
 </div>
 
@@ -131,7 +145,7 @@
     let registrarsData = [];
     let rotaData = [];
     let blocksData = {};
-    let currentDate = new Date();
+    let currentMonday = new Date(); // Will store the Monday of the current week
 
     const DATA_SOURCES = {
         registrars: './registrars_data.json',
@@ -146,6 +160,12 @@
     }
 
     function formatDate(date) {
+        return date.toLocaleDateString('en-US', {
+            month: 'short', day: 'numeric'
+        });
+    }
+
+    function formatFullDate(date) {
         return date.toLocaleDateString('en-US', {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
@@ -225,9 +245,11 @@
     }
 
     // Compose status text and CSS class for a session
-    function getSessionStatus(registrar, date, session, isWeekend) {
+    function getSessionStatus(registrar, date, session) {
         const dateISO = formatDateForISO(date);
         const dateStr = formatDateForRota(date);
+        const dayOfWeek = date.getDay();
+        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
 
         if (isWeekend) {
             // Weekend logic: only show AM Duty/Reporting if AAU duty; else "-"
@@ -266,44 +288,75 @@
         return {text: "-", cssClass: "status-none"};
     }
 
-    function renderSchedule() {
-        const container = document.getElementById('scheduleContainer');
-        const currentDateElem = document.getElementById('currentDate');
-        currentDateElem.textContent = formatDate(currentDate);
+    function renderWeeklyRota() {
+        const rotaContainer = document.getElementById('rotaContainer');
+        const currentWeekRangeElem = document.getElementById('currentWeekRange');
 
-        const dayOfWeek = currentDate.getDay();
-        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+        // Calculate the dates for the current week (Monday to Sunday)
+        let weekDates = [];
+        const startOfWeek = new Date(currentMonday); // Copy currentMonday
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(startOfWeek);
+            date.setDate(startOfWeek.getDate() + i);
+            weekDates.push(date);
+        }
+
+        // Update the week range display
+        const mondayFormatted = formatFullDate(weekDates[0]);
+        const sundayFormatted = formatFullDate(weekDates[6]);
+        currentWeekRangeElem.textContent = `${mondayFormatted} - ${sundayFormatted}`;
 
         let html = '';
 
-        if (isWeekend) {
+        // Add a weekend indicator only if the current week includes a weekend
+        const hasWeekend = weekDates.some(date => date.getDay() === 0 || date.getDay() === 6);
+        if (hasWeekend) {
             html += `<div class="weekend-indicator">Weekend Schedule: only AM AAU duty/reporting shown; otherwise '-'</div>`;
         }
 
         html += `<table>
             <thead>
                 <tr>
-                    <th>Registrar</th>
-                    <th>AM</th>
-                    <th>PM</th>
-                </tr>
+                    <th>Registrar</th>`;
+        weekDates.forEach(date => {
+            const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+            const dateNum = date.getDate().toString().padStart(2, '0');
+            const monthName = date.toLocaleDateString('en-US', { month: 'short' });
+            html += `<th colspan="2" class="day-header">${dayName}<br>${dateNum} ${monthName}</th>`;
+        });
+        html += `</tr>
+                <tr>
+                    <th></th>`; // Empty cell for registrar column
+        for (let i = 0; i < 7; i++) {
+            html += `<th>AM</th><th>PM</th>`;
+        }
+        html += `</tr>
             </thead>
             <tbody>`;
 
         registrarsData.forEach(registrar => {
-            const amStatus = getSessionStatus(registrar, currentDate, "AM", isWeekend);
-            const pmStatus = getSessionStatus(registrar, currentDate, "PM", isWeekend);
-
             html += `<tr>
-                <td>${registrar.name}</td>
-                <td class="${amStatus.cssClass}">${amStatus.text}</td>
-                <td class="${pmStatus.cssClass}">${pmStatus.text}</td>
-            </tr>`;
+                <td>${registrar.name}</td>`;
+            weekDates.forEach(date => {
+                const amStatus = getSessionStatus(registrar, date, "AM");
+                const pmStatus = getSessionStatus(registrar, date, "PM");
+                html += `<td class="${amStatus.cssClass} session-cell">${amStatus.text}</td>
+                         <td class="${pmStatus.cssClass} session-cell">${pmStatus.text}</td>`;
+            });
+            html += `</tr>`;
         });
 
         html += `</tbody></table>`;
 
-        container.innerHTML = html;
+        rotaContainer.innerHTML = html;
+    }
+
+    // Function to set currentMonday to the Monday of the current week
+    function setWeekToCurrentMonday(date) {
+        const dayOfWeek = date.getDay(); // 0 for Sunday, 1 for Monday, etc.
+        const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust if current day is Sunday
+        currentMonday = new Date(date.setDate(diff));
+        currentMonday.setHours(0, 0, 0, 0); // Normalize to start of day
     }
 
     async function initializeApp() {
@@ -312,16 +365,17 @@
             rotaData = await fetchData(DATA_SOURCES.rota);
             blocksData = await fetchData(DATA_SOURCES.blocks);
 
-            renderSchedule();
+            setWeekToCurrentMonday(new Date()); // Initialize to current week's Monday
+            renderWeeklyRota();
         } catch (error) {
-            document.getElementById('scheduleContainer').innerHTML = `<div class="error-message">Failed to load schedule data.</div>`;
+            document.getElementById('rotaContainer').innerHTML = `<div class="error-message">Failed to load rota data.</div>`;
             console.error(error);
         }
     }
 
-    function changeDate(days) {
-        currentDate.setDate(currentDate.getDate() + days);
-        renderSchedule();
+    function changeWeek(days) {
+        currentMonday.setDate(currentMonday.getDate() + days);
+        renderWeeklyRota();
     }
 
     window.addEventListener('DOMContentLoaded', initializeApp);
