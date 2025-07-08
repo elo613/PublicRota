@@ -80,7 +80,7 @@
     .session-cell {
         min-height: 40px;
         display: flex;
-        flex-direction: column;
+        flex-direction: column; /* <--- This is the culprit for vertical stacking inside a cell */
         align-items: center;
         justify-content: center;
     }
