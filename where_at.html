@@ -77,8 +77,14 @@
     .session-cell {
         min-height: 40px; /* Ensure consistent cell height */
         display: flex;
+        flex-direction: column; /* Allows content to stack */
         align-items: center;
         justify-content: center;
+    }
+    .shift-detail {
+        font-size: 0.8em; /* Smaller font for secondary details like ultrasound */
+        color: #555;
+        margin-top: 2px;
     }
     .status-leave {
         background: #f8d7da;
@@ -98,6 +104,11 @@
     .status-block {
         background: #cce5ff;
         color: #004085;
+        font-weight: bold;
+    }
+    .status-ultrasound { /* New style for ultrasound duty */
+        background: #d1ecf1;
+        color: #0c5460;
         font-weight: bold;
     }
     .status-none {
@@ -145,12 +156,14 @@
     let registrarsData = [];
     let rotaData = [];
     let blocksData = {};
-    let currentMonday = new Date(); // Will store the Monday of the current week
+    let ultrasoundData = []; // New variable for ultrasound data
+    let currentMonday = new Date();
 
     const DATA_SOURCES = {
         registrars: './registrars_data.json',
         rota: './rota.json',
-        blocks: './blocks.json'
+        blocks: './blocks.json',
+        ultrasound: './ultrasound.json' // Add new data source
     };
 
     async function fetchData(url) {
@@ -182,12 +195,10 @@
         return date.toISOString().split('T')[0];
     }
 
-    // Parse leave dates like "16 Sep 2024"
     function parseLeaveDate(dateStr) {
         return new Date(dateStr);
     }
 
-    // Inclusive date range check for leave and blocks
     function isDateInRange(checkDateStr, startStr, endStr) {
         const check = new Date(checkDateStr + 'T00:00:00');
         const start = parseLeaveDate(startStr);
@@ -196,7 +207,6 @@
         return check >= start && check <= end;
     }
 
-    // Check if registrar is on leave on the given date
     function checkLeave(registrar, dateISO) {
         for (const leave of registrar.leave_records) {
             if (isDateInRange(dateISO, leave.start, leave.end)) {
@@ -206,7 +216,6 @@
         return null;
     }
 
-    // Check block info for the registrar on given date and session
     function checkBlock(registrar, date, session) {
         const dateISO = formatDateForISO(date);
         const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -229,8 +238,6 @@
         return null;
     }
 
-    // Check rota for a specific date and session ('AM' or 'PM')
-    // Returns "Duty", "Reporting" or null
     function checkRota(registrarName, dateStr, session) {
         for (const day of rotaData) {
             if (day.Date === dateStr) {
@@ -244,6 +251,16 @@
         return null;
     }
 
+    // New function to check for ultrasound duty
+    function checkUltrasoundDuty(registrarName, dateStr, session) {
+        for (const entry of ultrasoundData) {
+            if (entry.Date === dateStr && entry.Session === session && entry['Registrar name'] === registrarName) {
+                return "Ultrasound";
+            }
+        }
+        return null;
+    }
+
     // Compose status text and CSS class for a session
     function getSessionStatus(registrar, date, session) {
         const dateISO = formatDateForISO(date);
@@ -252,7 +269,6 @@
         const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
 
         if (isWeekend) {
-            // Weekend logic: only show AM Duty/Reporting if AAU duty; else "-"
             if (session === 'AM') {
                 const rotaStatus = checkRota(registrar.name, dateStr, session);
                 if (rotaStatus === "Duty") {
@@ -262,16 +278,19 @@
                     return {text: "AAU Reporting", cssClass: "status-reporting"};
                 }
             }
+            // Weekends don't have regular ultrasound duties based on common patterns, but we'll check anyway.
+            const ultrasoundStatus = checkUltrasoundDuty(registrar.name, dateStr, session);
+            if (ultrasoundStatus) {
+                return {text: "Ultrasound", cssClass: "status-ultrasound"};
+            }
             return {text: "-", cssClass: "status-none"};
         }
 
-        // Weekday priority: Leave > Duty/Reporting > Block > None
+        // Weekday priority: Leave > Duty/Reporting > Ultrasound > Block > None
 
-        // Leave check
         const leaveStatus = checkLeave(registrar, dateISO);
         if (leaveStatus) return {text: leaveStatus, cssClass: 'status-leave'};
 
-        // Duty/Reporting check
         const rotaStatus = checkRota(registrar.name, dateStr, session);
         if (rotaStatus === "Duty") {
             return {text: "AAU Duty", cssClass: "status-duty"};
@@ -280,11 +299,15 @@
             return {text: "AAU Reporting", cssClass: "status-reporting"};
         }
 
-        // Block check - pass session now
+        // New ultrasound check before block
+        const ultrasoundStatus = checkUltrasoundDuty(registrar.name, dateStr, session);
+        if (ultrasoundStatus) {
+            return {text: "Ultrasound", cssClass: "status-ultrasound"};
+        }
+
         const blockStatus = checkBlock(registrar, date, session);
         if (blockStatus) return {text: blockStatus, cssClass: "status-block"};
 
-        // None assigned
         return {text: "-", cssClass: "status-none"};
     }
 
@@ -292,23 +315,20 @@
         const rotaContainer = document.getElementById('rotaContainer');
         const currentWeekRangeElem = document.getElementById('currentWeekRange');
 
-        // Calculate the dates for the current week (Monday to Sunday)
         let weekDates = [];
-        const startOfWeek = new Date(currentMonday); // Copy currentMonday
+        const startOfWeek = new Date(currentMonday);
         for (let i = 0; i < 7; i++) {
             const date = new Date(startOfWeek);
             date.setDate(startOfWeek.getDate() + i);
             weekDates.push(date);
         }
 
-        // Update the week range display
         const mondayFormatted = formatFullDate(weekDates[0]);
         const sundayFormatted = formatFullDate(weekDates[6]);
         currentWeekRangeElem.textContent = `${mondayFormatted} - ${sundayFormatted}`;
 
         let html = '';
 
-        // Add a weekend indicator only if the current week includes a weekend
         const hasWeekend = weekDates.some(date => date.getDay() === 0 || date.getDay() === 6);
         if (hasWeekend) {
             html += `<div class="weekend-indicator">Weekend Schedule: only AM AAU duty/reporting shown; otherwise '-'</div>`;
@@ -326,7 +346,7 @@
         });
         html += `</tr>
                 <tr>
-                    <th></th>`; // Empty cell for registrar column
+                    <th></th>`;
         for (let i = 0; i < 7; i++) {
             html += `<th>AM</th><th>PM</th>`;
         }
@@ -351,12 +371,11 @@
         rotaContainer.innerHTML = html;
     }
 
-    // Function to set currentMonday to the Monday of the current week
     function setWeekToCurrentMonday(date) {
-        const dayOfWeek = date.getDay(); // 0 for Sunday, 1 for Monday, etc.
-        const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust if current day is Sunday
+        const dayOfWeek = date.getDay();
+        const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
         currentMonday = new Date(date.setDate(diff));
-        currentMonday.setHours(0, 0, 0, 0); // Normalize to start of day
+        currentMonday.setHours(0, 0, 0, 0);
     }
 
     async function initializeApp() {
@@ -364,8 +383,9 @@
             registrarsData = await fetchData(DATA_SOURCES.registrars);
             rotaData = await fetchData(DATA_SOURCES.rota);
             blocksData = await fetchData(DATA_SOURCES.blocks);
+            ultrasoundData = await fetchData(DATA_SOURCES.ultrasound); // Fetch ultrasound data
 
-            setWeekToCurrentMonday(new Date()); // Initialize to current week's Monday
+            setWeekToCurrentMonday(new Date());
             renderWeeklyRota();
         } catch (error) {
             document.getElementById('rotaContainer').innerHTML = `<div class="error-message">Failed to load rota data.</div>`;
