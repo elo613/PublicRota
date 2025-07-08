@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Registrar Weekly Rota</title>
   <style>
     body {
@@ -10,6 +10,7 @@
       background: #f5f5f5;
       padding: 20px;
     }
+
     .container {
       max-width: 1400px;
       margin: 0 auto;
@@ -18,10 +19,12 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       padding: 20px;
     }
+
     h1 {
       text-align: center;
       color: #2c3e50;
     }
+
     .date-controls {
       display: flex;
       justify-content: center;
@@ -29,6 +32,7 @@
       gap: 15px;
       margin-bottom: 20px;
     }
+
     button {
       background: #34495e;
       border: none;
@@ -37,27 +41,33 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
     button:hover {
       background: #4a5f7a;
     }
+
     #currentWeekRange {
       font-weight: bold;
       font-size: 1.2rem;
       min-width: 300px;
       text-align: center;
     }
+
     .table-responsive {
       overflow-x: auto;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       min-width: 1000px;
     }
+
     thead tr {
       background: #34495e;
       color: white;
     }
+
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
@@ -67,19 +77,22 @@
       height: 40px;
       white-space: nowrap;
     }
+
     tbody tr:nth-child(even) {
       background: #f9f9f9;
     }
+
     .day-header {
       background: #5c7b9e;
       color: white;
       font-weight: bold;
     }
+
     .session-header {
       font-size: 0.8rem;
     }
 
-    /* Status styling */
+    /* Status styles */
     .status-leave { background: #dc3545; color: white; font-weight: bold; }
     .status-duty { background: #28a745; color: white; font-weight: bold; }
     .status-reporting { background: #007bff; color: white; font-weight: bold; }
@@ -98,15 +111,24 @@
       margin-bottom: 15px;
       border-radius: 6px;
     }
-    .loading, .error-message {
+
+    .loading,
+    .error-message {
       text-align: center;
       padding: 20px;
       font-size: 1.1rem;
       border-radius: 6px;
       margin: 20px 0;
     }
-    .loading { color: #6c757d; }
-    .error-message { background: #f8d7da; color: #721c24; }
+
+    .loading {
+      color: #6c757d;
+    }
+
+    .error-message {
+      background: #f8d7da;
+      color: #721c24;
+    }
   </style>
 </head>
 <body>
@@ -117,23 +139,24 @@
       <div id="currentWeekRange"></div>
       <button onclick="rotaApp.changeWeek(7)">Next Week →</button>
     </div>
+
     <div id="rotaContainer">
       <div class="loading">Loading rota...</div>
     </div>
   </div>
 
   <script>
-    // Assume rotaApp is instantiated and manages rendering
+    // Assume rotaApp class is defined elsewhere in your JS
     document.addEventListener("DOMContentLoaded", async () => {
       if (typeof RotaApp !== 'undefined') {
         window.rotaApp = new RotaApp();
         await rotaApp._loadAndProcessData();
         rotaApp._renderRotaTable();
       } else {
-        document.getElementById('rotaContainer').innerHTML = '<div class="error-message">Rota application failed to load. Please check your scripts.</div>';
+        document.getElementById('rotaContainer').innerHTML =
+          '<div class="error-message">Rota application failed to load. Please check your scripts.</div>';
       }
     });
   </script>
-  <!-- Load the rest of your JS logic (not included here) after this -->
 </body>
 </html>
