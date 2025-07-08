@@ -62,7 +62,7 @@
         padding: 8px;
         text-align: center;
         font-size: 0.8rem;
-        white-space: pre-line; /* Allows text to wrap within cells */
+        white-space: pre-line; /* Allows text to wrap within cells with <br> */
         vertical-align: top;
     }
     tbody tr:nth-child(even) {
@@ -78,17 +78,19 @@
         font-size: 0.75rem;
     }
     .session-cell {
-        min-height: 40px;
-        display: flex; /* Use flexbox to center content vertically/horizontally */
-        align-items: center;
-        justify-content: center;
-        /* If you wanted multiple lines within a cell to stack (e.g., "Duty" and then a smaller note below),
-           you would add: flex-direction: column; */
+        min-height: 40px; /* Ensure consistent height for empty cells */
+        /* For multiple lines, flex-direction: column is appropriate if you want each item to be a distinct block */
+        display: flex;
+        flex-direction: column; /* Stack multiple items vertically within the cell */
+        align-items: center; /* Center horizontally */
+        justify-content: flex-start; /* Align items to the top if multiple */
     }
-    .shift-detail {
-        font-size: 0.7em;
-        color: #555;
-        margin-top: 2px;
+    .shift-item {
+        margin: 2px 0; /* Space between multiple shifts in a cell */
+        padding: 2px 4px;
+        border-radius: 3px;
+        width: 100%; /* Take full width of parent cell */
+        box-sizing: border-box; /* Include padding in width */
     }
     /* Status-specific styling */
     .status-leave { background: #f8d7da; color: #721c24; font-weight: bold; }
@@ -97,6 +99,11 @@
     .status-block { background: #cce5ff; color: #004085; font-weight: bold; }
     .status-ultrasound { background: #d1ecf1; color: #0c5460; font-weight: bold; }
     .status-none { color: #6c757d; }
+    /* Specific styles for identified block types if needed, matching the image */
+    .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; } /* Example color */
+    .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; } /* Example color */
+
+
     .weekend-indicator {
         text-align: center;
         padding: 12px;
@@ -149,13 +156,18 @@ class RotaApp {
             ultrasound: './ultrasound.json'
         };
 
-        // CSS class mapping for various statuses
+        // CSS class mapping for various statuses/shift types
         this.CSS_STATUS_CLASSES = {
             'Leave': 'status-leave',
-            'Duty': 'status-duty',
-            'Reporting': 'status-reporting',
-            'Block': 'status-block',
+            'AAU Duty': 'status-duty',
+            'AAU Reporting': 'status-reporting',
             'Ultrasound': 'status-ultrasound',
+            // Generic Block class
+            'Block': 'status-block',
+            // Specific block/duty names seen in the image or likely data
+            'Mt Vernon Oncology': 'status-mt-vernon-oncology', // Custom class for this
+            'WGH Reporting/Duty': 'status-wgh-reporting-duty', // Custom class for this
+            // Default if no specific status
             'None': 'status-none'
         };
     }
@@ -185,16 +197,7 @@ class RotaApp {
     }
 
     /**
-     * Formats a Date object into a YYYY-MM-DD string, often used for internal Date object creation.
-     * @param {Date} date - The date to format.
-     * @returns {string} The formatted date string.
-     */
-    _formatDateForISO(date) {
-        return date.toISOString().split('T')[0];
-    }
-
-    /**
-     * Parses a date string (either "DD Mon YYYY" or "YYYY-MM-DD") into a UTC Date object.
+     * Parses a date string (either "DD MonYYYY" or "YYYY-MM-DD") into a UTC Date object.
      * @param {string} dateStr - The date string to parse.
      * @returns {Date} The parsed Date object in UTC.
      */
@@ -284,13 +287,6 @@ class RotaApp {
             this._processBlocksData(registrars, blocks); // Depends on registrars data
 
             console.log("Data loaded and processed successfully.");
-            // console.log("Processed Data:", {
-            //     registrars: this.registrarsData,
-            //     processedRota: this.processedRota,
-            //     processedBlocks: this.processedBlocks,
-            //     processedUltrasound: this.processedUltrasound
-            // });
-
         } catch (error) {
             document.getElementById('rotaContainer').innerHTML = `<div class="error-message">Failed to load rota data: ${error.message}. Please check data files.</div>`;
             console.error("Error during data loading or processing:", error);
@@ -371,27 +367,26 @@ class RotaApp {
     // --- Shift Status Logic ---
 
     /**
-     * Determines the status (Leave, Duty, Block, Ultrasound, None) for a specific registrar, date, and session.
-     * Prioritizes statuses: Leave > Rota (Duty/Reporting) > Ultrasound > Block > None.
+     * Determines all applicable statuses for a specific registrar, date, and session.
+     * Prioritizes statuses: Leave (exclusive) > Rota (Duty/Reporting) > Ultrasound > Block > None.
      * Special handling for weekends.
      * @param {Object} registrar - The registrar object.
      * @param {Date} date - The date for the session.
      * @param {string} session - The session ("AM" or "PM").
-     * @returns {{text: string, cssClass: string}} An object containing the display text and CSS class.
+     * @returns {Array<{text: string, cssClass: string}>} An array of objects containing the display text and CSS class for all applicable shifts.
      */
-    _getShiftStatus(registrar, date, session) {
+    _getShiftStatuses(registrar, date, session) {
         const dateForRotaLookup = this._formatDateForDataLookup(date); // DD/MM/YYYY
         const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
         const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+        const statuses = [];
 
-        let statusText = '-';
-        let statusClass = this.CSS_STATUS_CLASSES.None;
-
-        // 1. Check Leave (Highest Priority)
+        // 1. Check Leave (Highest Priority and Exclusive)
         if (registrar.leave_records) {
             for (const leave of registrar.leave_records) {
                 if (this._isDateBetween(date, leave.start, leave.end)) {
-                    return { text: `${leave.type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
+                    // If on leave, no other duties are explicitly shown for this slot.
+                    return [{ text: `${leave.type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave }];
                 }
             }
         }
@@ -401,49 +396,52 @@ class RotaApp {
         if (dayShifts && dayShifts[session]) {
             const shiftDetails = dayShifts[session];
             if (shiftDetails.Duty === registrar.name) {
-                return { text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES.Duty };
-            } else if (shiftDetails.Reporting === registrar.name) {
-                return { text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES.Reporting };
+                statuses.push({ text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES['AAU Duty'] });
+            }
+            if (shiftDetails.Reporting === registrar.name) {
+                statuses.push({ text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES['AAU Reporting'] });
             }
         }
 
-        // For weekends, we primarily show AAU duties/reporting and explicit ultrasound.
-        // Other blocks/activities are generally assumed not to apply or are not displayed.
-        if (isWeekend) {
-            // Check for Ultrasound on weekends too, though less common
-            const ultrasoundForDay = this.processedUltrasound.get(dateForRotaLookup);
-            if (ultrasoundForDay && ultrasoundForDay.get(session)?.has(registrar.name)) {
-                return { text: "Ultrasound", cssClass: this.CSS_STATUS_CLASSES.Ultrasound };
-            }
-            return { text: "-", cssClass: this.CSS_STATUS_CLASSES.None }; // Default for weekends if no duty/ultrasound
-        }
-
-        // 3. Check Ultrasound (Weekday Specific) - After Rota as Rota is often higher priority
+        // 3. Check Ultrasound
         const ultrasoundForDay = this.processedUltrasound.get(dateForRotaLookup);
         if (ultrasoundForDay && ultrasoundForDay.get(session)?.has(registrar.name)) {
-            return { text: "Ultrasound", cssClass: this.CSS_STATUS_CLASSES.Ultrasound };
+            statuses.push({ text: "Ultrasound", cssClass: this.CSS_STATUS_CLASSES.Ultrasound });
         }
 
-        // 4. Check Blocks
-        const registrarBlocks = this.processedBlocks.get(registrar.name);
-        if (registrarBlocks) {
-            for (const block of registrarBlocks) {
-                if (this._isDateBetween(date, block.start, block.end)) {
-                    const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeek];
-                    const blockValue = block.definition?.[dayName]?.[session]?.value;
-                    if (blockValue) {
-                        return { text: blockValue, cssClass: this.CSS_STATUS_CLASSES.Block };
-                    } else {
-                        // If a registrar is in a block, but no specific activity is defined for that day/session,
-                        // display the block name.
-                        return { text: `Block: ${block.blockName}`, cssClass: this.CSS_STATUS_CLASSES.Block };
+        // 4. Check Blocks (only for weekdays unless explicitly defined)
+        if (!isWeekend) { // Blocks are generally weekday activities unless specified
+            const registrarBlocks = this.processedBlocks.get(registrar.name);
+            if (registrarBlocks) {
+                for (const block of registrarBlocks) {
+                    if (this._isDateBetween(date, block.start, block.end)) {
+                        const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeek];
+                        const blockValue = block.definition?.[dayName]?.[session]?.value;
+                        if (blockValue) {
+                            // Use a specific class if defined for the block name, otherwise default block class
+                            const blockClass = this.CSS_STATUS_CLASSES[blockValue] || this.CSS_STATUS_CLASSES.Block;
+                            statuses.push({ text: blockValue, cssClass: blockClass });
+                        } else {
+                            // If a registrar is in a block, but no specific activity is defined for that day/session,
+                            // display the block name.
+                            statuses.push({ text: `Block: ${block.blockName}`, cssClass: this.CSS_STATUS_CLASSES.Block });
+                        }
                     }
                 }
             }
+        } else {
+            // For weekends, if only general blocks would apply but not specific rota/ultrasound, do not show them.
+            // The weekend indicator handles the general rule.
         }
 
-        // 5. Default (No specific status found)
-        return { text: statusText, cssClass: statusClass };
+        // If no specific status found and not on leave, return a default 'None' status
+        if (statuses.length === 0) {
+            return [{ text: "-", cssClass: this.CSS_STATUS_CLASSES.None }];
+        }
+
+        // Remove duplicates and sort for consistent display if multiple are found (e.g., if a block name is the same as a rota duty)
+        const uniqueStatuses = Array.from(new Set(statuses.map(s => JSON.stringify(s)))).map(s => JSON.parse(s));
+        return uniqueStatuses.sort((a, b) => a.text.localeCompare(b.text));
     }
 
 
@@ -499,12 +497,31 @@ class RotaApp {
             html += `<tr>
                 <td>${registrar.name}</td>`; // Registrar name in the first column
             weekDates.forEach(date => {
-                const amStatus = this._getShiftStatus(registrar, date, "AM");
-                const pmStatus = this._getShiftStatus(registrar, date, "PM");
+                const amStatuses = this._getShiftStatuses(registrar, date, "AM");
+                const pmStatuses = this._getShiftStatuses(registrar, date, "PM");
                 
-                // Each day gets two cells: one for AM, one for PM
-                html += `<td class="${amStatus.cssClass} session-cell">${amStatus.text}</td>
-                         <td class="${pmStatus.cssClass} session-cell">${pmStatus.text}</td>`;
+                // For AM cell
+                html += `<td class="session-cell">`;
+                if (amStatuses.length > 0) {
+                    amStatuses.forEach(status => {
+                        // Use a div for each shift to allow individual styling and stacking
+                        html += `<div class="shift-item ${status.cssClass}">${status.text}</div>`;
+                    });
+                } else {
+                    html += `<div class="shift-item ${this.CSS_STATUS_CLASSES.None}">-</div>`;
+                }
+                html += `</td>`;
+
+                // For PM cell
+                html += `<td class="session-cell">`;
+                if (pmStatuses.length > 0) {
+                    pmStatuses.forEach(status => {
+                        html += `<div class="shift-item ${status.cssClass}">${status.text}</div>`;
+                    });
+                } else {
+                    html += `<div class="shift-item ${this.CSS_STATUS_CLASSES.None}">-</div>`;
+                }
+                html += `</td>`;
             });
             html += `</tr>`;
         });
