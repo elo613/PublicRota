@@ -11,7 +11,7 @@
         padding: 20px;
     }
     .container {
-        max-width: 1200px; /* Increased max-width for weekly view */
+        max-width: 1400px; /* Increased max-width for even wider weekly view */
         margin: 0 auto;
         background: white;
         border-radius: 8px;
@@ -45,7 +45,7 @@
     #currentWeekRange {
         font-weight: bold;
         font-size: 1.2rem;
-        min-width: 300px; /* Adjusted width for week range */
+        min-width: 300px;
         text-align: center;
     }
     table {
@@ -59,30 +59,33 @@
     }
     th, td {
         border: 1px solid #ddd;
-        padding: 10px;
+        padding: 8px; /* Slightly reduced padding */
         text-align: center;
-        font-size: 0.85rem; /* Slightly smaller font for more content */
+        font-size: 0.8rem; /* Further reduced font size for many columns */
         white-space: pre-line;
-        vertical-align: top; /* Align content to top for multi-line cells */
+        vertical-align: top;
     }
     tbody tr:nth-child(even) {
         background: #f9f9f9;
     }
     .day-header {
-        background: #5c7b9e; /* Different background for day headers */
+        background: #5c7b9e;
         color: white;
         font-weight: bold;
-        padding: 8px;
+        padding: 6px; /* Adjusted padding */
+    }
+    .session-header {
+        font-size: 0.75rem; /* Smaller font for AM/PM in second header row */
     }
     .session-cell {
-        min-height: 40px; /* Ensure consistent cell height */
+        min-height: 40px;
         display: flex;
-        flex-direction: column; /* Allows content to stack */
+        flex-direction: column;
         align-items: center;
         justify-content: center;
     }
     .shift-detail {
-        font-size: 0.8em; /* Smaller font for secondary details like ultrasound */
+        font-size: 0.7em; /* Smaller font for secondary details */
         color: #555;
         margin-top: 2px;
     }
@@ -106,7 +109,7 @@
         color: #004085;
         font-weight: bold;
     }
-    .status-ultrasound { /* New style for ultrasound duty */
+    .status-ultrasound {
         background: #d1ecf1;
         color: #0c5460;
         font-weight: bold;
@@ -156,26 +159,20 @@
     let registrarsData = [];
     let rotaData = [];
     let blocksData = {};
-    let ultrasoundData = []; // New variable for ultrasound data
+    let ultrasoundData = [];
     let currentMonday = new Date();
 
     const DATA_SOURCES = {
         registrars: './registrars_data.json',
         rota: './rota.json',
         blocks: './blocks.json',
-        ultrasound: './ultrasound.json' // Add new data source
+        ultrasound: './ultrasound.json'
     };
 
     async function fetchData(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Failed to load ${url}`);
         return await response.json();
-    }
-
-    function formatDate(date) {
-        return date.toLocaleDateString('en-US', {
-            month: 'short', day: 'numeric'
-        });
     }
 
     function formatFullDate(date) {
@@ -196,15 +193,29 @@
     }
 
     function parseLeaveDate(dateStr) {
-        return new Date(dateStr);
+        // Ensure dateStr is parsed as UTC to avoid timezone issues when comparing
+        const parts = dateStr.match(/(\d{1,2}) ([A-Za-z]{3}) (\d{4})/);
+        if (parts) {
+            const day = parseInt(parts[1], 10);
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const month = monthNames.indexOf(parts[2]);
+            const year = parseInt(parts[3], 10);
+            return new Date(Date.UTC(year, month, day));
+        }
+        return new Date(dateStr); // Fallback, though parsing "16 Sep 2024" directly should work in modern browsers
     }
 
+    // Inclusive date range check for leave and blocks
     function isDateInRange(checkDateStr, startStr, endStr) {
         const check = new Date(checkDateStr + 'T00:00:00');
         const start = parseLeaveDate(startStr);
         const end = parseLeaveDate(endStr);
-        end.setHours(23, 59, 59, 999);
-        return check >= start && check <= end;
+        end.setUTCHours(23, 59, 59, 999); // Set end of day in UTC for inclusive range
+
+        // Normalize check date to UTC for consistent comparison
+        const checkUTC = new Date(Date.UTC(check.getFullYear(), check.getMonth(), check.getDate()));
+
+        return checkUTC >= start && checkUTC <= end;
     }
 
     function checkLeave(registrar, dateISO) {
@@ -219,7 +230,7 @@
     function checkBlock(registrar, date, session) {
         const dateISO = formatDateForISO(date);
         const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-        const dayName = dayNames[date.getDay()];
+        const dayName = dayNames[date.getDay()]; // getDay() returns 0 for Sunday, 1 for Monday etc.
 
         for (const block of registrar.blocks) {
             if (isDateInRange(dateISO, block.start_date, block.end_date)) {
@@ -251,7 +262,6 @@
         return null;
     }
 
-    // New function to check for ultrasound duty
     function checkUltrasoundDuty(registrarName, dateStr, session) {
         for (const entry of ultrasoundData) {
             if (entry.Date === dateStr && entry.Session === session && entry['Registrar name'] === registrarName) {
@@ -261,27 +271,25 @@
         return null;
     }
 
-    // Compose status text and CSS class for a session
     function getSessionStatus(registrar, date, session) {
         const dateISO = formatDateForISO(date);
         const dateStr = formatDateForRota(date);
         const dayOfWeek = date.getDay();
         const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
 
+        // For weekends, only AAU duties are generally shown. Ultrasound is generally weekday.
         if (isWeekend) {
-            if (session === 'AM') {
-                const rotaStatus = checkRota(registrar.name, dateStr, session);
-                if (rotaStatus === "Duty") {
-                    return {text: "AAU Duty", cssClass: "status-duty"};
-                }
-                if (rotaStatus === "Reporting") {
-                    return {text: "AAU Reporting", cssClass: "status-reporting"};
-                }
+            const rotaStatus = checkRota(registrar.name, dateStr, session);
+            if (rotaStatus === "Duty") {
+                return {text: "AAU Duty", cssClass: "status-duty"};
             }
-            // Weekends don't have regular ultrasound duties based on common patterns, but we'll check anyway.
+            if (rotaStatus === "Reporting") {
+                return {text: "AAU Reporting", cssClass: "status-reporting"};
+            }
+             // While uncommon for weekend, still check ultrasound just in case
             const ultrasoundStatus = checkUltrasoundDuty(registrar.name, dateStr, session);
             if (ultrasoundStatus) {
-                return {text: "Ultrasound", cssClass: "status-ultrasound"};
+                 return {text: "Ultrasound", cssClass: "status-ultrasound"};
             }
             return {text: "-", cssClass: "status-none"};
         }
@@ -299,7 +307,6 @@
             return {text: "AAU Reporting", cssClass: "status-reporting"};
         }
 
-        // New ultrasound check before block
         const ultrasoundStatus = checkUltrasoundDuty(registrar.name, dateStr, session);
         if (ultrasoundStatus) {
             return {text: "Ultrasound", cssClass: "status-ultrasound"};
@@ -316,7 +323,7 @@
         const currentWeekRangeElem = document.getElementById('currentWeekRange');
 
         let weekDates = [];
-        const startOfWeek = new Date(currentMonday);
+        const startOfWeek = new Date(currentMonday); // This is already the Monday
         for (let i = 0; i < 7; i++) {
             const date = new Date(startOfWeek);
             date.setDate(startOfWeek.getDate() + i);
@@ -337,7 +344,7 @@
         html += `<table>
             <thead>
                 <tr>
-                    <th>Registrar</th>`;
+                    <th rowspan="2">Registrar</th>`; // Registrar header spans two rows
         weekDates.forEach(date => {
             const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
             const dateNum = date.getDate().toString().padStart(2, '0');
@@ -345,10 +352,10 @@
             html += `<th colspan="2" class="day-header">${dayName}<br>${dateNum} ${monthName}</th>`;
         });
         html += `</tr>
-                <tr>
-                    <th></th>`;
+                <tr>`;
+        // Second header row for AM/PM
         for (let i = 0; i < 7; i++) {
-            html += `<th>AM</th><th>PM</th>`;
+            html += `<th class="session-header">AM</th><th class="session-header">PM</th>`;
         }
         html += `</tr>
             </thead>
@@ -356,7 +363,7 @@
 
         registrarsData.forEach(registrar => {
             html += `<tr>
-                <td>${registrar.name}</td>`;
+                <td>${registrar.name}</td>`; // Registrar name in the first column
             weekDates.forEach(date => {
                 const amStatus = getSessionStatus(registrar, date, "AM");
                 const pmStatus = getSessionStatus(registrar, date, "PM");
@@ -372,10 +379,12 @@
     }
 
     function setWeekToCurrentMonday(date) {
-        const dayOfWeek = date.getDay();
+        const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        // Calculate the difference to get to the preceding Monday
+        // If it's Sunday (0), subtract 6 days. Otherwise, subtract (dayOfWeek - 1) days.
         const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
         currentMonday = new Date(date.setDate(diff));
-        currentMonday.setHours(0, 0, 0, 0);
+        currentMonday.setHours(0, 0, 0, 0); // Normalize to start of day
     }
 
     async function initializeApp() {
@@ -383,8 +392,9 @@
             registrarsData = await fetchData(DATA_SOURCES.registrars);
             rotaData = await fetchData(DATA_SOURCES.rota);
             blocksData = await fetchData(DATA_SOURCES.blocks);
-            ultrasoundData = await fetchData(DATA_SOURCES.ultrasound); // Fetch ultrasound data
+            ultrasoundData = await fetchData(DATA_SOURCES.ultrasound);
 
+            // Set the initial week to the current week's Monday
             setWeekToCurrentMonday(new Date());
             renderWeeklyRota();
         } catch (error) {
