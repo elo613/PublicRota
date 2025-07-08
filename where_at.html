@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Registrar Weekly Rota</title>
     <style>
+        /* General Body and Container Styling */
         body {
             font-family: Arial, sans-serif;
             background: #f5f5f5;
             padding: 20px;
+            margin: 0; /* Ensure no default body margin */
+            box-sizing: border-box; /* Include padding in element's total width and height */
         }
         .container {
             max-width: 1400px;
@@ -17,14 +20,20 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             padding: 20px;
+            box-sizing: border-box;
         }
+
+        /* Header Styling */
         h1 {
             text-align: center;
             margin-bottom: 15px;
             color: #2c3e50;
         }
+
+        /* Date Controls Styling */
         .date-controls {
             display: flex;
+            flex-wrap: wrap; /* Allow controls to wrap on smaller screens */
             justify-content: center;
             align-items: center;
             gap: 15px;
@@ -34,28 +43,39 @@
             background: #34495e;
             border: none;
             color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 10px 20px; /* Slightly larger padding for better touch targets */
+            border-radius: 5px; /* Slightly more rounded corners */
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 1rem; /* Slightly larger font size */
+            transition: background 0.3s ease; /* Smooth transition on hover */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* subtle shadow */
         }
         button:hover {
             background: #4a5f7a;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
         }
         #currentWeekRange {
             font-weight: bold;
             font-size: 1.2rem;
-            min-width: 300px;
+            min-width: 250px; /* Adjusted min-width for flexibility */
             text-align: center;
+            padding: 5px 10px; /* Add some padding */
+            border: 1px solid #ccc; /* Add a subtle border */
+            border-radius: 4px;
         }
+
+        /* Table Responsive Container */
         .table-responsive {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+            overflow-x: auto; /* Enables horizontal scrolling for the table if it overflows */
+            -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS devices */
+            padding-bottom: 10px; /* Add some space below the table if it scrolls */
         }
+
+        /* Table Styling */
         table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1000px;
+            width: 100%; /* Table takes full width of its responsive container */
+            border-collapse: collapse; /* Collapses borders between cells */
+            table-layout: fixed; /* Important: Ensures columns have fixed widths */
         }
         thead tr {
             background: #34495e;
@@ -65,14 +85,32 @@
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem; /* Slightly adjusted font size */
             vertical-align: middle;
-            height: 40px;
-            white-space: nowrap;
+            height: auto; /* Allow height to adjust based on content */
+            word-break: break-word; /* Ensures long words break and wrap */
+            overflow: hidden; /* Hide overflowing content if any */
+            box-sizing: border-box;
         }
+
+        /* Specific column widths for better control and wrapping */
+        th:first-child, td:first-child {
+            width: 15%; /* Allocate more width for the Registrar name column */
+            min-width: 100px; /* Minimum width for registrar name */
+            white-space: normal; /* Allow name to wrap */
+        }
+        th:not(:first-child), td:not(:first-child) {
+            width: 12.14%; /* (100 - 15) / 7 days / 2 sessions per day = approx 6.07% per AM/PM cell. So 12.14% per day. */
+            min-width: 60px; /* Minimum width for AM/PM cells to ensure content wraps */
+            max-width: 100px; /* Max width to encourage wrapping */
+        }
+
+
         tbody tr:nth-child(even) {
             background: #f9f9f9;
         }
+
+        /* Status Classes (no changes, but included for completeness) */
         .status-leave { background: #dc3545; color: white; font-weight: bold; }
         .status-duty { background: #28a745; color: white; font-weight: bold; }
         .status-reporting { background: #007bff; color: white; font-weight: bold; }
@@ -81,6 +119,8 @@
         .status-none { color: #6c757d; font-style: italic; }
         .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; }
         .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; }
+
+        /* Weekend Indicator (no changes) */
         .weekend-indicator {
             text-align: center;
             padding: 12px;
@@ -90,6 +130,8 @@
             margin-bottom: 15px;
             border-radius: 6px;
         }
+
+        /* Loading and Error Messages (no changes) */
         .loading, .error-message {
             text-align: center;
             padding: 20px;
@@ -108,7 +150,8 @@
             <button onclick="rotaApp.changeWeek(-7)">← Previous Week</button>
             <div id="currentWeekRange">Loading...</div>
             <button onclick="rotaApp.changeWeek(7)">Next Week →</button>
-            <button onclick="rotaApp.copyTable()">Copy Table</button> </div>
+            <button onclick="rotaApp.copyTable()">Copy Table</button>
+        </div>
         <div id="rotaContainer">
             <div class="loading">Loading rota...</div>
         </div>
@@ -118,6 +161,7 @@
         class RotaApp {
             constructor() {
                 this.currentMonday = this._getMondayOfWeek(new Date());
+                // Data sources are configured to fetch from external JSON files
                 this.DATA_SOURCES = {
                     registrars: './registrars_data.json',
                     rota: './rota.json',
@@ -140,21 +184,36 @@
                 this.processedUltrasound = new Map();
             }
 
+            /**
+             * Initializes the Rota application by loading and processing data, then rendering the table.
+             */
             async init() {
                 try {
+                    // Call the method to load and process data from external files
                     await this._loadAndProcessData();
                     this.render();
                 } catch (e) {
-                    console.error(e);
+                    console.error("Error initializing RotaApp:", e);
+                    document.getElementById("rotaContainer").innerHTML = `<div class="error-message">Error loading rota: ${e.message}</div>`;
                 }
             }
 
+            /**
+             * Fetches JSON data from a given URL.
+             * @param {string} url - The URL to fetch data from.
+             * @returns {Promise<Object>} - A promise that resolves with the JSON data.
+             * @private
+             */
             async _fetchData(url) {
                 const res = await fetch(url);
-                if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+                if (!res.ok) throw new Error(`Failed to fetch ${url} (Status: ${res.status})`);
                 return res.json();
             }
 
+            /**
+             * Loads and processes all necessary data from the specified DATA_SOURCES.
+             * @private
+             */
             async _loadAndProcessData() {
                 const [registrars, rota, blocks, ultrasound] = await Promise.all([
                     this._fetchData(this.DATA_SOURCES.registrars),
@@ -168,6 +227,11 @@
                 this._processUltrasoundData(ultrasound);
             }
 
+            /**
+             * Processes raw rota data into a Map for easier lookup by date.
+             * @param {Array<Object>} data - The raw rota data.
+             * @private
+             */
             _processRotaData(data) {
                 this.processedRota.clear();
                 data.forEach(day => {
@@ -177,6 +241,13 @@
                 });
             }
 
+            /**
+             * Processes registrar block and leave data.
+             * Converts date strings to Date objects and organizes blocks by registrar name.
+             * @param {Array<Object>} registrars - The list of registrars.
+             * @param {Object} blockDefs - Definitions for various block types.
+             * @private
+             */
             _processBlocksData(registrars, blockDefs) {
                 registrars.forEach(r => {
                     const blocks = [];
@@ -199,6 +270,11 @@
                 });
             }
 
+            /**
+             * Processes ultrasound data into a nested Map for lookup by date and session.
+             * @param {Array<Object>} data - The raw ultrasound data.
+             * @private
+             */
             _processUltrasoundData(data) {
                 this.processedUltrasound.clear();
                 data.forEach(d => {
@@ -213,16 +289,26 @@
                 });
             }
 
+            /**
+             * Determines the status of a registrar for a given date and session.
+             * Applies a priority order: Leave > Duty/Reporting > Ultrasound > Blocks > None.
+             * @param {Object} registrar - The registrar object.
+             * @param {Date} date - The date to check.
+             * @param {string} session - The session (e.g., "AM", "PM").
+             * @returns {{text: string, cssClass: string}} - The status text and corresponding CSS class.
+             * @private
+             */
             _getShiftStatus(registrar, date, session) {
                 const dateStr = date.toLocaleDateString('en-GB');
                 const dayOfWeek = date.getDay(); // 0 for Sunday, 6 for Saturday
 
                 // 1. Check for Leave first (highest priority)
                 if (registrar.leave_records.some(l => date >= l.start && date <= l.end)) {
-                    return { text: `${registrar.leave_records.find(l => date >= l.start && date <= l.end).type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
+                    const leaveType = registrar.leave_records.find(l => date >= l.start && date <= l.end).type;
+                    return { text: `${leaveType} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
                 }
 
-                // 2. Check for Duty/Reporting
+                // 2. Check for Duty/Reporting from Rota
                 const dayShifts = this.processedRota.get(dateStr);
                 if (dayShifts && dayShifts[session]) {
                     const shift = dayShifts[session];
@@ -234,17 +320,19 @@
                 const us = this.processedUltrasound.get(dateStr)?.get(session);
                 if (us && us.has(registrar.name)) return { text: "Ultrasound", cssClass: this.CSS_STATUS_CLASSES["Ultrasound"] };
 
-                // 4. Check for Blocks - ONLY if it's NOT Saturday (6) or Sunday (0)
-                if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Saturday or Sunday
+                // 4. Check for Blocks - ONLY if it's NOT Saturday (0) or Sunday (6)
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) {
                     const blocks = this.processedBlocks.get(registrar.name);
-                    for (const b of blocks) {
-                        if (date >= b.start && date <= b.end) {
-                            const day = date.toDateString().split(' ')[0];
-                            const val = b.definition?.[day]?.[session]?.value;
-                            return {
-                                text: val || `Block: ${b.blockName}`,
-                                cssClass: this.CSS_STATUS_CLASSES[val] || this.CSS_STATUS_CLASSES.Block
-                            };
+                    if (blocks) {
+                        for (const b of blocks) {
+                            if (date >= b.start && date <= b.end) {
+                                const dayAbbr = date.toDateString().split(' ')[0]; // e.g., "Mon", "Tue"
+                                const val = b.definition?.[dayAbbr]?.[session]?.value;
+                                return {
+                                    text: val || `Block: ${b.blockName}`,
+                                    cssClass: this.CSS_STATUS_CLASSES[val] || this.CSS_STATUS_CLASSES.Block
+                                };
+                            }
                         }
                     }
                 }
@@ -253,20 +341,33 @@
                 return { text: "-", cssClass: this.CSS_STATUS_CLASSES.None };
             }
 
+            /**
+             * Calculates the Monday of the week for a given date.
+             * @param {Date} date - The date to find the Monday for.
+             * @returns {Date} - A Date object representing the Monday of that week.
+             * @private
+             */
             _getMondayOfWeek(date) {
                 const d = new Date(date);
-                const day = d.getDay();
-                const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+                const day = d.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+                const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
                 d.setDate(diff);
-                d.setHours(0, 0, 0, 0);
+                d.setHours(0, 0, 0, 0); // Set to start of the day
                 return d;
             }
 
+            /**
+             * Changes the current week displayed by the specified offset.
+             * @param {number} offsetDays - Number of days to add to the current Monday (e.g., 7 for next week, -7 for previous).
+             */
             changeWeek(offsetDays) {
                 this.currentMonday.setDate(this.currentMonday.getDate() + offsetDays);
                 this.render();
             }
 
+            /**
+             * Renders the rota table based on the current week and processed data.
+             */
             render() {
                 const week = [];
                 for (let i = 0; i < 7; i++) {
@@ -277,7 +378,7 @@
                 const currentWeekRange = `${week[0].toDateString()} - ${week[6].toDateString()}`;
                 document.getElementById("currentWeekRange").textContent = currentWeekRange;
 
-                let html = `<div class="table-responsive"><table id="rotaTable"><thead><tr><th>Registrar</th>`; // Added ID here
+                let html = `<div class="table-responsive"><table id="rotaTable"><thead><tr><th>Registrar</th>`;
                 week.forEach(d => {
                     html += `<th colspan="2">${d.toDateString()}</th>`;
                 });
@@ -302,11 +403,14 @@
                 document.getElementById("rotaContainer").innerHTML = html;
             }
 
-            // NEW FUNCTION TO COPY TABLE
+            /**
+             * Copies the content of the rota table to the clipboard.
+             * Uses document.execCommand('copy') for broader browser compatibility in iframes.
+             */
             async copyTable() {
                 const table = document.getElementById('rotaTable');
                 if (!table) {
-                    alert('Rota table not found!');
+                    this._showMessage('Rota table not found!');
                     return;
                 }
 
@@ -320,18 +424,59 @@
                 try {
                     const successful = document.execCommand('copy');
                     const msg = successful ? 'Table copied to clipboard!' : 'Failed to copy table.';
-                    alert(msg);
+                    this._showMessage(msg);
                 } catch (err) {
                     console.error('Error copying table: ', err);
-                    alert('Failed to copy table. Your browser may not support this method.');
+                    this._showMessage('Failed to copy table. Your browser may not support this method.');
                 } finally {
                     selection.removeAllRanges(); // Deselect the table
                 }
             }
+
+            /**
+             * Displays a custom message box instead of using `alert()`.
+             * The message box fades in and then fades out after a few seconds.
+             * @param {string} message - The message to display.
+             * @private
+             */
+            _showMessage(message) {
+                const messageBox = document.createElement('div');
+                messageBox.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: #333;
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                    z-index: 1000;
+                    font-size: 1rem;
+                    opacity: 0;
+                    transition: opacity 0.3s ease-in-out;
+                `;
+                messageBox.textContent = message;
+                document.body.appendChild(messageBox);
+
+                // Fade in
+                setTimeout(() => {
+                    messageBox.style.opacity = '1';
+                }, 10);
+
+                // Fade out and remove after 3 seconds
+                setTimeout(() => {
+                    messageBox.style.opacity = '0';
+                    messageBox.addEventListener('transitionend', () => messageBox.remove());
+                }, 3000);
+            }
         }
 
-        const rotaApp = new RotaApp();
-        rotaApp.init();
+        // Initialize the RotaApp when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const rotaApp = new RotaApp();
+            rotaApp.init();
+        });
     </script>
 </body>
 </html>
