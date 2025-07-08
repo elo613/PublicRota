@@ -11,7 +11,7 @@
         padding: 20px;
     }
     .container {
-        max-width: 1400px;
+        max-width: 1400px; /* Adjust as needed, but the scrollbar handles overflow */
         margin: 0 auto;
         background: white;
         border-radius: 8px;
@@ -48,10 +48,16 @@
         min-width: 300px;
         text-align: center;
     }
+    /* Wrapper for horizontal scroll */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+    }
     table {
         width: 100%;
         border-collapse: collapse;
-        table-layout: fixed; /* Ensures even column distribution */
+        /* table-layout: fixed; */ /* Removed to allow content to dictate column width for scroll */
+        min-width: 1000px; /* Ensures table is wide enough to trigger scroll on smaller screens */
     }
     thead tr {
         background: #34495e;
@@ -64,6 +70,7 @@
         font-size: 0.8rem;
         vertical-align: middle; /* Center content vertically */
         height: 40px; /* Consistent height for cells */
+        white-space: nowrap; /* Prevent text wrapping within cells */
     }
     tbody tr:nth-child(even) {
         background: #f9f9f9;
@@ -77,23 +84,24 @@
     .session-header {
         font-size: 0.75rem;
     }
-    /* Removed .session-cell and .shift-item specific flex styling as content will be directly in td */
 
-    /* Status-specific styling */
-    .status-leave { background: #f8d7da; color: #721c24; font-weight: bold; }
-    .status-duty { background: #d4edda; color: #155724; font-weight: bold; }
-    .status-reporting { background: #fff3cd; color: #856404; font-weight: bold; }
-    .status-block { background: #cce5ff; color: #004085; font-weight: bold; }
-    .status-ultrasound { background: #d1ecf1; color: #0c5460; font-weight: bold; }
+    /* Status-specific styling - UPDATED COLORS */
+    .status-leave { background: #dc3545; color: white; font-weight: bold; } /* Red */
+    .status-duty { background: #28a745; color: white; font-weight: bold; } /* Green */
+    .status-reporting { background: #007bff; color: white; font-weight: bold; } /* Blue */
+    .status-block { background: #17a2b8; color: white; font-weight: bold; } /* Cyan */
+    .status-ultrasound { background: #6f42c1; color: white; font-weight: bold; } /* Purple */
     .status-none { color: #6c757d; font-style: italic;} /* Style for '-' */
+
     /* Specific styles for identified block types if needed, matching the image */
-    .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; }
-    .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; }
+    /* Keep these specific styles if they override the generic block style for certain cases */
+    .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; } /* This will override generic block for Mt Vernon if preferred */
+    .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; } /* This will override generic block for WGH if preferred */
 
     .weekend-indicator {
         text-align: center;
         padding: 12px;
-        background: #17a2b8;
+        background: #17a2b8; /* Cyan-like, consistent with block if not overridden */
         color: white;
         font-weight: bold;
         margin-bottom: 15px;
@@ -354,8 +362,9 @@ class RotaApp {
                     const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeek];
                     const blockValue = block.definition?.[dayName]?.[session]?.value;
                     if (blockValue) {
-                        const blockClass = this.CSS_STATUS_CLASSES[blockValue] || this.CSS_STATUS_CLASSES.Block;
-                        return { text: blockValue, cssClass: blockClass };
+                        // Check for specific block styles first, otherwise use generic 'Block'
+                        const specificBlockClass = this.CSS_STATUS_CLASSES[blockValue];
+                        return { text: blockValue, cssClass: specificBlockClass || this.CSS_STATUS_CLASSES.Block };
                     } else { // If no specific value for the block, use generic
                         return { text: `Block: ${block.blockName}`, cssClass: this.CSS_STATUS_CLASSES.Block };
                     }
@@ -387,6 +396,7 @@ class RotaApp {
             html += `<div class="weekend-indicator">Weekend Schedule: Only AAU duty/reporting and explicit Ultrasound shown; otherwise '-'</div>`;
         }
 
+        html += `<div class="table-responsive">`; /* Wrapper for horizontal scroll */
         html += `<table>
             <thead>
                 <tr>
@@ -423,6 +433,7 @@ class RotaApp {
         });
 
         html += `</tbody></table>`;
+        html += `</div>`; /* Close table-responsive wrapper */
         rotaContainer.innerHTML = html;
     }
 
@@ -431,8 +442,7 @@ class RotaApp {
         document.getElementById('rotaContainer').innerHTML = `<div class="loading">Loading rota...</div>`;
         try {
             await this._loadAndProcessData();
-            // IMPORTANT: Set the initial week to the week of the image provided (July 7, 2025)
-            // This ensures we're looking at the same week for debugging.
+            // Set the initial week to the week of the image provided (July 7, 2025)
             const july7_2025 = new Date('2025-07-07T00:00:00Z'); // UTC date for consistency
             this.currentMonday = this._getMondayOfWeek(july7_2025); 
             this._renderRotaTable();
