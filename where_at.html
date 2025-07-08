@@ -62,8 +62,7 @@
         padding: 8px;
         text-align: center;
         font-size: 0.8rem;
-        white-space: pre-line; /* Allows text to wrap within cells with <br> */
-        vertical-align: top;
+        vertical-align: top; /* Ensure content starts at the top */
     }
     tbody tr:nth-child(even) {
         background: #f9f9f9;
@@ -79,18 +78,20 @@
     }
     .session-cell {
         min-height: 40px; /* Ensure consistent height for empty cells */
-        /* For multiple lines, flex-direction: column is appropriate if you want each item to be a distinct block */
         display: flex;
         flex-direction: column; /* Stack multiple items vertically within the cell */
-        align-items: center; /* Center horizontally */
+        align-items: stretch; /* Stretch items to fill horizontal space */
         justify-content: flex-start; /* Align items to the top if multiple */
+        gap: 2px; /* Space between stacked shift items */
     }
     .shift-item {
-        margin: 2px 0; /* Space between multiple shifts in a cell */
         padding: 2px 4px;
         border-radius: 3px;
-        width: 100%; /* Take full width of parent cell */
-        box-sizing: border-box; /* Include padding in width */
+        white-space: nowrap; /* Prevent text wrapping within a shift item */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Add ellipsis for overflow */
+        display: block; /* Ensure it behaves as a block for stacking */
+        text-align: center; /* Center text within the item */
     }
     /* Status-specific styling */
     .status-leave { background: #f8d7da; color: #721c24; font-weight: bold; }
@@ -98,11 +99,10 @@
     .status-reporting { background: #fff3cd; color: #856404; font-weight: bold; }
     .status-block { background: #cce5ff; color: #004085; font-weight: bold; }
     .status-ultrasound { background: #d1ecf1; color: #0c5460; font-weight: bold; }
-    .status-none { color: #6c757d; }
+    .status-none { color: #6c757d; font-style: italic;} /* Style for '-' */
     /* Specific styles for identified block types if needed, matching the image */
-    .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; } /* Example color */
-    .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; } /* Example color */
-
+    .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; }
+    .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; }
 
     .weekend-indicator {
         text-align: center;
@@ -162,33 +162,20 @@ class RotaApp {
             'AAU Duty': 'status-duty',
             'AAU Reporting': 'status-reporting',
             'Ultrasound': 'status-ultrasound',
-            // Generic Block class
-            'Block': 'status-block',
-            // Specific block/duty names seen in the image or likely data
-            'Mt Vernon Oncology': 'status-mt-vernon-oncology', // Custom class for this
-            'WGH Reporting/Duty': 'status-wgh-reporting-duty', // Custom class for this
-            // Default if no specific status
+            'Block': 'status-block', // Generic block class
+            'Mt Vernon Oncology': 'status-mt-vernon-oncology', // Specific block type from image
+            'WGH Reporting/Duty': 'status-wgh-reporting-duty', // Specific block type from image
             'None': 'status-none'
         };
     }
 
     // --- Utility Date Functions ---
-    /**
-     * Formats a Date object into a long display string (e.g., "Monday, July 8, 2024").
-     * @param {Date} date - The date to format.
-     * @returns {string} The formatted date string.
-     */
     _formatDateForDisplay(date) {
         return date.toLocaleDateString('en-US', {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
     }
 
-    /**
-     * Formats a Date object into a DD/MM/YYYY string, used for rota and ultrasound data lookups.
-     * @param {Date} date - The date to format.
-     * @returns {string} The formatted date string.
-     */
     _formatDateForDataLookup(date) {
         const d = date.getDate().toString().padStart(2, '0');
         const m = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -196,11 +183,6 @@ class RotaApp {
         return `${d}/${m}/${y}`;
     }
 
-    /**
-     * Parses a date string (either "DD MonYYYY" or "YYYY-MM-DD") into a UTC Date object.
-     * @param {string} dateStr - The date string to parse.
-     * @returns {Date} The parsed Date object in UTC.
-     */
     _parseLeaveBlockDate(dateStr) {
         const parts = dateStr.match(/(\d{1,2}) ([A-Za-z]{3}) (\d{4})/);
         if (parts) {
@@ -219,33 +201,16 @@ class RotaApp {
         return d;
     }
 
-    /**
-     * Checks if a given date falls inclusively within a start and end date range (UTC comparison).
-     * @param {Date} checkDate - The date to check.
-     * @param {Date} startDate - The start of the range (parsed as UTC).
-     * @param {Date} endDate - The end of the range (parsed as UTC).
-     * @returns {boolean} True if checkDate is within the range, false otherwise.
-     */
     _isDateBetween(checkDate, startDate, endDate) {
-        // Normalize checkDate to start of day UTC for consistent comparison
         const checkUTC = new Date(Date.UTC(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate()));
-        
-        // Ensure endDate is set to end of day UTC for inclusive range
         const endOfEndDate = new Date(endDate);
         endOfEndDate.setUTCHours(23, 59, 59, 999);
-
         return checkUTC >= startDate && checkUTC <= endOfEndDate;
     }
 
-    /**
-     * Calculates the Monday of the week for a given date.
-     * @param {Date} date - Any date within the desired week.
-     * @returns {Date} A new Date object representing the Monday of that week, at 00:00:00.
-     */
     _getMondayOfWeek(date) {
         const d = new Date(date);
         const dayOfWeek = d.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-        // Calculate the difference to get to the preceding Monday
         const diff = d.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
         d.setDate(diff);
         d.setHours(0, 0, 0, 0); // Normalize to start of day
@@ -253,12 +218,6 @@ class RotaApp {
     }
 
     // --- Data Fetching and Processing ---
-
-    /**
-     * Fetches JSON data from a given URL.
-     * @param {string} url - The URL of the JSON file.
-     * @returns {Promise<Object[]>} A promise that resolves to the parsed JSON data.
-     */
     async _fetchData(url) {
         const response = await fetch(url);
         if (!response.ok) {
@@ -267,9 +226,6 @@ class RotaApp {
         return await response.json();
     }
 
-    /**
-     * Loads all required data and processes it into optimized data structures.
-     */
     async _loadAndProcessData() {
         try {
             const [registrars, rota, blocks, ultrasound] = await Promise.all([
@@ -279,25 +235,20 @@ class RotaApp {
                 this._fetchData(this.DATA_SOURCES.ultrasound)
             ]);
 
-            this.registrarsData = registrars; // Store raw registrars data
+            this.registrarsData = registrars;
 
-            // Process raw data into efficient lookup structures
             this._processRotaData(rota);
             this._processUltrasoundData(ultrasound);
-            this._processBlocksData(registrars, blocks); // Depends on registrars data
+            this._processBlocksData(registrars, blocks);
 
             console.log("Data loaded and processed successfully.");
         } catch (error) {
             document.getElementById('rotaContainer').innerHTML = `<div class="error-message">Failed to load rota data: ${error.message}. Please check data files.</div>`;
             console.error("Error during data loading or processing:", error);
-            throw error; // Re-throw to prevent rendering with incomplete data
+            throw error;
         }
     }
 
-    /**
-     * Processes raw rota data into a Map for quick date lookups.
-     * @param {Array<Object>} rotaRaw - Raw rota data from rota.json.
-     */
     _processRotaData(rotaRaw) {
         this.processedRota.clear();
         rotaRaw.forEach(dayEntry => {
@@ -305,12 +256,9 @@ class RotaApp {
                 this.processedRota.set(dayEntry.Date, dayEntry.Shifts);
             }
         });
+        console.log("Processed Rota Data:", this.processedRota);
     }
 
-    /**
-     * Processes raw ultrasound data into a nested Map for quick date/session/registrar lookups.
-     * @param {Array<Object>} ultrasoundRaw - Raw ultrasound data from ultrasound.json.
-     */
     _processUltrasoundData(ultrasoundRaw) {
         this.processedUltrasound.clear();
         ultrasoundRaw.forEach(entry => {
@@ -325,13 +273,9 @@ class RotaApp {
                 sessionsMap.get(entry.Session).add(entry['Registrar name']);
             }
         });
+        console.log("Processed Ultrasound Data:", this.processedUltrasound);
     }
 
-    /**
-     * Processes raw blocks data and associates it with registrars, parsing dates.
-     * @param {Array<Object>} registrars - The processed registrars data (needed for leave records).
-     * @param {Object} blocksMapRaw - Raw blocks definition data from blocks.json.
-     */
     _processBlocksData(registrars, blocksMapRaw) {
         this.processedBlocks.clear();
         registrars.forEach(registrar => {
@@ -344,7 +288,7 @@ class RotaApp {
                             start: this._parseLeaveBlockDate(blockRef.start_date),
                             end: this._parseLeaveBlockDate(blockRef.end_date),
                             blockName: blockRef.block_name,
-                            definition: blockDefinition // Store full definition for specific day/session lookups
+                            definition: blockDefinition
                         });
                     } else {
                         console.warn(`Block definition for "${blockRef.block_name}" not found for registrar ${registrar.name}.`);
@@ -353,7 +297,6 @@ class RotaApp {
             }
             this.processedBlocks.set(registrar.name, registrarBlocks);
 
-            // Also parse leave dates immediately for consistency in the registrar object itself
             if (registrar.leave_records) {
                 registrar.leave_records = registrar.leave_records.map(leave => ({
                     type: leave.type,
@@ -362,21 +305,12 @@ class RotaApp {
                 }));
             }
         });
+        console.log("Processed Blocks Data:", this.processedBlocks);
     }
 
     // --- Shift Status Logic ---
-
-    /**
-     * Determines all applicable statuses for a specific registrar, date, and session.
-     * Prioritizes statuses: Leave (exclusive) > Rota (Duty/Reporting) > Ultrasound > Block > None.
-     * Special handling for weekends.
-     * @param {Object} registrar - The registrar object.
-     * @param {Date} date - The date for the session.
-     * @param {string} session - The session ("AM" or "PM").
-     * @returns {Array<{text: string, cssClass: string}>} An array of objects containing the display text and CSS class for all applicable shifts.
-     */
     _getShiftStatuses(registrar, date, session) {
-        const dateForRotaLookup = this._formatDateForDataLookup(date); // DD/MM/YYYY
+        const dateForRotaLookup = this._formatDateForDataLookup(date);
         const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
         const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
         const statuses = [];
@@ -385,7 +319,7 @@ class RotaApp {
         if (registrar.leave_records) {
             for (const leave of registrar.leave_records) {
                 if (this._isDateBetween(date, leave.start, leave.end)) {
-                    // If on leave, no other duties are explicitly shown for this slot.
+                    console.log(`[${registrar.name}] ${dateForRotaLookup} ${session}: Found Leave: ${leave.type}`);
                     return [{ text: `${leave.type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave }];
                 }
             }
@@ -397,9 +331,11 @@ class RotaApp {
             const shiftDetails = dayShifts[session];
             if (shiftDetails.Duty === registrar.name) {
                 statuses.push({ text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES['AAU Duty'] });
+                console.log(`[${registrar.name}] ${dateForRotaLookup} ${session}: Found Rota Duty: AAU Duty`);
             }
             if (shiftDetails.Reporting === registrar.name) {
                 statuses.push({ text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES['AAU Reporting'] });
+                console.log(`[${registrar.name}] ${dateForRotaLookup} ${session}: Found Rota Reporting: AAU Reporting`);
             }
         }
 
@@ -407,49 +343,43 @@ class RotaApp {
         const ultrasoundForDay = this.processedUltrasound.get(dateForRotaLookup);
         if (ultrasoundForDay && ultrasoundForDay.get(session)?.has(registrar.name)) {
             statuses.push({ text: "Ultrasound", cssClass: this.CSS_STATUS_CLASSES.Ultrasound });
+            console.log(`[${registrar.name}] ${dateForRotaLookup} ${session}: Found Ultrasound`);
         }
 
-        // 4. Check Blocks (only for weekdays unless explicitly defined)
-        if (!isWeekend) { // Blocks are generally weekday activities unless specified
-            const registrarBlocks = this.processedBlocks.get(registrar.name);
-            if (registrarBlocks) {
-                for (const block of registrarBlocks) {
-                    if (this._isDateBetween(date, block.start, block.end)) {
-                        const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeek];
-                        const blockValue = block.definition?.[dayName]?.[session]?.value;
-                        if (blockValue) {
-                            // Use a specific class if defined for the block name, otherwise default block class
-                            const blockClass = this.CSS_STATUS_CLASSES[blockValue] || this.CSS_STATUS_CLASSES.Block;
-                            statuses.push({ text: blockValue, cssClass: blockClass });
-                        } else {
-                            // If a registrar is in a block, but no specific activity is defined for that day/session,
-                            // display the block name.
-                            statuses.push({ text: `Block: ${block.blockName}`, cssClass: this.CSS_STATUS_CLASSES.Block });
-                        }
+        // 4. Check Blocks (only for weekdays unless explicitly defined for weekends)
+        const registrarBlocks = this.processedBlocks.get(registrar.name);
+        if (registrarBlocks) {
+            for (const block of registrarBlocks) {
+                if (this._isDateBetween(date, block.start, block.end)) {
+                    const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeek];
+                    const blockValue = block.definition?.[dayName]?.[session]?.value;
+
+                    // Only add block if it has a specific value for this day/session OR it's a weekday and no other shifts were found yet.
+                    // For weekends, we only show explicit AAU or Ultrasound, not generic blocks.
+                    if (blockValue) {
+                        const blockClass = this.CSS_STATUS_CLASSES[blockValue] || this.CSS_STATUS_CLASSES.Block;
+                        statuses.push({ text: blockValue, cssClass: blockClass });
+                        console.log(`[${registrar.name}] ${dateForRotaLookup} ${session}: Found Block (specific): ${blockValue}`);
+                    } else if (!isWeekend && statuses.length === 0) { // If no specific value, and no other shifts, and it's a weekday
+                        statuses.push({ text: `Block: ${block.blockName}`, cssClass: this.CSS_STATUS_CLASSES.Block });
+                        console.log(`[${registrar.name}] ${dateForRotaLookup} ${session}: Found Block (generic): ${block.blockName}`);
                     }
                 }
             }
-        } else {
-            // For weekends, if only general blocks would apply but not specific rota/ultrasound, do not show them.
-            // The weekend indicator handles the general rule.
         }
-
+        
         // If no specific status found and not on leave, return a default 'None' status
         if (statuses.length === 0) {
+            console.log(`[${registrar.name}] ${dateForRotaLookup} ${session}: No shifts found. Returning '-'`);
             return [{ text: "-", cssClass: this.CSS_STATUS_CLASSES.None }];
         }
 
-        // Remove duplicates and sort for consistent display if multiple are found (e.g., if a block name is the same as a rota duty)
+        // Remove duplicates and sort for consistent display
         const uniqueStatuses = Array.from(new Set(statuses.map(s => JSON.stringify(s)))).map(s => JSON.parse(s));
         return uniqueStatuses.sort((a, b) => a.text.localeCompare(b.text));
     }
 
-
     // --- Rendering Logic ---
-
-    /**
-     * Renders the weekly rota table based on the currentMonday and loaded data.
-     */
     _renderRotaTable() {
         const rotaContainer = document.getElementById('rotaContainer');
         const currentWeekRangeElem = document.getElementById('currentWeekRange');
@@ -462,7 +392,6 @@ class RotaApp {
             weekDates.push(date);
         }
 
-        // Update the displayed week range
         currentWeekRangeElem.textContent = `${this._formatDateForDisplay(weekDates[0])} - ${this._formatDateForDisplay(weekDates[6])}`;
 
         let html = '';
@@ -471,11 +400,10 @@ class RotaApp {
             html += `<div class="weekend-indicator">Weekend Schedule: Only AAU duty/reporting and explicit Ultrasound shown; otherwise '-'</div>`;
         }
 
-        // Build table header
         html += `<table>
             <thead>
                 <tr>
-                    <th rowspan="2">Registrar</th>`; // Registrar header spans two rows
+                    <th rowspan="2">Registrar</th>`;
         weekDates.forEach(date => {
             const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
             const dateNum = date.getDate().toString().padStart(2, '0');
@@ -484,7 +412,6 @@ class RotaApp {
         });
         html += `</tr>
                 <tr>`;
-        // Second header row for AM/PM for each day
         for (let i = 0; i < 7; i++) {
             html += `<th class="session-header">AM</th><th class="session-header">PM</th>`;
         }
@@ -492,19 +419,17 @@ class RotaApp {
             </thead>
             <tbody>`;
 
-        // Build table body rows for each registrar
         this.registrarsData.forEach(registrar => {
             html += `<tr>
-                <td>${registrar.name}</td>`; // Registrar name in the first column
+                <td>${registrar.name}</td>`;
             weekDates.forEach(date => {
                 const amStatuses = this._getShiftStatuses(registrar, date, "AM");
                 const pmStatuses = this._getShiftStatuses(registrar, date, "PM");
                 
-                // For AM cell
+                // AM Cell
                 html += `<td class="session-cell">`;
                 if (amStatuses.length > 0) {
                     amStatuses.forEach(status => {
-                        // Use a div for each shift to allow individual styling and stacking
                         html += `<div class="shift-item ${status.cssClass}">${status.text}</div>`;
                     });
                 } else {
@@ -512,7 +437,7 @@ class RotaApp {
                 }
                 html += `</td>`;
 
-                // For PM cell
+                // PM Cell
                 html += `<td class="session-cell">`;
                 if (pmStatuses.length > 0) {
                     pmStatuses.forEach(status => {
@@ -527,36 +452,30 @@ class RotaApp {
         });
 
         html += `</tbody></table>`;
-        rotaContainer.innerHTML = html; // Update the DOM
+        rotaContainer.innerHTML = html;
     }
 
     // --- Public Methods (called by event handlers) ---
-
-    /**
-     * Initializes the application by loading data and rendering the initial rota.
-     */
     async initializeApp() {
         document.getElementById('rotaContainer').innerHTML = `<div class="loading">Loading rota...</div>`;
         try {
-            await this._loadAndProcessData(); // Load and process all data
-            this.currentMonday = this._getMondayOfWeek(new Date()); // Set initial week to current week's Monday
-            this._renderRotaTable(); // Render the rota
+            await this._loadAndProcessData();
+            // IMPORTANT: Set the initial week to the week of the image provided (July 7, 2025)
+            // This ensures we're looking at the same week for debugging.
+            const july7_2025 = new Date('2025-07-07T00:00:00Z'); // UTC date for consistency
+            this.currentMonday = this._getMondayOfWeek(july7_2025); 
+            this._renderRotaTable();
         } catch (error) {
             // Error message already handled and displayed by _loadAndProcessData
         }
     }
 
-    /**
-     * Changes the displayed week by a given number of days and re-renders the rota.
-     * @param {number} days - Number of days to change (e.g., 7 for next week, -7 for previous week).
-     */
     changeWeek(days) {
         this.currentMonday.setDate(this.currentMonday.getDate() + days);
         this._renderRotaTable();
     }
 }
 
-// Instantiate the app and initialize when the DOM is fully loaded
 const rotaApp = new RotaApp();
 window.addEventListener('DOMContentLoaded', () => rotaApp.initializeApp());
 </script>
