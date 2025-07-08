@@ -1,464 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Registrar Weekly Rota</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
-        padding: 20px;
-    }
-    .container {
-        max-width: 1400px; /* Adjust as needed, but the scrollbar handles overflow */
-        margin: 0 auto;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        padding: 20px;
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 15px;
-        color: #2c3e50;
-    }
-    .date-controls {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-    button {
-        background: #34495e;
-        border: none;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9rem;
-    }
-    button:hover {
-        background: #4a5f7a;
-    }
-    #currentWeekRange {
-        font-weight: bold;
-        font-size: 1.2rem;
-        min-width: 300px;
-        text-align: center;
-    }
-    /* Wrapper for horizontal scroll */
-    .table-responsive {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        /* table-layout: fixed; */ /* Removed to allow content to dictate column width for scroll */
-        min-width: 1000px; /* Ensures table is wide enough to trigger scroll on smaller screens */
-    }
-    thead tr {
-        background: #34495e;
-        color: white;
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-        font-size: 0.8rem;
-        vertical-align: middle; /* Center content vertically */
-        height: 40px; /* Consistent height for cells */
-        white-space: nowrap; /* Prevent text wrapping within cells */
-    }
-    tbody tr:nth-child(even) {
-        background: #f9f9f9;
-    }
-    .day-header {
-        background: #5c7b9e;
-        color: white;
-        font-weight: bold;
-        padding: 6px;
-    }
-    .session-header {
-        font-size: 0.75rem;
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Weekly Rota</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .date-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #34495e;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #4a5f7a;
+    }
+    #currentWeekRange {
+      font-weight: bold;
+      font-size: 1.2rem;
+      min-width: 300px;
+      text-align: center;
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1000px;
+    }
+    thead tr {
+      background: #34495e;
+      color: white;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+      vertical-align: middle;
+      height: 40px;
+      white-space: nowrap;
+    }
+    tbody tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    .day-header {
+      background: #5c7b9e;
+      color: white;
+      font-weight: bold;
+    }
+    .session-header {
+      font-size: 0.8rem;
+    }
 
-    /* Status-specific styling - UPDATED COLORS */
-    .status-leave { background: #dc3545; color: white; font-weight: bold; } /* Red */
-    .status-duty { background: #28a745; color: white; font-weight: bold; } /* Green */
-    .status-reporting { background: #007bff; color: white; font-weight: bold; } /* Blue */
-    .status-block { background: #17a2b8; color: white; font-weight: bold; } /* Cyan */
-    .status-ultrasound { background: #6f42c1; color: white; font-weight: bold; } /* Purple */
-    .status-none { color: #6c757d; font-style: italic;} /* Style for '-' */
+    /* Status styling */
+    .status-leave { background: #dc3545; color: white; font-weight: bold; }
+    .status-duty { background: #28a745; color: white; font-weight: bold; }
+    .status-reporting { background: #007bff; color: white; font-weight: bold; }
+    .status-block { background: #17a2b8; color: white; font-weight: bold; }
+    .status-ultrasound { background: #6f42c1; color: white; font-weight: bold; }
+    .status-none { color: #6c757d; font-style: italic; }
+    .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; }
+    .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; }
 
-    /* Specific styles for identified block types if needed, matching the image */
-    /* Keep these specific styles if they override the generic block style for certain cases */
-    .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; } /* This will override generic block for Mt Vernon if preferred */
-    .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; } /* This will override generic block for WGH if preferred */
-
-    .weekend-indicator {
-        text-align: center;
-        padding: 12px;
-        background: #17a2b8; /* Cyan-like, consistent with block if not overridden */
-        color: white;
-        font-weight: bold;
-        margin-bottom: 15px;
-        border-radius: 6px;
-    }
-    .loading, .error-message {
-        text-align: center;
-        padding: 20px;
-        font-size: 1.1rem;
-        border-radius: 6px;
-        margin: 20px 0;
-    }
-    .loading { color: #6c757d; }
-    .error-message { background: #f8d7da; color: #721c24; }
-</style>
+    .weekend-indicator {
+      text-align: center;
+      padding: 12px;
+      background: #17a2b8;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 15px;
+      border-radius: 6px;
+    }
+    .loading, .error-message {
+      text-align: center;
+      padding: 20px;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+    .loading { color: #6c757d; }
+    .error-message { background: #f8d7da; color: #721c24; }
+  </style>
 </head>
 <body>
-<div class="container">
-    <h1>Registrar Weekly Rota</h1>
-    <div class="date-controls">
-        <button onclick="rotaApp.changeWeek(-7)">← Previous Week</button>
-        <div id="currentWeekRange"></div>
-        <button onclick="rotaApp.changeWeek(7)">Next Week →</button>
-    </div>
-    <div id="rotaContainer">
-        <div class="loading">Loading rota...</div>
-    </div>
-</div>
+  <div class="container">
+    <h1>Registrar Weekly Rota</h1>
+    <div class="date-controls">
+      <button onclick="rotaApp.changeWeek(-7)">← Previous Week</button>
+      <div id="currentWeekRange"></div>
+      <button onclick="rotaApp.changeWeek(7)">Next Week →</button>
+    </div>
+    <div id="rotaContainer">
+      <div class="loading">Loading rota...</div>
+    </div>
+  </div>
 
-<script>
-class RotaApp {
-    constructor() {
-        this.currentMonday = new Date(); // Stores the Monday of the currently displayed week
-        this.registrarsData = []; // Array of registrar objects
-        
-        // Processed data structures for quick lookups
-        this.processedRota = new Map(); // Map<dateStr (DD/MM/YYYY), Map<session, {duty: string, reporting: string}>>
-        this.processedBlocks = new Map(); // Map<registrarName, Array<{start: Date, end: Date, blockName: string, definition: Object}>>
-        this.processedUltrasound = new Map(); // Map<dateStr (DD/MM/YYYY), Map<session, Set<registrarName>>>
-
-        // Configuration for data sources
-        this.DATA_SOURCES = {
-            registrars: './registrars_data.json',
-            rota: './rota.json',
-            blocks: './blocks.json',
-            ultrasound: './ultrasound.json'
-        };
-
-        // CSS class mapping for various statuses/shift types
-        this.CSS_STATUS_CLASSES = {
-            'Leave': 'status-leave',
-            'AAU Duty': 'status-duty',
-            'AAU Reporting': 'status-reporting',
-            'Ultrasound': 'status-ultrasound',
-            'Block': 'status-block', // Generic block class
-            'Mt Vernon Oncology': 'status-mt-vernon-oncology', // Specific block type from image
-            'WGH Reporting/Duty': 'status-wgh-reporting-duty', // Specific block type from image
-            'None': 'status-none'
-        };
-    }
-
-    // --- Utility Date Functions ---
-    _formatDateForDisplay(date) {
-        return date.toLocaleDateString('en-US', {
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-        });
-    }
-
-    _formatDateForDataLookup(date) {
-        const d = date.getDate().toString().padStart(2, '0');
-        const m = (date.getMonth() + 1).toString().padStart(2, '0');
-        const y = date.getFullYear();
-        return `${d}/${m}/${y}`;
-    }
-
-    _parseLeaveBlockDate(dateStr) {
-        const parts = dateStr.match(/(\d{1,2}) ([A-Za-z]{3}) (\d{4})/);
-        if (parts) {
-            const day = parseInt(parts[1], 10);
-            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const month = monthNames.indexOf(parts[2]);
-            const year = parseInt(parts[3], 10);
-            return new Date(Date.UTC(year, month, day)); // Parse as UTC
-        }
-        // Fallback for YYYY-MM-DD format, parsed as UTC
-        const d = new Date(dateStr + 'T00:00:00Z');
-        if (isNaN(d.getTime())) {
-            console.warn(`Could not parse date: ${dateStr}. Falling back to local date interpretation, which might have timezone issues.`);
-            return new Date(dateStr); // Fallback to local if UTC fails
-        }
-        return d;
-    }
-
-    _isDateBetween(checkDate, startDate, endDate) {
-        const checkUTC = new Date(Date.UTC(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate()));
-        const endOfEndDate = new Date(endDate);
-        endOfEndDate.setUTCHours(23, 59, 59, 999);
-        return checkUTC >= startDate && checkUTC <= endOfEndDate;
-    }
-
-    _getMondayOfWeek(date) {
-        const d = new Date(date);
-        const dayOfWeek = d.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-        const diff = d.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-        d.setDate(diff);
-        d.setHours(0, 0, 0, 0); // Normalize to start of day
-        return d;
-    }
-
-    // --- Data Fetching and Processing ---
-    async _fetchData(url) {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Failed to load ${url}: ${response.statusText} (${response.status})`);
-        }
-        return await response.json();
-    }
-
-    async _loadAndProcessData() {
-        try {
-            const [registrars, rota, blocks, ultrasound] = await Promise.all([
-                this._fetchData(this.DATA_SOURCES.registrars),
-                this._fetchData(this.DATA_SOURCES.rota),
-                this._fetchData(this.DATA_SOURCES.blocks),
-                this._fetchData(this.DATA_SOURCES.ultrasound)
-            ]);
-
-            this.registrarsData = registrars;
-
-            this._processRotaData(rota);
-            this._processUltrasoundData(ultrasound);
-            this._processBlocksData(registrars, blocks);
-
-            console.log("Data loaded and processed successfully.");
-        } catch (error) {
-            document.getElementById('rotaContainer').innerHTML = `<div class="error-message">Failed to load rota data: ${error.message}. Please check data files.</div>`;
-            console.error("Error during data loading or processing:", error);
-            throw error;
-        }
-    }
-
-    _processRotaData(rotaRaw) {
-        this.processedRota.clear();
-        rotaRaw.forEach(dayEntry => {
-            if (dayEntry.Date && dayEntry.Shifts) {
-                this.processedRota.set(dayEntry.Date, dayEntry.Shifts);
-            }
-        });
-        console.log("Processed Rota Data:", this.processedRota);
-    }
-
-    _processUltrasoundData(ultrasoundRaw) {
-        this.processedUltrasound.clear();
-        ultrasoundRaw.forEach(entry => {
-            if (entry.Date && entry.Session && entry['Registrar name']) {
-                if (!this.processedUltrasound.has(entry.Date)) {
-                    this.processedUltrasound.set(entry.Date, new Map());
-                }
-                const sessionsMap = this.processedUltrasound.get(entry.Date);
-                if (!sessionsMap.has(entry.Session)) {
-                    sessionsMap.set(entry.Session, new Set());
-                }
-                sessionsMap.get(entry.Session).add(entry['Registrar name']);
-            }
-        });
-        console.log("Processed Ultrasound Data:", this.processedUltrasound);
-    }
-
-    _processBlocksData(registrars, blocksMapRaw) {
-        this.processedBlocks.clear();
-        registrars.forEach(registrar => {
-            const registrarBlocks = [];
-            if (registrar.blocks) {
-                registrar.blocks.forEach(blockRef => {
-                    const blockDefinition = blocksMapRaw[blockRef.block_name];
-                    if (blockDefinition) {
-                        registrarBlocks.push({
-                            start: this._parseLeaveBlockDate(blockRef.start_date),
-                            end: this._parseLeaveBlockDate(blockRef.end_date),
-                            blockName: blockRef.block_name,
-                            definition: blockDefinition
-                        });
-                    } else {
-                        console.warn(`Block definition for "${blockRef.block_name}" not found for registrar ${registrar.name}.`);
-                    }
-                });
-            }
-            this.processedBlocks.set(registrar.name, registrarBlocks);
-
-            if (registrar.leave_records) {
-                registrar.leave_records = registrar.leave_records.map(leave => ({
-                    type: leave.type,
-                    start: this._parseLeaveBlockDate(leave.start),
-                    end: this._parseLeaveBlockDate(leave.end)
-                }));
-            }
-        });
-        console.log("Processed Blocks Data:", this.processedBlocks);
-    }
-
-    // --- Shift Status Logic ---
-    // Modified to return a single, prioritized status
-    _getShiftStatus(registrar, date, session) {
-        const dateForRotaLookup = this._formatDateForDataLookup(date);
-        const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-        
-        // 1. Check Leave (Highest Priority and Exclusive)
-        if (registrar.leave_records) {
-            for (const leave of registrar.leave_records) {
-                if (this._isDateBetween(date, leave.start, leave.end)) {
-                    return { text: `${leave.type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
-                }
-            }
-        }
-
-        // For weekends, only show AAU duty/reporting or Ultrasound
-        if (isWeekend) {
-            const dayShifts = this.processedRota.get(dateForRotaLookup);
-            if (dayShifts && dayShifts[session]) {
-                const shiftDetails = dayShifts[session];
-                if (shiftDetails.Duty === registrar.name) {
-                    return { text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES['AAU Duty'] };
-                }
-                if (shiftDetails.Reporting === registrar.name) {
-                    return { text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES['AAU Reporting'] };
-                }
-            }
-            const ultrasoundForDay = this.processedUltrasound.get(dateForRotaLookup);
-            if (ultrasoundForDay && ultrasoundForDay.get(session)?.has(registrar.name)) {
-                return { text: "Ultrasound", cssClass: this.CSS_STATUS_CLASSES.Ultrasound };
-            }
-            // If nothing specific for weekend, return None
-            return { text: "-", cssClass: this.CSS_STATUS_CLASSES.None };
-        }
-
-        // Weekday Logic (includes checks for Rota, Ultrasound, and Blocks)
-        const dayShifts = this.processedRota.get(dateForRotaLookup);
-        if (dayShifts && dayShifts[session]) {
-            const shiftDetails = dayShifts[session];
-            if (shiftDetails.Duty === registrar.name) {
-                return { text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES['AAU Duty'] };
-            }
-            if (shiftDetails.Reporting === registrar.name) {
-                return { text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES['AAU Reporting'] };
-            }
-        }
-
-        const ultrasoundForDay = this.processedUltrasound.get(dateForRotaLookup);
-        if (ultrasoundForDay && ultrasoundForDay.get(session)?.has(registrar.name)) {
-            return { text: "Ultrasound", cssClass: this.CSS_STATUS_CLASSES.Ultrasound };
-        }
-
-        const registrarBlocks = this.processedBlocks.get(registrar.name);
-        if (registrarBlocks) {
-            for (const block of registrarBlocks) {
-                if (this._isDateBetween(date, block.start, block.end)) {
-                    const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayOfWeek];
-                    const blockValue = block.definition?.[dayName]?.[session]?.value;
-                    if (blockValue) {
-                        // Check for specific block styles first, otherwise use generic 'Block'
-                        const specificBlockClass = this.CSS_STATUS_CLASSES[blockValue];
-                        return { text: blockValue, cssClass: specificBlockClass || this.CSS_STATUS_CLASSES.Block };
-                    } else { // If no specific value for the block, use generic
-                        return { text: `Block: ${block.blockName}`, cssClass: this.CSS_STATUS_CLASSES.Block };
-                    }
-                }
-            }
-        }
-        
-        return { text: "-", cssClass: this.CSS_STATUS_CLASSES.None };
-    }
-
-    // --- Rendering Logic ---
-    _renderRotaTable() {
-        const rotaContainer = document.getElementById('rotaContainer');
-        const currentWeekRangeElem = document.getElementById('currentWeekRange');
-
-        let weekDates = [];
-        const startOfWeek = new Date(this.currentMonday);
-        for (let i = 0; i < 7; i++) {
-            const date = new Date(startOfWeek);
-            date.setDate(startOfWeek.getDate() + i);
-            weekDates.push(date);
-        }
-
-        currentWeekRangeElem.textContent = `${this._formatDateForDisplay(weekDates[0])} - ${this._formatDateForDisplay(weekDates[6])}`;
-
-        let html = '';
-        const hasWeekend = weekDates.some(date => date.getDay() === 0 || date.getDay() === 6);
-        if (hasWeekend) {
-            html += `<div class="weekend-indicator">Weekend Schedule: Only AAU duty/reporting and explicit Ultrasound shown; otherwise '-'</div>`;
-        }
-
-        html += `<div class="table-responsive">`; /* Wrapper for horizontal scroll */
-        html += `<table>
-            <thead>
-                <tr>
-                    <th rowspan="2">Registrar</th>`;
-        weekDates.forEach(date => {
-            const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
-            const dateNum = date.getDate().toString().padStart(2, '0');
-            const monthName = date.toLocaleDateString('en-US', { month: 'short' });
-            html += `<th colspan="2" class="day-header">${dayName}<br>${dateNum} ${monthName}</th>`;
-        });
-        html += `</tr>
-                <tr>`;
-        for (let i = 0; i < 7; i++) {
-            html += `<th class="session-header">AM</th><th class="session-header">PM</th>`;
-        }
-        html += `</tr>
-            </thead>
-            <tbody>`;
-
-        this.registrarsData.forEach(registrar => {
-            html += `<tr>
-                <td>${registrar.name}</td>`;
-            weekDates.forEach(date => {
-                const amStatus = this._getShiftStatus(registrar, date, "AM");
-                const pmStatus = this._getShiftStatus(registrar, date, "PM");
-                
-                // AM Cell
-                html += `<td class="${amStatus.cssClass}">${amStatus.text}</td>`;
-
-                // PM Cell
-                html += `<td class="${pmStatus.cssClass}">${pmStatus.text}</td>`;
-            });
-            html += `</tr>`;
-        });
-
-        html += `</tbody></table>`;
-        html += `</div>`; /* Close table-responsive wrapper */
-        rotaContainer.innerHTML = html;
-    }
-
-    // --- Public Methods (called by event handlers) ---
-    async initializeApp() {
-        document.getElementById('rotaContainer').innerHTML = `<div class="loading">Loading rota...</div>`;
-        try {
-            await this._loadAndProcessData();
-            // Set the initial week to the week of the image provided (July 7, 2025)
-            const july7_2025 = new Date('2025-07-07T00:00:00Z'); // UTC date for consistency
-            this.currentMonday = this._getMondayOfWeek(july7_2025); 
-            this._renderRotaTable();
-        } catch (error) {
-            // Error message already handled and displayed by _loadAndProcessData
-        }
-    }
-
-    changeWeek(days) {
-        this.currentMonday.setDate(this.currentMonday.getDate() + days);
-        this._renderRotaTable();
-    }
-}
-
-const rotaApp = new RotaApp();
-window.addEventListener('DOMContentLoaded', () => rotaApp.initializeApp());
-</script>
+  <script>
+    // Assume rotaApp is instantiated and manages rendering
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (typeof RotaApp !== 'undefined') {
+        window.rotaApp = new RotaApp();
+        await rotaApp._loadAndProcessData();
+        rotaApp._renderRotaTable();
+      } else {
+        document.getElementById('rotaContainer').innerHTML = '<div class="error-message">Rota application failed to load. Please check your scripts.</div>';
+      }
+    });
+  </script>
+  <!-- Load the rest of your JS logic (not included here) after this -->
 </body>
 </html>
