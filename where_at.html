@@ -243,13 +243,37 @@
                 });
             }
 
+            /**
+             * Normalizes a Date object to midnight (00:00:00.000) of its day.
+             * This is crucial for accurate date-only comparisons, ignoring time components.
+             * @param {Date} d The date to normalize.
+             * @returns {Date} A new Date object set to midnight of the same day.
+             */
+            _normalizeDateToMidnight(d) {
+                if (!d) return null; // Handle potential null/undefined dates
+                return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            }
+
             _getShiftStatus(registrar, date, session) {
                 const dateStr = date.toLocaleDateString('en-GB');
                 const dayOfWeek = date.getDay(); // 0 for Sunday, 6 for Saturday
 
+                const normalizedCurrentDate = this._normalizeDateToMidnight(date);
+
                 // 1. Check for Leave first (highest priority)
-                if (registrar.leave_records.some(l => date >= l.start && date <= l.end)) {
-                    return { text: `${registrar.leave_records.find(l => date >= l.start && date <= l.end).type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
+                if (registrar.leave_records.some(l => {
+                    const normalizedLeaveStart = this._normalizeDateToMidnight(l.start);
+                    const normalizedLeaveEnd = this._normalizeDateToMidnight(l.end);
+                    // Check if the current date falls inclusively within the leave range (date-only comparison)
+                    return normalizedCurrentDate >= normalizedLeaveStart && normalizedCurrentDate <= normalizedLeaveEnd;
+                })) {
+                    // Find the specific leave record that matches the date
+                    const leaveRecord = registrar.leave_records.find(l => {
+                        const normalizedLeaveStart = this._normalizeDateToMidnight(l.start);
+                        const normalizedLeaveEnd = this._normalizeDateToMidnight(l.end);
+                        return normalizedCurrentDate >= normalizedLeaveStart && normalizedCurrentDate <= normalizedLeaveEnd;
+                    });
+                    return { text: `${leaveRecord.type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
                 }
 
                 // 2. Check for Duty/Reporting
@@ -269,8 +293,11 @@
                     const blocks = this.processedBlocks.get(registrar.name);
                     if (blocks) { // Ensure blocks exist for registrar
                         for (const b of blocks) {
-                            if (date >= b.start && date <= b.end) {
-                                const day = date.toDateString().split(' ')[0];
+                            const normalizedBlockStart = this._normalizeDateToMidnight(b.start);
+                            const normalizedBlockEnd = this._normalizeDateToMidnight(b.end);
+                            // Check if the current date falls inclusively within the block range (date-only comparison)
+                            if (normalizedCurrentDate >= normalizedBlockStart && normalizedCurrentDate <= normalizedBlockEnd) {
+                                const day = date.toDateString().split(' ')[0]; // Day of week like "Mon", "Tue"
                                 const val = b.definition?.[day]?.[session]?.value;
                                 return {
                                     text: val || `Block: ${b.blockName}`,
@@ -290,7 +317,7 @@
                 const day = d.getDay();
                 const diff = d.getDate() - day + (day === 0 ? -6 : 1);
                 d.setDate(diff);
-                d.setHours(0, 0, 0, 0);
+                d.setHours(0, 0, 0, 0); // Ensure it's at the very beginning of Monday
                 return d;
             }
 
@@ -304,6 +331,7 @@
                 for (let i = 0; i < 7; i++) {
                     const d = new Date(this.currentMonday);
                     d.setDate(d.getDate() + i);
+                    // Dates in 'week' array are already normalized to 00:00:00 by _getMondayOfWeek and addition
                     week.push(d);
                 }
                 const currentWeekRange = `${week[0].toDateString()} - ${week[6].toDateString()}`;
