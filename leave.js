@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function calculateDaysInCycle(startDate, endDate, leaveType, isHalfDay, cycle) {
         const start = new Date(Math.max(startDate.getTime(), cycle.start.getTime()));
         const end = new Date(Math.min(endDate.getTime(), cycle.end.getTime()));
-        end.setHours(0, 0, 0, 0); // Standardize the end date for duration calculation
+        end.setHours(0, 0, 0, 0);
         
         if (start > end) return 0;
         
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const end = parseDate(record.end);
             
             let current = new Date(start);
-            current.setHours(0, 0, 0, 0); // Start from the beginning of the day
+            current.setHours(0, 0, 0, 0);
             while (current <= end) {
                 let thisCycle = getLeaveCycleForDate(current);
                 let key = thisCycle.key;
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${record.start}</td>
                 <td>${record.end}</td>
                 <td>${record.type}</td>
-                <td>${duration}</td>
+                <td>${Math.round(duration)}</td>
             `;
             
             if (record.type === "Study") studyDays += duration;
@@ -183,11 +183,11 @@ document.addEventListener("DOMContentLoaded", () => {
             leaveRecordsTableBody.appendChild(row);
         });
         
-        studyLeaveUsed.textContent = studyDays;
-        studyLeaveRemaining.textContent = (allowances.study - studyDays).toFixed(1);
-        annualLeaveUsed.textContent = annualDays;
-        annualLeaveRemaining.textContent = (allowances.annual - annualDays).toFixed(1);
-        otherLeaveUsed.textContent = otherDays;
+        studyLeaveUsed.textContent = Math.round(studyDays);
+        studyLeaveRemaining.textContent = Math.round(allowances.study - studyDays);
+        annualLeaveUsed.textContent = Math.round(annualDays);
+        annualLeaveRemaining.textContent = Math.round(allowances.annual - annualDays);
+        otherLeaveUsed.textContent = Math.round(otherDays);
     }
 
     function displayOtherCyclesLeave(groupedLeave) {
@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         } else {
                             duration = ((recordEnd.getTime() - recordStart.getTime()) / (1000 * 60 * 60 * 24)) + 1;
                         }
-                        return `<tr><td>${record.start}</td><td>${record.end}</td><td>${record.type}</td><td>${duration}</td></tr>`;
+                        return `<tr><td>${record.start}</td><td>${record.end}</td><td>${record.type}</td><td>${Math.round(duration)}</td></tr>`;
                     }).join("")}
                 </tbody>
             `;
