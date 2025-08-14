@@ -1,397 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Registrar Weekly Rota</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        .date-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        button {
-            background: #34495e;
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        button:hover {
-            background: #4a5f7a;
-        }
-        #currentWeekRange {
-            font-weight: bold;
-            font-size: 1.2rem;
-            min-width: 300px;
-            text-align: center;
-        }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Registrar Weekly Rota</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .date-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #34495e;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        button:hover {
+            background: #4a5f7a;
+        }
+        #currentWeekRange {
+            font-weight: bold;
+            font-size: 1.2rem;
+            min-width: 300px;
+            text-align: center;
+        }
 
-        /* NEW CSS for sticky header and column */
-        .table-container {
-            overflow: auto; /* This creates the scrollbar for the table */
-            max-height: 80vh; /* Optional: adds vertical scrolling if the table gets too long */
-        }
+        /* NEW CSS for sticky header and column */
+        .table-container {
+            overflow: auto; /* This creates the scrollbar for the table */
+            max-height: 80vh; /* Optional: adds vertical scrolling if the table gets too long */
+        }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1000px; /* Ensure table is wide enough to trigger scroll */
-            position: relative; /* Needed for sticky positioning context */
-        }
-        thead tr {
-            background: #34495e;
-            color: white;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-            font-size: 0.8rem;
-            vertical-align: middle;
-            height: 40px;
-            white-space: nowrap;
-        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px; /* Ensure table is wide enough to trigger scroll */
+            position: relative; /* Needed for sticky positioning context */
+        }
+        thead tr {
+            background: #34495e;
+            color: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            vertical-align: middle;
+            height: 40px;
+            white-space: nowrap;
+        }
 
-        /* Sticky header row */
-        thead th {
-            position: sticky;
-            top: 0;
-            z-index: 2; /* Ensures it stays above body content */
-            background: #34495e; /* Ensure background color to hide content underneath */
-        }
+        /* Sticky header row */
+        thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2; /* Ensures it stays above body content */
+            background: #34495e; /* Ensure background color to hide content underneath */
+        }
 
-        /* Sticky first column */
-        th:first-child,
-        td:first-child {
-            position: sticky;
-            left: 0;
-            z-index: 1; /* Ensures it stays above other columns */
-            background: white; /* Match container background or specific for clarity */
-            min-width: 120px; /* Give some width for the name column */
-        }
+        /* Sticky first column */
+        th:first-child,
+        td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 1; /* Ensures it stays above other columns */
+            background: white; /* Match container background or specific for clarity */
+            min-width: 120px; /* Give some width for the name column */
+        }
 
-        /* Top-left corner (intersection of sticky row and column) */
-        thead th:first-child {
-            z-index: 3; /* Highest z-index for the corner */
-        }
+        /* Top-left corner (intersection of sticky row and column) */
+        thead th:first-child {
+            z-index: 3; /* Highest z-index for the corner */
+        }
 
-        tbody tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-        .status-leave { background: #dc3545; color: white; font-weight: bold; }
-        .status-duty { background: #28a745; color: white; font-weight: bold; }
-        .status-reporting { background: #007bff; color: white; font-weight: bold; }
-        .status-block { background: #17a2b8; color: white; font-weight: bold; }
-        .status-ultrasound { background: #6f42c1; color: white; font-weight: bold; }
-        .status-none { color: #6c757d; font-style: italic; }
-        .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; }
-        .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; }
-        .weekend-indicator {
-            text-align: center;
-            padding: 12px;
-            background: #17a2b8;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 15px;
-            border-radius: 6px;
-        }
-        .loading, .error-message {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.1rem;
-            border-radius: 6px;
-            margin: 20px 0;
-        }
-        .loading { color: #6c757d; }
-        .error-message { background: #f8d7da; color: #721c24; }
-    </style>
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .status-leave { background: #dc3545; color: white; font-weight: bold; }
+        .status-duty { background: #28a745; color: white; font-weight: bold; }
+        .status-reporting { background: #007bff; color: white; font-weight: bold; }
+        .status-block { background: #17a2b8; color: white; font-weight: bold; }
+        .status-ultrasound { background: #6f42c1; color: white; font-weight: bold; }
+        .status-none { color: #6c757d; font-style: italic; }
+        .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; }
+        .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; }
+        .weekend-indicator {
+            text-align: center;
+            padding: 12px;
+            background: #17a2b8;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+        .loading, .error-message {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .loading { color: #6c757d; }
+        .error-message { background: #f8d7da; color: #721c24; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Registrar Weekly Rota</h1>
-        <div class="date-controls">
-            <button onclick="rotaApp.changeWeek(-7)">← Previous Week</button>
-            <div id="currentWeekRange">Loading...</div>
-            <button onclick="rotaApp.changeWeek(7)">Next Week →</button>
-            <button onclick="rotaApp.copyTable()">Copy Table</button>
-        </div>
-        <div id="rotaContainer">
-            <div class="loading">Loading rota...</div>
-        </div>
-    </div>
+    <div class="container">
+        <h1>Registrar Weekly Rota</h1>
+        <div class="date-controls">
+            <button onclick="rotaApp.changeWeek(-7)">← Previous Week</button>
+            <div id="currentWeekRange">Loading...</div>
+            <button onclick="rotaApp.changeWeek(7)">Next Week →</button>
+            <button onclick="rotaApp.copyTable()">Copy Table</button>
+        </div>
+        <div id="rotaContainer">
+            <div class="loading">Loading rota...</div>
+        </div>
+    </div>
 
-    <script>
-        class RotaApp {
-            constructor() {
-                this.currentMonday = this._getMondayOfWeek(new Date());
-                this.DATA_SOURCES = {
-                    registrars: './registrars_data.json',
-                    rota: './rota.json',
-                    blocks: './blocks.json',
-                    ultrasound: './ultrasound.json'
-                };
-                this.CSS_STATUS_CLASSES = {
-                    'Leave': 'status-leave',
-                    'AAU Duty': 'status-duty',
-                    'AAU Reporting': 'status-reporting',
-                    'Ultrasound': 'status-ultrasound',
-                    'Block': 'status-block',
-                    'Mt Vernon Oncology': 'status-mt-vernon-oncology',
-                    'WGH Reporting/Duty': 'status-wgh-reporting-duty',
-                    'None': 'status-none'
-                };
-                this.registrarsData = [];
-                this.processedRota = new Map();
-                this.processedBlocks = new Map();
-                this.processedUltrasound = new Map();
-            }
+    <script>
+        class RotaApp {
+            constructor() {
+                this.currentMonday = this._getMondayOfWeek(new Date());
+                this.DATA_SOURCES = {
+                    registrars: './registrars_data.json',
+                    rota: './rota.json',
+                    blocks: './blocks.json',
+                };
+                this.CSS_STATUS_CLASSES = {
+                    'Leave': 'status-leave',
+                    'AAU Duty': 'status-duty',
+                    'AAU Reporting': 'status-reporting',
+                    'Ultrasound': 'status-ultrasound',
+                    'Block': 'status-block',
+                    'Mt Vernon Oncology': 'status-mt-vernon-oncology',
+                    'WGH Reporting/Duty': 'status-wgh-reporting-duty',
+                    'None': 'status-none'
+                };
+                this.registrarsData = [];
+                this.processedRota = new Map();
+                this.processedBlocks = new Map();
+            }
 
-            async init() {
-                try {
-                    await this._loadAndProcessData();
-                    this.render();
-                } catch (e) {
-                    console.error(e);
-                    document.getElementById("rotaContainer").innerHTML = '<div class="error-message">Failed to load rota data. Please try again later.</div>';
-                }
-            }
+            async init() {
+                try {
+                    await this._loadAndProcessData();
+                    this.render();
+                } catch (e) {
+                    console.error(e);
+                    document.getElementById("rotaContainer").innerHTML = '<div class="error-message">Failed to load rota data. Please try again later.</div>';
+                }
+            }
 
-            async _fetchData(url) {
-                const res = await fetch(url);
-                if (!res.ok) throw new Error(`Failed to fetch ${url}`);
-                return res.json();
-            }
+            async _fetchData(url) {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+                return res.json();
+            }
 
-            async _loadAndProcessData() {
-                const [registrars, rota, blocks, ultrasound] = await Promise.all([
-                    this._fetchData(this.DATA_SOURCES.registrars),
-                    this._fetchData(this.DATA_SOURCES.rota),
-                    this._fetchData(this.DATA_SOURCES.blocks),
-                    this._fetchData(this.DATA_SOURCES.ultrasound)
-                ]);
-                this.registrarsData = registrars;
-                this._processRotaData(rota);
-                this._processBlocksData(registrars, blocks);
-                this._processUltrasoundData(ultrasound);
-            }
+            async _loadAndProcessData() {
+                // Fetches data from the three remaining sources
+                const [registrars, rota, blocks] = await Promise.all([
+                    this._fetchData(this.DATA_SOURCES.registrars),
+                    this._fetchData(this.DATA_SOURCES.rota),
+                    this._fetchData(this.DATA_SOURCES.blocks)
+                ]);
+                this.registrarsData = registrars;
+                this._processRotaData(rota);
+                this._processBlocksData(registrars, blocks);
+            }
 
-            _processRotaData(data) {
-                this.processedRota.clear();
-                data.forEach(day => {
-                    if (day.Date && day.Shifts) {
-                        this.processedRota.set(day.Date, day.Shifts);
-                    }
-                });
-            }
+            _processRotaData(data) {
+                this.processedRota.clear();
+                data.forEach(day => {
+                    // Ensure all shifts are handled, including the new Ultrasound key
+                    if (day.Date && day.Shifts) {
+                        this.processedRota.set(day.Date, day.Shifts);
+                    }
+                });
+            }
 
-            _processBlocksData(registrars, blockDefs) {
-                registrars.forEach(r => {
-                    const blocks = [];
-                    if (r.blocks) {
-                        r.blocks.forEach(b => {
-                            blocks.push({
-                                start: new Date(b.start_date),
-                                end: new Date(b.end_date),
-                                blockName: b.block_name,
-                                definition: blockDefs[b.block_name]
-                            });
-                        });
-                    }
-                    r.leave_records = r.leave_records?.map(l => ({
-                        type: l.type,
-                        start: new Date(l.start),
-                        end: new Date(l.end)
-                    })) || [];
-                    this.processedBlocks.set(r.name, blocks);
-                });
-            }
+            _processBlocksData(registrars, blockDefs) {
+                registrars.forEach(r => {
+                    const blocks = [];
+                    if (r.blocks) {
+                        r.blocks.forEach(b => {
+                            blocks.push({
+                                start: new Date(b.start_date),
+                                end: new Date(b.end_date),
+                                blockName: b.block_name,
+                                definition: blockDefs[b.block_name]
+                            });
+                        });
+                    }
+                    r.leave_records = r.leave_records?.map(l => ({
+                        type: l.type,
+                        start: new Date(l.start),
+                        end: new Date(l.end)
+                    })) || [];
+                    this.processedBlocks.set(r.name, blocks);
+                });
+            }
 
-            _processUltrasoundData(data) {
-                this.processedUltrasound.clear();
-                data.forEach(d => {
-                    if (!this.processedUltrasound.has(d.Date)) {
-                        this.processedUltrasound.set(d.Date, new Map());
-                    }
-                    const map = this.processedUltrasound.get(d.Date);
-                    if (!map.has(d.Session)) {
-                        map.set(d.Session, new Set());
-                    }
-                    map.get(d.Session).add(d["Registrar name"]);
-                });
-            }
+            /**
+             * Normalizes a Date object to midnight (00:00:00.000) of its day.
+             * This is crucial for accurate date-only comparisons, ignoring time components.
+             * @param {Date} d The date to normalize.
+             * @returns {Date} A new Date object set to midnight of the same day.
+             */
+            _normalizeDateToMidnight(d) {
+                if (!d) return null; // Handle potential null/undefined dates
+                return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+            }
 
-            /**
-             * Normalizes a Date object to midnight (00:00:00.000) of its day.
-             * This is crucial for accurate date-only comparisons, ignoring time components.
-             * @param {Date} d The date to normalize.
-             * @returns {Date} A new Date object set to midnight of the same day.
-             */
-            _normalizeDateToMidnight(d) {
-                if (!d) return null; // Handle potential null/undefined dates
-                return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-            }
+            _getShiftStatus(registrar, date, session) {
+                const dateStr = date.toLocaleDateString('en-GB');
+                const dayOfWeek = date.getDay(); // 0 for Sunday, 6 for Saturday
 
-            _getShiftStatus(registrar, date, session) {
-                const dateStr = date.toLocaleDateString('en-GB');
-                const dayOfWeek = date.getDay(); // 0 for Sunday, 6 for Saturday
+                const normalizedCurrentDate = this._normalizeDateToMidnight(date);
 
-                const normalizedCurrentDate = this._normalizeDateToMidnight(date);
+                // 1. Check for Leave first (highest priority)
+                if (registrar.leave_records.some(l => {
+                    const normalizedLeaveStart = this._normalizeDateToMidnight(l.start);
+                    const normalizedLeaveEnd = this._normalizeDateToMidnight(l.end);
+                    return normalizedCurrentDate >= normalizedLeaveStart && normalizedCurrentDate <= normalizedLeaveEnd;
+                })) {
+                    const leaveRecord = registrar.leave_records.find(l => {
+                        const normalizedLeaveStart = this._normalizeDateToMidnight(l.start);
+                        const normalizedLeaveEnd = this._normalizeDateToMidnight(l.end);
+                        return normalizedCurrentDate >= normalizedLeaveStart && normalizedCurrentDate <= normalizedLeaveEnd;
+                    });
+                    return { text: `${leaveRecord.type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
+                }
 
-                // 1. Check for Leave first (highest priority)
-                if (registrar.leave_records.some(l => {
-                    const normalizedLeaveStart = this._normalizeDateToMidnight(l.start);
-                    const normalizedLeaveEnd = this._normalizeDateToMidnight(l.end);
-                    // Check if the current date falls inclusively within the leave range (date-only comparison)
-                    return normalizedCurrentDate >= normalizedLeaveStart && normalizedCurrentDate <= normalizedLeaveEnd;
-                })) {
-                    // Find the specific leave record that matches the date
-                    const leaveRecord = registrar.leave_records.find(l => {
-                        const normalizedLeaveStart = this._normalizeDateToMidnight(l.start);
-                        const normalizedLeaveEnd = this._normalizeDateToMidnight(l.end);
-                        return normalizedCurrentDate >= normalizedLeaveStart && normalizedCurrentDate <= normalizedLeaveEnd;
-                    });
-                    return { text: `${leaveRecord.type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
-                }
+                // 2. Check for Duty/Reporting/Ultrasound from the new rota structure
+                const dayShifts = this.processedRota.get(dateStr);
+                if (dayShifts && dayShifts[session]) {
+                    const shift = dayShifts[session];
+                    // Handle the new array-based structure
+                    if (shift.Duty && shift.Duty.includes(registrar.name)) return { text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES["AAU Duty"] };
+                    if (shift.Reporting && shift.Reporting.includes(registrar.name)) return { text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES["AAU Reporting"] };
+                    if (shift.Ultrasound && shift.Ultrasound.includes(registrar.name)) return { text: "Ultrasound Duty", cssClass: this.CSS_STATUS_CLASSES["Ultrasound"] };
+                }
 
-                // 2. Check for Duty/Reporting
-                const dayShifts = this.processedRota.get(dateStr);
-                if (dayShifts && dayShifts[session]) {
-                    const shift = dayShifts[session];
-                    if (shift.Duty === registrar.name) return { text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES["AAU Duty"] };
-                    if (shift.Reporting === registrar.name) return { text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES["AAU Reporting"] };
-                }
+                // 3. Check for Blocks - ONLY if it's NOT Saturday (6) or Sunday (0)
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Saturday or Sunday
+                    const blocks = this.processedBlocks.get(registrar.name);
+                    if (blocks) { // Ensure blocks exist for registrar
+                        for (const b of blocks) {
+                            const normalizedBlockStart = this._normalizeDateToMidnight(b.start);
+                            const normalizedBlockEnd = this._normalizeDateToMidnight(b.end);
+                            if (normalizedCurrentDate >= normalizedBlockStart && normalizedCurrentDate <= normalizedBlockEnd) {
+                                const day = date.toDateString().split(' ')[0]; // Day of week like "Mon", "Tue"
+                                const val = b.definition?.[day]?.[session]?.value;
+                                return {
+                                    text: val || `Block: ${b.blockName}`,
+                                    cssClass: this.CSS_STATUS_CLASSES[val] || this.CSS_STATUS_CLASSES.Block
+                                };
+                            }
+                        }
+                    }
+                }
 
-                // 3. Check for Ultrasound
-                const us = this.processedUltrasound.get(dateStr)?.get(session);
-                if (us && us.has(registrar.name)) return { text: "Ultrasound Duty", cssClass: this.CSS_STATUS_CLASSES["Ultrasound"] };
+                // 4. Default to 'None' if no other status applies
+                return { text: "-", cssClass: this.CSS_STATUS_CLASSES.None };
+            }
 
-                // 4. Check for Blocks - ONLY if it's NOT Saturday (6) or Sunday (0)
-                if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Saturday or Sunday
-                    const blocks = this.processedBlocks.get(registrar.name);
-                    if (blocks) { // Ensure blocks exist for registrar
-                        for (const b of blocks) {
-                            const normalizedBlockStart = this._normalizeDateToMidnight(b.start);
-                            const normalizedBlockEnd = this._normalizeDateToMidnight(b.end);
-                            // Check if the current date falls inclusively within the block range (date-only comparison)
-                            if (normalizedCurrentDate >= normalizedBlockStart && normalizedCurrentDate <= normalizedBlockEnd) {
-                                const day = date.toDateString().split(' ')[0]; // Day of week like "Mon", "Tue"
-                                const val = b.definition?.[day]?.[session]?.value;
-                                return {
-                                    text: val || `Block: ${b.blockName}`,
-                                    cssClass: this.CSS_STATUS_CLASSES[val] || this.CSS_STATUS_CLASSES.Block
-                                };
-                            }
-                        }
-                    }
-                }
+            _getMondayOfWeek(date) {
+                const d = new Date(date);
+                const day = d.getDay();
+                const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+                d.setDate(diff);
+                d.setHours(0, 0, 0, 0);
+                return d;
+            }
 
-                // 5. Default to 'None' if no other status applies
-                return { text: "-", cssClass: this.CSS_STATUS_CLASSES.None };
-            }
+            changeWeek(offsetDays) {
+                this.currentMonday.setDate(this.currentMonday.getDate() + offsetDays);
+                this.render();
+            }
 
-            _getMondayOfWeek(date) {
-                const d = new Date(date);
-                const day = d.getDay();
-                const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-                d.setDate(diff);
-                d.setHours(0, 0, 0, 0); // Ensure it's at the very beginning of Monday
-                return d;
-            }
+            render() {
+                const week = [];
+                for (let i = 0; i < 7; i++) {
+                    const d = new Date(this.currentMonday);
+                    d.setDate(d.getDate() + i);
+                    week.push(d);
+                }
+                const currentWeekRange = `${week[0].toDateString()} - ${week[6].toDateString()}`;
+                document.getElementById("currentWeekRange").textContent = currentWeekRange;
 
-            changeWeek(offsetDays) {
-                this.currentMonday.setDate(this.currentMonday.getDate() + offsetDays);
-                this.render();
-            }
+                let html = `<div class="table-container"><table id="rotaTable"><thead><tr><th>Registrar</th>`; // Added ID here
+                week.forEach(d => {
+                    html += `<th colspan="2">${d.toDateString()}</th>`;
+                });
+                html += `</tr><tr><th></th>`;
+                week.forEach(() => {
+                    html += `<th>AM</th><th>PM</th>`;
+                });
+                html += `</tr></thead><tbody>`;
 
-            render() {
-                const week = [];
-                for (let i = 0; i < 7; i++) {
-                    const d = new Date(this.currentMonday);
-                    d.setDate(d.getDate() + i);
-                    // Dates in 'week' array are already normalized to 00:00:00 by _getMondayOfWeek and addition
-                    week.push(d);
-                }
-                const currentWeekRange = `${week[0].toDateString()} - ${week[6].toDateString()}`;
-                document.getElementById("currentWeekRange").textContent = currentWeekRange;
+                this.registrarsData.forEach(r => {
+                    html += `<tr><td>${r.name}</td>`;
+                    week.forEach(d => {
+                        ["AM", "PM"].forEach(s => {
+                            const status = this._getShiftStatus(r, d, s);
+                            html += `<td class="${status.cssClass}">${status.text}</td>`;
+                        });
+                    });
+                    html += `</tr>`;
+                });
 
-                let html = `<div class="table-container"><table id="rotaTable"><thead><tr><th>Registrar</th>`; // Added ID here
-                week.forEach(d => {
-                    html += `<th colspan="2">${d.toDateString()}</th>`;
-                });
-                html += `</tr><tr><th></th>`;
-                week.forEach(() => {
-                    html += `<th>AM</th><th>PM</th>`;
-                });
-                html += `</tr></thead><tbody>`;
+                html += `</tbody></table></div>`;
+                document.getElementById("rotaContainer").innerHTML = html;
+            }
 
-                this.registrarsData.forEach(r => {
-                    html += `<tr><td>${r.name}</td>`;
-                    week.forEach(d => {
-                        ["AM", "PM"].forEach(s => {
-                            const status = this._getShiftStatus(r, d, s);
-                            html += `<td class="${status.cssClass}">${status.text}</td>`;
-                        });
-                    });
-                    html += `</tr>`;
-                });
+            async copyTable() {
+                const table = document.getElementById('rotaTable');
+                if (!table) {
+                    alert('Rota table not found!');
+                    return;
+                }
 
-                html += `</tbody></table></div>`;
-                document.getElementById("rotaContainer").innerHTML = html;
-            }
+                const range = document.createRange();
+                range.selectNode(table);
 
-            // NEW FUNCTION TO COPY TABLE
-            async copyTable() {
-                const table = document.getElementById('rotaTable');
-                if (!table) {
-                    alert('Rota table not found!');
-                    return;
-                }
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
 
-                const range = document.createRange();
-                range.selectNode(table);
+                try {
+                    const successful = document.execCommand('copy');
+                    const msg = successful ? 'Table copied to clipboard!' : 'Failed to copy table.';
+                    alert(msg);
+                } catch (err) {
+                    console.error('Error copying table: ', err);
+                    alert('Failed to copy table. Your browser may not support this method.');
+                } finally {
+                    selection.removeAllRanges();
+                }
+            }
+        }
 
-                const selection = window.getSelection();
-                selection.removeAllRanges();
-                selection.addRange(range);
-
-                try {
-                    const successful = document.execCommand('copy');
-                    const msg = successful ? 'Table copied to clipboard!' : 'Failed to copy table.';
-                    alert(msg);
-                } catch (err) {
-                    console.error('Error copying table: ', err);
-                    alert('Failed to copy table. Your browser may not support this method.');
-                } finally {
-                    selection.removeAllRanges(); // Deselect the table
-                }
-            }
-        }
-
-        const rotaApp = new RotaApp();
-        rotaApp.init();
-    </script>
+        const rotaApp = new RotaApp();
+        rotaApp.init();
+    </script>
 </body>
 </html>
