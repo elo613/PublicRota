@@ -29,27 +29,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function calculateWeekdaysBetween(startDate, endDate) {
         let count = 0;
-        for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
-            const day = date.getDay();
-            if (day !== 0 && day !== 6) count++;
+        const current = new Date(startDate);
+        while (current <= endDate) {
+            const day = current.getDay();
+            if (day !== 0 && day !== 6) {
+                count++;
+            }
+            current.setDate(current.getDate() + 1);
         }
         return count;
     }
 
     function getLeaveCycleForDate(date) {
-        let year = date.getFullYear();
-        // The cycle starts in August, so if it's before August, the cycle year is the previous year
-        if (date.getMonth() < 7) { 
+        const d = new Date(date);
+        let year = d.getFullYear();
+        if (d.getMonth() < 7) { 
             year--;
         }
 
-        const start = new Date(year, 7, 1); // August 1st
-        while (start.getDay() !== 3) start.setDate(start.getDate() + 1); // Find first Wednesday
+        const start = new Date(year, 7, 1);
+        while (start.getDay() !== 3) start.setDate(start.getDate() + 1);
 
-        const end = new Date(year + 1, 7, 1); // August 1st next year
-        while (end.getDay() !== 2) end.setDate(end.getDate() + 1); // Find first Tuesday
+        const end = new Date(year + 1, 7, 1);
+        while (end.getDay() !== 2) end.setDate(end.getDate() + 1);
         
-        // Normalize to midnight for consistent comparisons
         start.setHours(0, 0, 0, 0);
         end.setHours(23, 59, 59, 999);
 
@@ -66,35 +69,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function parseDate(dateStr) {
-        // Handle "dd Month yyyy" format from registrars_data.json
         const parts = dateStr.split(' ');
         const day = parts[0];
         const month = parts[1];
         const year = parts[2];
-        return new Date(`${month} ${day}, ${year}`);
+        const newDate = new Date(`${month} ${day}, ${year}`);
+        newDate.setHours(0, 0, 0, 0); // Standardize to midnight
+        return newDate;
     }
 
     function isInCycle(startDate, endDate, cycle) {
-        return (startDate <= cycle.end && endDate >= cycle.start);
+        return (startDate.getTime() <= cycle.end.getTime() && endDate.getTime() >= cycle.start.getTime());
     }
     
     function calculateDaysInCycle(startDate, endDate, leaveType, isHalfDay, cycle) {
         const start = new Date(Math.max(startDate.getTime(), cycle.start.getTime()));
         const end = new Date(Math.min(endDate.getTime(), cycle.end.getTime()));
-
+        end.setHours(0, 0, 0, 0); // Standardize the end date for duration calculation
+        
         if (start > end) return 0;
         
         let days = 0;
         if (isHalfDay) {
-            // A half day only counts if the single day is within the cycle
-            if (startDate.toDateString() === endDate.toDateString() && isInCycle(startDate, endDate, cycle)) {
+            if (start.toDateString() === end.toDateString() && isInCycle(start, end, cycle)) {
                 days = 0.5;
             }
         } else {
             if (leaveType === "Annual") {
                 days = calculateWeekdaysBetween(start, end);
-            } else { // Study or Other
-                days = ((end - start) / (1000 * 60 * 60 * 24)) + 1;
+            } else {
+                days = ((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
             }
         }
         return days;
@@ -102,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function groupLeaveByCycle(records) {
         const grouped = {};
-        const allCycles = new Map();
         const now = new Date();
         now.setHours(0, 0, 0, 0);
         const currentCycle = getLeaveCycleForDate(now);
@@ -111,13 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const start = parseDate(record.start);
             const end = parseDate(record.end);
             
-            let cycle = getLeaveCycleForDate(start);
-            if (!allCycles.has(cycle.key)) {
-                allCycles.set(cycle.key, cycle);
-            }
-            
-            // Check if leave spans multiple cycles
             let current = new Date(start);
+            current.setHours(0, 0, 0, 0); // Start from the beginning of the day
             while (current <= end) {
                 let thisCycle = getLeaveCycleForDate(current);
                 let key = thisCycle.key;
@@ -130,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     };
                 }
                 
-                // Add the record if not already added for this cycle
                 if (!grouped[key].records.some(r => r.start === record.start && r.end === record.end)) {
                     const recordCopy = {
                         ...record,
@@ -160,16 +157,16 @@ document.addEventListener("DOMContentLoaded", () => {
         sortedRecords.forEach(record => {
             const row = document.createElement("tr");
             
-            let duration = 0;
             const recordStart = parseDate(record.start);
             const recordEnd = parseDate(record.end);
             
+            let duration = 0;
             if (record.isHalfDay) {
                 duration = 0.5;
             } else if (record.type === "Annual") {
                 duration = calculateWeekdaysBetween(recordStart, recordEnd);
-            } else { // Study or Other
-                duration = ((recordEnd - recordStart) / (1000 * 60 * 60 * 24)) + 1;
+            } else {
+                duration = ((recordEnd.getTime() - recordStart.getTime()) / (1000 * 60 * 60 * 24)) + 1;
             }
             
             row.innerHTML = `
@@ -242,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         } else if (record.type === "Annual") {
                             duration = calculateWeekdaysBetween(recordStart, recordEnd);
                         } else {
-                            duration = ((recordEnd - recordStart) / (1000 * 60 * 60 * 24)) + 1;
+                            duration = ((recordEnd.getTime() - recordStart.getTime()) / (1000 * 60 * 60 * 24)) + 1;
                         }
                         return `<tr><td>${record.start}</td><td>${record.end}</td><td>${record.type}</td><td>${duration}</td></tr>`;
                     }).join("")}
@@ -273,7 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (groupedLeave[currentCycle.key]) {
             displayCurrentCycleLeave(groupedLeave[currentCycle.key], allowances);
         } else {
-            // Handle case where no leave records exist in the current cycle
             leaveRecordsTableBody.innerHTML = '<tr><td colspan="4">No leave records for this cycle.</td></tr>';
             annualLeaveUsed.textContent = 0;
             annualLeaveRemaining.textContent = allowances.annual;
@@ -300,8 +296,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function initialise() {
         hideSections();
-        // Login check and token handling can be added here if needed
-        
         const data = await fetchRegistrarData();
         data.forEach(registrar => {
             const option = document.createElement("option");
