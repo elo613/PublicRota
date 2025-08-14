@@ -1,83 +1,164 @@
+/* General Styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #f4f4f9;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+    align-items: center;
+    height: 100vh;
 }
 
-.container {
-    width: 80%;
-    max-width: 800px;
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Login Form */
+.login-container {
+    width: 350px;
     background: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
-    margin: 20px;
-}
-
-h1, h2 {
     text-align: center;
-    color: #333;
-}
-
-h3 {
-    color: #444;
-    margin-bottom: 5px;
 }
 
 label {
     display: block;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-    color: #555;
+    margin: 10px 0 5px;
+    text-align: left;
 }
 
-select {
-    width: 100%;
+input {
+    width: 300px;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 1em;
-    background-color: #fff;
 }
 
-.hidden {
-    display: none;
-}
-
-/* Current Cycle Display */
-#current-cycle-container {
-    margin: 20px 0;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-    border-left: 4px solid #4CAF50;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#current-cycle-display {
-    font-weight: bold;
-    color: #2c7be5;
-}
-
-/* Leave Tables */
-table {
+/* Button Styling */
+button {
     width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Disabled Button Styling */
+button:disabled {
+    background-color: #cccccc; /* Light grey */
+    color: #666666;          /* Darker grey for text */
+    cursor: not-allowed;     /* Indicates the button is not clickable */
+    opacity: 0.6;            /* Adds a slightly transparent effect */
+}
+
+/* Rota Viewer */
+.rota-container {
+    width: 90%; /* Increased width to better fit new columns */
+    max-width: 1200px; /* Increased max-width */
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Week Header Styling */
+.week-header h1 {
+    margin-bottom: 20px;
+}
+
+/* Styling for Previous and Next Week Buttons */
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 2%;
+}
+
+.button-row button {
+    width: 48%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.button-row button:hover {
+    background-color: #0056b3;
+}
+
+
+.button-row button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Styling for 100% Width Buttons Below the Table */
+.button-container {
+    margin-top: 10px;
+}
+
+.button-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+.button-container button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Table Styling */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#rota-table {
+    width: 100%;
+    min-width: 900px; /* Adjust min-width to accommodate new columns */
     border-collapse: collapse;
-    margin: 20px 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 thead th {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px;
-    text-align: left;
+    background-color: #f4f4f9;
+    padding: 10px;
 }
 
 th, td {
@@ -94,36 +175,6 @@ tbody tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Empty State */
-.empty-cycle-message {
-    color: #666;
-    font-style: italic;
-    padding: 15px;
-    text-align: center;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-}
-
-.note {
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 15px;
-    font-style: italic;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-        margin: 10px;
-        padding: 15px;
-    }
-    
-    table {
-        font-size: 0.9em;
-    }
-    
-    th, td {
-        padding: 8px;
-    }
+.highlight {
+    background-color: lightblue;
 }
