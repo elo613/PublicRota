@@ -2,21 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const registrarSelect = document.getElementById("registrar-select");
     const currentCycleSection = document.getElementById("current-cycle-section");
     const otherCyclesSection = document.getElementById("other-cycles-section");
-    const leaveRecordsTable = document.querySelector("#leave-records-table tbody");
+    const leaveRecordsTableBody = document.getElementById("leave-records-table-body");
     const currentCycleDisplay = document.getElementById("current-cycle-display");
     const cycleTablesContainer = document.getElementById("cycle-tables-container");
     
     // Summary elements
     const annualLeaveAllowance = document.getElementById("annual-leave-allowance");
-    const studyLeave = document.getElementById("study-leave");
+    const studyLeaveAllowance = document.getElementById("study-leave-allowance");
     const studyLeaveUsed = document.getElementById("study-leave-used");
     const annualLeaveUsed = document.getElementById("annual-leave-used");
     const otherLeaveUsed = document.getElementById("other-leave-used");
     const studyLeaveRemaining = document.getElementById("study-leave-remaining");
     const annualLeaveRemaining = document.getElementById("annual-leave-remaining");
-    const otherLeaveRemaining = document.getElementById("other-leave-remaining");
 
-    let authToken = "";
+    let registrarsData = [];
 
     function hideSections() {
         currentCycleSection?.classList.add("hidden");
@@ -28,57 +27,31 @@ document.addEventListener("DOMContentLoaded", () => {
         otherCyclesSection?.classList.remove("hidden");
     }
 
-    function checkLogin() {
-        const tokenString = localStorage.getItem("loginToken");
-        if (!tokenString) {
-            redirectToLogin();
-            return false;
-        }
-
-        try {
-            const token = JSON.parse(tokenString);
-            if (Date.now() > token.expiry) {
-                alert("Session expired. Please log in again.");
-                localStorage.removeItem("loginToken");
-                redirectToLogin();
-                return false;
-            }
-            authToken = token.value;
-            return true;
-        } catch (e) {
-            console.error("Error parsing token:", e);
-            redirectToLogin();
-            return false;
-        }
-    }
-
-    function redirectToLogin() {
-        window.location.href = "index.html";
-    }
-
     function calculateWeekdaysBetween(startDate, endDate) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
         let count = 0;
-
-        for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+        for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
             const day = date.getDay();
             if (day !== 0 && day !== 6) count++;
         }
-
         return count;
     }
 
     function getLeaveCycleForDate(date) {
-        const d = new Date(date);
-        let year = d.getFullYear();
-        if (d.getMonth() < 7) year--;
+        let year = date.getFullYear();
+        // The cycle starts in August, so if it's before August, the cycle year is the previous year
+        if (date.getMonth() < 7) { 
+            year--;
+        }
 
         const start = new Date(year, 7, 1); // August 1st
         while (start.getDay() !== 3) start.setDate(start.getDate() + 1); // Find first Wednesday
 
         const end = new Date(year + 1, 7, 1); // August 1st next year
         while (end.getDay() !== 2) end.setDate(end.getDate() + 1); // Find first Tuesday
+        
+        // Normalize to midnight for consistent comparisons
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
 
         return {
             start,
@@ -91,128 +64,153 @@ document.addEventListener("DOMContentLoaded", () => {
     function formatDate(date) {
         return date.toDateString();
     }
-
-    function getCurrentLeaveCycle() {
-        return getLeaveCycleForDate(new Date());
+    
+    function parseDate(dateStr) {
+        // Handle "dd Month yyyy" format from registrars_data.json
+        const parts = dateStr.split(' ');
+        const day = parts[0];
+        const month = parts[1];
+        const year = parts[2];
+        return new Date(`${month} ${day}, ${year}`);
     }
 
     function isInCycle(startDate, endDate, cycle) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        return (start >= cycle.start && start <= cycle.end) ||
-               (end >= cycle.start && end <= cycle.end) ||
-               (start <= cycle.start && end >= cycle.end);
+        return (startDate <= cycle.end && endDate >= cycle.start);
     }
+    
+    function calculateDaysInCycle(startDate, endDate, leaveType, isHalfDay, cycle) {
+        const start = new Date(Math.max(startDate.getTime(), cycle.start.getTime()));
+        const end = new Date(Math.min(endDate.getTime(), cycle.end.getTime()));
 
-    function calculateDaysInCycle(startDate, endDate, cycle) {
-        const start = new Date(Math.max(new Date(startDate).getTime(), cycle.start.getTime()));
-        const end = new Date(Math.min(new Date(endDate).getTime(), cycle.end.getTime()));
         if (start > end) return 0;
-        return calculateWeekdaysBetween(start, end);
+        
+        let days = 0;
+        if (isHalfDay) {
+            // A half day only counts if the single day is within the cycle
+            if (startDate.toDateString() === endDate.toDateString() && isInCycle(startDate, endDate, cycle)) {
+                days = 0.5;
+            }
+        } else {
+            if (leaveType === "Annual") {
+                days = calculateWeekdaysBetween(start, end);
+            } else { // Study or Other
+                days = ((end - start) / (1000 * 60 * 60 * 24)) + 1;
+            }
+        }
+        return days;
     }
 
     function groupLeaveByCycle(records) {
         const grouped = {};
-        
-        // Initialize with the current cycle
-        const currentCycle = getCurrentLeaveCycle();
-        grouped[currentCycle.key] = { 
-            cycle: currentCycle, 
-            records: [],
-            isCurrent: true
-        };
+        const allCycles = new Map();
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        const currentCycle = getLeaveCycleForDate(now);
 
-        // Process all leave records
         records.forEach(record => {
-            // Find which cycle(s) this leave record belongs to
-            let foundCycle = false;
+            const start = parseDate(record.start);
+            const end = parseDate(record.end);
             
-            // Check if it belongs to existing cycles in our grouped object
-            for (const [key, group] of Object.entries(grouped)) {
-                if (isInCycle(record.start, record.end, group.cycle)) {
-                    // Create a copy of the record with days calculated for this specific cycle
-                    const recordCopy = {...record};
-                    recordCopy.daysInCycle = calculateDaysInCycle(record.start, record.end, group.cycle);
-                    group.records.push(recordCopy);
-                    foundCycle = true;
-                }
+            let cycle = getLeaveCycleForDate(start);
+            if (!allCycles.has(cycle.key)) {
+                allCycles.set(cycle.key, cycle);
             }
             
-            // If it doesn't belong to any existing cycles, create a new one
-            if (!foundCycle) {
-                const recordCycle = getLeaveCycleForDate(record.start);
-                const key = recordCycle.key;
+            // Check if leave spans multiple cycles
+            let current = new Date(start);
+            while (current <= end) {
+                let thisCycle = getLeaveCycleForDate(current);
+                let key = thisCycle.key;
                 
                 if (!grouped[key]) {
-                    grouped[key] = { 
-                        cycle: recordCycle, 
+                    grouped[key] = {
+                        cycle: thisCycle,
                         records: [],
-                        isCurrent: false 
+                        isCurrent: thisCycle.key === currentCycle.key
                     };
                 }
                 
-                const recordCopy = {...record};
-                recordCopy.daysInCycle = calculateDaysInCycle(record.start, record.end, recordCycle);
-                grouped[key].records.push(recordCopy);
+                // Add the record if not already added for this cycle
+                if (!grouped[key].records.some(r => r.start === record.start && r.end === record.end)) {
+                    const recordCopy = {
+                        ...record,
+                        start: record.start,
+                        end: record.end,
+                        type: record.type,
+                        isHalfDay: record.half_day || false,
+                        daysInCycle: calculateDaysInCycle(start, end, record.type, record.half_day, thisCycle)
+                    };
+                    grouped[key].records.push(recordCopy);
+                }
+                current.setDate(current.getDate() + 1);
             }
         });
-        
         return grouped;
     }
 
     function displayCurrentCycleLeave(cycleData, allowances) {
-        // Clear existing data
-        leaveRecordsTable.innerHTML = "";
+        leaveRecordsTableBody.innerHTML = "";
         
-        // Display leave records for current cycle
         let studyDays = 0, annualDays = 0, otherDays = 0;
         
-        // Sort by start date
         const sortedRecords = [...cycleData.records].sort(
-            (a, b) => new Date(a.start) - new Date(b.start)
+            (a, b) => parseDate(a.start) - parseDate(b.start)
         );
         
         sortedRecords.forEach(record => {
             const row = document.createElement("tr");
+            
+            let duration = 0;
+            const recordStart = parseDate(record.start);
+            const recordEnd = parseDate(record.end);
+            
+            if (record.isHalfDay) {
+                duration = 0.5;
+            } else if (record.type === "Annual") {
+                duration = calculateWeekdaysBetween(recordStart, recordEnd);
+            } else { // Study or Other
+                duration = ((recordEnd - recordStart) / (1000 * 60 * 60 * 24)) + 1;
+            }
+            
             row.innerHTML = `
                 <td>${record.start}</td>
                 <td>${record.end}</td>
                 <td>${record.type}</td>
-                <td>${record.daysInCycle}</td>
+                <td>${duration}</td>
             `;
             
-            // Calculate totals for summary
-            if (record.type === "Study") studyDays += record.daysInCycle;
-            else if (record.type === "Annual") annualDays += record.daysInCycle;
-            else otherDays += record.daysInCycle;
+            if (record.type === "Study") studyDays += duration;
+            else if (record.type === "Annual") annualDays += duration;
+            else otherDays += duration;
             
-            leaveRecordsTable.appendChild(row);
+            leaveRecordsTableBody.appendChild(row);
         });
         
-        // Update summary section
         studyLeaveUsed.textContent = studyDays;
-        studyLeaveRemaining.textContent = allowances.study - studyDays;
+        studyLeaveRemaining.textContent = (allowances.study - studyDays).toFixed(1);
         annualLeaveUsed.textContent = annualDays;
-        annualLeaveRemaining.textContent = allowances.annual - annualDays;
+        annualLeaveRemaining.textContent = (allowances.annual - annualDays).toFixed(1);
         otherLeaveUsed.textContent = otherDays;
     }
 
     function displayOtherCyclesLeave(groupedLeave) {
-        // Clear container
         cycleTablesContainer.innerHTML = "";
         
-        // Sort cycles by start date (descending - newest first)
         const sortedCycles = Object.entries(groupedLeave)
             .filter(([_, group]) => !group.isCurrent)
             .sort(([_, groupA], [__, groupB]) => 
                 groupB.cycle.start.getTime() - groupA.cycle.start.getTime()
             );
             
-        // Display each cycle
+        if (sortedCycles.length === 0) {
+            otherCyclesSection.classList.add("hidden");
+            return;
+        }
+        
         sortedCycles.forEach(([key, group]) => {
             const section = document.createElement("div");
             section.className = "cycle-section";
-            section.innerHTML = `<h3>Cycle: ${group.cycle.year} (${key})</h3>`;
+            section.innerHTML = `<h3>Cycle: ${group.cycle.year} (${group.cycle.start.toDateString()} to ${group.cycle.end.toDateString()})</h3>`;
             
             if (group.records.length === 0) {
                 section.innerHTML += `<p>No leave records for this cycle.</p>`;
@@ -220,9 +218,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             
-            // Sort records by start date
             const sortedRecords = [...group.records].sort(
-                (a, b) => new Date(a.start) - new Date(b.start)
+                (a, b) => parseDate(a.start) - parseDate(b.start)
             );
             
             const table = document.createElement("table");
@@ -236,14 +233,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     </tr>
                 </thead>
                 <tbody>
-                    ${sortedRecords.map(record => `
-                        <tr>
-                            <td>${record.start}</td>
-                            <td>${record.end}</td>
-                            <td>${record.type}</td>
-                            <td>${record.daysInCycle}</td>
-                        </tr>
-                    `).join("")}
+                    ${sortedRecords.map(record => {
+                        const recordStart = parseDate(record.start);
+                        const recordEnd = parseDate(record.end);
+                        let duration = 0;
+                        if (record.isHalfDay) {
+                            duration = 0.5;
+                        } else if (record.type === "Annual") {
+                            duration = calculateWeekdaysBetween(recordStart, recordEnd);
+                        } else {
+                            duration = ((recordEnd - recordStart) / (1000 * 60 * 60 * 24)) + 1;
+                        }
+                        return `<tr><td>${record.start}</td><td>${record.end}</td><td>${record.type}</td><td>${duration}</td></tr>`;
+                    }).join("")}
                 </tbody>
             `;
             
@@ -251,47 +253,45 @@ document.addEventListener("DOMContentLoaded", () => {
             cycleTablesContainer.appendChild(section);
         });
         
-        // Show or hide the section based on whether we have any cycles to display
-        if (sortedCycles.length === 0) {
-            otherCyclesSection.classList.add("hidden");
-        } else {
-            otherCyclesSection.classList.remove("hidden");
-        }
+        otherCyclesSection.classList.remove("hidden");
     }
 
     function displayRegistrarDetails(registrar) {
-        const currentCycle = getCurrentLeaveCycle();
+        const currentCycle = getLeaveCycleForDate(new Date());
         currentCycleDisplay.textContent = `${formatDate(currentCycle.start)} to ${formatDate(currentCycle.end)}`;
 
-        // Set allowance values
         const allowances = {
-            study: registrar.allowance.study || 0,
-            annual: registrar.allowance.annual || 0
+            study: parseFloat(registrar.allowance.study) || 0,
+            annual: parseFloat(registrar.allowance.annual) || 0
         };
         
         annualLeaveAllowance.textContent = allowances.annual;
-        studyLeave.textContent = allowances.study;
+        studyLeaveAllowance.textContent = allowances.study;
 
-        // Group leave records by cycle
         const groupedLeave = groupLeaveByCycle(registrar.leave_records);
         
-        // Display current cycle data (including summary)
         if (groupedLeave[currentCycle.key]) {
             displayCurrentCycleLeave(groupedLeave[currentCycle.key], allowances);
-            currentCycleSection.classList.remove("hidden");
         } else {
-            currentCycleSection.classList.add("hidden");
+            // Handle case where no leave records exist in the current cycle
+            leaveRecordsTableBody.innerHTML = '<tr><td colspan="4">No leave records for this cycle.</td></tr>';
+            annualLeaveUsed.textContent = 0;
+            annualLeaveRemaining.textContent = allowances.annual;
+            studyLeaveUsed.textContent = 0;
+            studyLeaveRemaining.textContent = allowances.study;
+            otherLeaveUsed.textContent = 0;
         }
         
-        // Display other cycles (no summary, just dates)
         displayOtherCyclesLeave(groupedLeave);
+        showSections();
     }
 
     async function fetchRegistrarData() {
         try {
             const response = await fetch("./registrars_data.json");
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return await response.json();
+            registrarsData = await response.json();
+            return registrarsData;
         } catch (error) {
             console.error("Error loading registrar data:", error);
             alert("Failed to load registrar data. Please try again later.");
@@ -300,8 +300,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function initialise() {
         hideSections();
-        if (!checkLogin()) return;
-
+        // Login check and token handling can be added here if needed
+        
         const data = await fetchRegistrarData();
         data.forEach(registrar => {
             const option = document.createElement("option");
@@ -313,7 +313,6 @@ document.addEventListener("DOMContentLoaded", () => {
         registrarSelect.addEventListener("change", () => {
             const selected = data.find(r => r.name === registrarSelect.value);
             if (selected) {
-                showSections();
                 displayRegistrarDetails(selected);
             } else {
                 hideSections();
