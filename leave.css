@@ -1,180 +1,148 @@
-/* General Styling */
+/* General page styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #e9ecef; /* Light gray background */
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px; /* Wider container for better table display */
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px; /* Smoother corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 20px;
+    color: #343a40; /* Darker heading color */
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
-/* Login Form */
-.login-container {
-    width: 350px;
-    background: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
+h2 {
+    font-size: 1.5rem;
+    color: #495057;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+    margin-top: 30px;
 }
 
-label {
-    display: block;
-    margin: 10px 0 5px;
-    text-align: left;
-}
-
-input {
-    width: 300px;
-    padding: 10px;
+h3 {
+    font-size: 1.25rem;
+    color: #495057;
+    margin-top: 25px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
 }
 
-/* Button Styling */
-button {
+/* Dropdown styling */
+label[for="registrar-select"] {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #6c757d;
+}
+
+#registrar-select {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #f8f9fa;
     cursor: pointer;
-    transition: background-color 0.3s;
-    text-align: center;
+    transition: border-color 0.3s;
 }
 
-button:hover {
-    background-color: #0056b3;
+#registrar-select:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-/* Disabled Button Styling */
-button:disabled {
-    background-color: #cccccc; /* Light grey */
-    color: #666666;          /* Darker grey for text */
-    cursor: not-allowed;     /* Indicates the button is not clickable */
-    opacity: 0.6;            /* Adds a slightly transparent effect */
+/* Leave cycle display */
+.cycle-header {
+    color: #007bff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 25px;
 }
 
-/* Rota Viewer */
-.rota-container {
-    width: 90%; /* Increased width to better fit new columns */
-    max-width: 1200px; /* Increased max-width */
-    background: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
+.cycle-note {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 5px;
 }
 
-/* Week Header Styling */
-.week-header h1 {
-    margin-bottom: 20px;
-}
-
-/* Styling for Previous and Next Week Buttons */
-.button-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    gap: 2%;
-}
-
-.button-row button {
-    width: 48%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-align: center;
-}
-
-.button-row button:hover {
-    background-color: #0056b3;
-}
-
-
-.button-row button:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-/* Styling for 100% Width Buttons Below the Table */
-.button-container {
-    margin-top: 10px;
-}
-
-.button-container button {
+/* Table styling for summary and records */
+table {
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-align: center;
-}
-
-.button-container button:hover {
-    background-color: #0056b3;
-}
-
-.button-container button:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-/* Table Styling */
-.table-container {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-#rota-table {
-    width: 100%;
-    min-width: 900px; /* Adjust min-width to accommodate new columns */
     border-collapse: collapse;
+    margin-top: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden; /* Ensures the rounded corners are visible */
 }
 
 thead th {
-    background-color: #f4f4f9;
-    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
+tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
     text-align: left;
+    color: #495057;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f8f9fa;
 }
 
-tbody tr:hover {
-    background-color: #f1f1f1;
+/* Summary table specific styling */
+.summary-table td {
+    font-weight: 500;
 }
 
-.highlight {
-    background-color: lightblue;
+#annual-leave-allowance,
+#study-leave-allowance,
+#annual-leave-used,
+#study-leave-used,
+#annual-leave-remaining,
+#study-leave-remaining {
+    font-weight: bold;
+}
+
+/* Colors for used/remaining values */
+#annual-leave-used, #study-leave-used, #other-leave-used {
+    color: #dc3545; /* Red for used days */
+}
+
+#annual-leave-remaining, #study-leave-remaining {
+    color: #28a745; /* Green for remaining days */
+}
+
+/* Other leave cycles section */
+#other-cycles-section {
+    margin-top: 40px;
+}
+
+.cycle-section {
+    margin-bottom: 25px;
+}
+
+/* Hidden elements */
+.hidden {
+    display: none;
 }
