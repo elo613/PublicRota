@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <!-- Login Form -->
     <div id="login-container" class="login-container">
         <h1>Login</h1>
         <form id="login-form">
@@ -20,14 +19,11 @@
         </form>
     </div>
 
-    <!-- Rota Viewer -->
     <div id="rota-container" class="rota-container" style="display: none;">
-        <!-- Week Header -->
         <div class="week-header">
             <h1 id="week-title">Week of:</h1>
         </div>
     
-        <!-- Previous and Next Week Buttons -->
         <div class="button-row">
             <button id="prev-week">← Previous Week</button>
             <button id="next-week">Next Week →</button>
@@ -40,34 +36,30 @@
                         <th>Day</th>
                         <th>AM Duty</th>
                         <th>AM Reporting</th>
+                        <th>AM Ultrasound</th>
                         <th>PM Duty</th>
                         <th>PM Reporting</th>
-                        <th>Ultrasound Duty</th>
+                        <th>PM Ultrasound</th>
                         <th>Leave</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rota rows will be dynamically generated here -->
-                </tbody>
+                    </tbody>
             </table>
         </div>
         
-        <!-- View Blocks Button -->
         <div class="button-container">
             <button id="view-blocks" onclick="openBlocksPage()">View Block Timetables</button>
         </div>
 
-        <!-- View Registrar location -->
         <div class="button-container">
             <button id="view-location" onclick="openRegLocation()">View Daily Registrar location</button>
         </div>
 
-        <!-- View Leave Button -->
         <div class="button-container">
             <button id="view-leave" onclick="openLeave()">View Leave</button>
         </div>
     
-
     <script src="index.js"></script>
 </body>
 </html>
