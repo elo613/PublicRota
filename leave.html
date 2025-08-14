@@ -15,33 +15,13 @@
             <option value="" disabled selected>-- Please select a registrar to view records --</option>
         </select>
 
-        <div id="current-cycle-container">
-            <h3>Current Leave Cycle: <span id="current-cycle-display"></span></h3>
-            <p>Leave cycle runs from 1st Wednesday in August to 1st Tuesday in August the following year.</p>
-        </div>
-
-        <!-- Current Cycle Section -->
         <div id="current-cycle-section" class="hidden">
-            <h2>Current Cycle Leave Records</h2>
-            
-            <div id="leave-records">
-                <h3>Leave Dates</h3>
-                <table id="leave-records-table">
-                    <thead>
-                        <tr>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Leave Type</th>
-                            <th>Duration (Days)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leave-records-table-body"></tbody>
-                </table>
-            </div>
+            <h3 class="cycle-header">Current Leave Cycle: <span id="current-cycle-display"></span></h3>
+            <p class="cycle-note">Leave cycle runs from 1st Wednesday in August to 1st Tuesday in August the following year.</p>
 
             <div id="leave-details-summary">
                 <h3>Leave Summary</h3>
-                <table>
+                <table class="summary-table">
                     <thead>
                         <tr>
                             <th>Type of Leave</th>
@@ -59,7 +39,7 @@
                         </tr>
                         <tr>
                             <td>Study Leave</td>
-                            <td><span id="study-leave"></span> days</td>
+                            <td><span id="study-leave-allowance"></span> days</td>
                             <td><span id="study-leave-used">0</span> days</td>
                             <td><span id="study-leave-remaining">0</span> days</td>
                         </tr>
@@ -67,20 +47,33 @@
                             <td>Other Leave</td>
                             <td>N/A</td>
                             <td><span id="other-leave-used">0</span> days</td>
-                            <td><span id="other-leave-remaining">N/A</span></td>
+                            <td>N/A</td>
                         </tr>
                     </tbody>
                 </table>
                 <p class="note">Note: Leave counts exclude weekends and only include dates within the current leave cycle.</p>
             </div>
+            
+            <div id="leave-records">
+                <h3>Leave Dates</h3>
+                <table id="leave-records-table">
+                    <thead>
+                        <tr>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Leave Type</th>
+                            <th>Duration (Days)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leave-records-table-body"></tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- Other Cycles Section -->
         <div id="other-cycles-section" class="hidden">
             <h2>Other Leave Cycles</h2>
             <div id="cycle-tables-container">
-                <!-- Leave cycles will be inserted here dynamically -->
-            </div>
+                </div>
         </div>
     </div>
 
