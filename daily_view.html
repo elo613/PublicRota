@@ -144,7 +144,7 @@
                     const additionalSessions = dayShifts[session].Additional;
                     for (const s of additionalSessions) {
                         if (s[0] === registrarName) {
-                            return { text: `Manual: ${s[3]}`, cssClass: this.CSS_STATUS_CLASSES.Additional };
+                            return { text: `Other: ${s[3]}`, cssClass: this.CSS_STATUS_CLASSES.Additional };
                         }
                     }
                 }
