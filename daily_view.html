@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Daily Rota</title>
-    <!-- Use Tailwind CSS for a modern, responsive design -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font for consistent typography -->
     <style>
         body { font-family: 'Inter', sans-serif; }
         .table-container { max-height: 80vh; }
@@ -21,6 +19,7 @@
         .status-block { background: #17a2b8; color: white; font-weight: bold; }
         .status-ultrasound { background: #6f42c1; color: white; font-weight: bold; }
         .status-none { color: #6c757d; font-style: italic; }
+        .status-additional { background: #ffc107; color: #343a40; font-weight: bold; }
         .status-mt-vernon-oncology { background: #e6f7ff; color: #0056b3; font-weight: bold; }
         .status-wgh-reporting-duty { background: #dff0d8; color: #3c763d; font-weight: bold; }
     </style>
@@ -40,7 +39,6 @@
         </div>
     </div>
 
-    <!-- Custom Modal for messages instead of alerts -->
     <div id="messageModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg shadow-xl text-center max-w-sm">
             <p id="modalMessage" class="text-lg font-semibold mb-4"></p>
@@ -70,6 +68,7 @@
                     'Block': 'status-block',
                     'Mt Vernon Oncology': 'status-mt-vernon-oncology',
                     'WGH Reporting/Duty': 'status-wgh-reporting-duty',
+                    'Additional': 'status-additional',
                     'None': 'status-none'
                 };
             }
@@ -139,13 +138,25 @@
                 return new Date(d.getFullYear(), d.getMonth(), d.getDate());
             }
 
+            _getAdditionalSessionStatus(registrarName, dateStr, session) {
+                const dayShifts = this.processedRota.get(dateStr);
+                if (dayShifts && dayShifts[session] && dayShifts[session].Additional) {
+                    const additionalSessions = dayShifts[session].Additional;
+                    for (const s of additionalSessions) {
+                        if (s[0] === registrarName) {
+                            return { text: `Manual: ${s[3]}`, cssClass: this.CSS_STATUS_CLASSES.Additional };
+                        }
+                    }
+                }
+                return null;
+            }
+
             _getShiftStatus(registrar, date, session) {
                 const dateStr = date.toLocaleDateString('en-GB');
                 const dayOfWeek = date.toDateString().split(' ')[0];
-
                 const normalizedCurrentDate = this._normalizeDateToMidnight(date);
 
-                // Check for leave
+                // 1. Check for Leave (Highest priority)
                 if (registrar.leave_records.some(l => {
                     const normalizedLeaveStart = this._normalizeDateToMidnight(l.start);
                     const normalizedLeaveEnd = this._normalizeDateToMidnight(l.end);
@@ -159,16 +170,23 @@
                     return { text: `${leaveRecord.type} Leave`, cssClass: this.CSS_STATUS_CLASSES.Leave };
                 }
 
-                // Check for specific duty shifts
                 const dayShifts = this.processedRota.get(dateStr);
                 if (dayShifts && dayShifts[session]) {
                     const shift = dayShifts[session];
+                    
+                    // 2. Check for AAU Duty/Reporting and Ultrasound
                     if (shift.Duty && shift.Duty.includes(registrar.name)) return { text: "AAU Duty", cssClass: this.CSS_STATUS_CLASSES["AAU Duty"] };
                     if (shift.Reporting && shift.Reporting.includes(registrar.name)) return { text: "AAU Reporting", cssClass: this.CSS_STATUS_CLASSES["AAU Reporting"] };
-                    if (shift.Ultrasound && shift.Ultrasound.includes(registrar.name)) return { text: "Ultrasound Duty", cssClass: this.CSS_STATUS_CLASSES["Ultrasound"] };
+                    if (shift.Ultrasound && shift.Ultrasound.includes(registrar.name)) return { text: "Ultrasound Duty", cssClass: this.CSS_STATUS_CLASSES.Ultrasound };
                 }
-
-                // Check for blocks, only on weekdays
+                
+                // 3. Check for Manual Sessions
+                const additionalSession = this._getAdditionalSessionStatus(registrar.name, dateStr, session);
+                if (additionalSession) {
+                    return additionalSession;
+                }
+                
+                // 4. Check for Block rotations, only on weekdays
                 if (date.getDay() !== 0 && date.getDay() !== 6) { // 0 is Sunday, 6 is Saturday
                     const blocks = this.processedBlocks.get(registrar.name);
                     if (blocks) {
@@ -186,7 +204,7 @@
                     }
                 }
 
-                // Default to a 'None' status if no other conditions are met
+                // 5. Default to a 'None' status if no other conditions are met
                 return { text: "-", cssClass: this.CSS_STATUS_CLASSES.None };
             }
 
