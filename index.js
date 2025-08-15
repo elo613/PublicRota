@@ -207,6 +207,10 @@ function openShowRegLocation() {
     window.location.href = "reg_location.html";
 }
 
+function openDaily() {
+    window.location.href = "daily_view.html";
+}
+
 function openRegBlocks() {
     window.location.href = "reg_blocks.html";
 }
