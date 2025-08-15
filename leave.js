@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         otherCyclesSection?.classList.remove("hidden");
     }
 
+    // This function correctly calculates only weekdays between two dates.
     function calculateWeekdaysBetween(startDate, endDate) {
         let count = 0;
         const current = new Date(startDate);
@@ -82,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return (startDate.getTime() <= cycle.end.getTime() && endDate.getTime() >= cycle.start.getTime());
     }
     
+    // **UPDATED** to calculate weekdays for ALL leave types
     function calculateDaysInCycle(startDate, endDate, leaveType, isHalfDay, cycle) {
         const start = new Date(Math.max(startDate.getTime(), cycle.start.getTime()));
         const end = new Date(Math.min(endDate.getTime(), cycle.end.getTime()));
@@ -89,19 +91,18 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (start > end) return 0;
         
-        let days = 0;
         if (isHalfDay) {
             if (start.toDateString() === end.toDateString() && isInCycle(start, end, cycle)) {
-                days = 0.5;
+                // Ensure half-day is not on a weekend
+                if (start.getDay() !== 0 && start.getDay() !== 6) {
+                     return 0.5;
+                }
             }
+            return 0; // Don't count half-days on weekends
         } else {
-            if (leaveType === "Annual") {
-                days = calculateWeekdaysBetween(start, end);
-            } else {
-                days = ((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-            }
+            // All full-day leave types now use the weekday calculation
+            return calculateWeekdaysBetween(start, end);
         }
-        return days;
     }
 
     function groupLeaveByCycle(records) {
@@ -137,7 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         isHalfDay: record.half_day || false,
                         daysInCycle: calculateDaysInCycle(start, end, record.type, record.half_day, thisCycle)
                     };
-                    grouped[key].records.push(recordCopy);
+                    // Only add the record if it has a duration greater than 0
+                    if (recordCopy.daysInCycle > 0) {
+                        grouped[key].records.push(recordCopy);
+                    }
                 }
                 current.setDate(current.getDate() + 1);
             }
@@ -157,17 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
         sortedRecords.forEach(record => {
             const row = document.createElement("tr");
             
-            const recordStart = parseDate(record.start);
-            const recordEnd = parseDate(record.end);
-            
-            let duration = 0;
-            if (record.isHalfDay) {
-                duration = 0.5;
-            } else if (record.type === "Annual") {
-                duration = calculateWeekdaysBetween(recordStart, recordEnd);
-            } else {
-                duration = ((recordEnd.getTime() - recordStart.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-            }
+            // **UPDATED** to use the pre-calculated `daysInCycle`
+            const duration = record.daysInCycle;
             
             row.innerHTML = `
                 <td>${record.start}</td>
@@ -231,16 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 </thead>
                 <tbody>
                     ${sortedRecords.map(record => {
-                        const recordStart = parseDate(record.start);
-                        const recordEnd = parseDate(record.end);
-                        let duration = 0;
-                        if (record.isHalfDay) {
-                            duration = 0.5;
-                        } else if (record.type === "Annual") {
-                            duration = calculateWeekdaysBetween(recordStart, recordEnd);
-                        } else {
-                            duration = ((recordEnd.getTime() - recordStart.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-                        }
+                        // **UPDATED** to use the pre-calculated `daysInCycle`
+                        const duration = record.daysInCycle;
                         return `<tr><td>${record.start}</td><td>${record.end}</td><td>${record.type}</td><td>${Math.round(duration)}</td></tr>`;
                     }).join("")}
                 </tbody>
