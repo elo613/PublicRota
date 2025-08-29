@@ -549,7 +549,7 @@
             },
             "PM": {
                 "Duty": [
-                    "MM"
+                    "KA"
                 ],
                 "Reporting": [
                     "SR"
@@ -570,7 +570,7 @@
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "MM"
                 ],
                 "Reporting": [
                     "SA"
