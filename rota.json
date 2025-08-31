@@ -545,6 +545,14 @@
                 ],
                 "Reporting": [
                     "CM"
+                ],
+                "Additional": [
+                    [
+                        "SA",
+                        "01/09/2025",
+                        "AM",
+                        "Sick leave"
+                    ]
                 ]
             },
             "PM": {
@@ -553,6 +561,14 @@
                 ],
                 "Reporting": [
                     "SR"
+                ],
+                "Additional": [
+                    [
+                        "SA",
+                        "01/09/2025",
+                        "PM",
+                        "Sick leave"
+                    ]
                 ]
             }
         }
