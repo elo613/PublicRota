@@ -816,9 +816,7 @@
                 "Duty": [
                     "SR"
                 ],
-                "Reporting": [
-                    "CM"
-                ],
+                "Reporting": [],
                 "Ultrasound": []
             },
             "PM": {
