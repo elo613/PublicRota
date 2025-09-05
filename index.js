@@ -3,54 +3,12 @@ const rotaTableBody = document.querySelector("#rota-table tbody");
 const weekTitle = document.getElementById("week-title");
 const prevWeekButton = document.getElementById("prev-week");
 const nextWeekButton = document.getElementById("next-week");
-const loginForm = document.getElementById("login-form");
-const loginContainer = document.getElementById("login-container");
-const rotaContainer = document.getElementById("rota-container");
-const loginError = document.getElementById("login-error");
-const leaveTodayInput = document.getElementById("on-leave-today");
 
 let currentDate = new Date(); // Default current date
 let rotaData = [];
 let firstDate = null; // Earliest date in JSON
 let lastDate = null; // Latest date in JSON
 let registrarsData = []; // Store registrars_data.json
-let authToken = "";
-
-// Toggle visibility of login or rota view
-function toggleLoginView(isLoggedIn) {
-    if (isLoggedIn) {
-        loginContainer.style.display = "none";
-        rotaContainer.style.display = "block";
-        loadRotaData();
-    } else {
-        loginContainer.style.display = "block";
-        rotaContainer.style.display = "none";
-    }
-}
-
-// Set token with expiry
-function setToken(token) {
-    const data = {
-        value: token,
-        expiry: Date.now() + 10 * 60 * 1000, // 10 minutes
-    };
-    localStorage.setItem("loginToken", JSON.stringify(data));
-}
-
-// Check token validity
-function checkLogin() {
-    const tokenString = localStorage.getItem("loginToken");
-    if (!tokenString) return false;
-
-    const token = JSON.parse(tokenString);
-    if (Date.now() > token.expiry) {
-        localStorage.removeItem("loginToken");
-        return false;
-    }
-
-    authToken = token.value; // Store the valid token globally
-    return true;
-}
 
 // Format date to "Day, dd Month yyyy"
 function formatDate(date) {
@@ -86,12 +44,11 @@ function updateButtonStates() {
     nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
-// New function to handle array-based shifts
+// Handle array-based shifts
 function getShiftRegistrars(shifts, session, role) {
     const registrars = shifts?.[session]?.[role];
     return registrars && registrars.length > 0 ? registrars.join(', ') : '-';
 }
-
 
 async function displayRota() {
     const weekStart = getWeekStart(new Date(currentDate));
@@ -108,7 +65,6 @@ async function displayRota() {
 
         // Find the rota data for the current day
         const rotaDayData = rotaData.find(item => item.Date === dateKey);
-
         const row = document.createElement("tr");
 
         // Apply highlighting for the current date
@@ -147,13 +103,12 @@ async function displayRota() {
             <td>${pmUltrasound}</td>
             <td>${onLeave}</td>
         `;
-
         rotaTableBody.appendChild(row);
     }
     updateButtonStates();
 }
 
-// Helper function to format date as "dd/mm/yyyy" for comparison with rota data
+// Helper function to format date as "dd/mm/yyyy"
 function formatDateForComparison(date) {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -161,21 +116,16 @@ function formatDateForComparison(date) {
     return `${day}/${month}/${year}`;
 }
 
-// Function to get the registrars on leave for a specific day
+// Function to get registrars on leave for a specific day
 function get_who_on_leave(currentDay) {
     const registrarsOnLeave = [];
-
-    // Iterate through the registrar data to check each registrar's leave records
     registrarsData.forEach((registrar) => {
         registrar.leave_records.forEach((leave) => {
-            // Note: The leave dates are in "dd Month yyyy" format and need to be parsed correctly.
-            // Using a safe parsing method.
             const [startDay, startMonth, startYear] = leave.start.split(' ');
             const [endDay, endMonth, endYear] = leave.end.split(' ');
             const leaveStartDate = new Date(`${startMonth} ${startDay}, ${startYear}`);
             const leaveEndDate = new Date(`${endMonth} ${endDay}, ${endYear}`);
             
-            // Normalize dates to midnight for accurate comparison
             leaveStartDate.setHours(0, 0, 0, 0);
             leaveEndDate.setHours(23, 59, 59, 999);
 
@@ -184,36 +134,16 @@ function get_who_on_leave(currentDay) {
             }
         });
     });
-
     return registrarsOnLeave;
 }
 
-
-// Redirect to blocks.html
-function openBlocksPage() {
-    window.location.href = "blocks.html";
-}
-
-function openRegLocation() {
-    window.location.href = "where_at.html";
-}
-
-// Redirect to leave.html
-function openLeave() {
-    window.location.href = "leave.html";
-}
-
-function openShowRegLocation() {
-    window.location.href = "reg_location.html";
-}
-
-function openDaily() {
-    window.location.href = "daily_view.html";
-}
-
-function openRegBlocks() {
-    window.location.href = "reg_blocks.html";
-}
+// Page redirection functions
+function openBlocksPage() { window.location.href = "blocks.html"; }
+function openRegLocation() { window.location.href = "where_at.html"; }
+function openLeave() { window.location.href = "leave.html"; }
+function openShowRegLocation() { window.location.href = "reg_location.html"; }
+function openDaily() { window.location.href = "daily_view.html"; }
+function openRegBlocks() { window.location.href = "reg_blocks.html"; }
 
 async function loadRotaData() {
     try {
@@ -243,50 +173,10 @@ async function loadRotaData() {
     }
 }
 
-
 // Initialise the page
 document.addEventListener("DOMContentLoaded", () => {
-    toggleLoginView(checkLogin());
-
-if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const usernameInput = document.getElementById("username").value.trim().toLowerCase();
-        const passwordInput = document.getElementById("password").value;
-
-        const usernameHash = "f56c68f42cb42511dd16882d80fb852b44126eb19210785ad23dd16ad2273032"; 
-        const passwordHash = "a27fd1720a7c30a644351e9d80659326a48b6e2f421286dbee282d235a23f53c"; 
-
-        async function hashValue(value) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(value);
-            const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-            return Array.from(new Uint8Array(hashBuffer))
-                .map(b => b.toString(16).padStart(2, "0"))
-                .join("");
-        }
-
-        try {
-            const [hashedUsername, hashedPassword] = await Promise.all([
-                hashValue(usernameInput),
-                hashValue(passwordInput)
-            ]);
-
-            if (hashedUsername === usernameHash && hashedPassword === passwordHash) {
-                const token = "dummy-token";
-                setToken(token);
-                authToken = token;
-                toggleLoginView(true);
-            } else {
-                loginError.textContent = "Invalid username or password";
-            }
-        } catch (error) {
-            console.error("Login error:", error);
-            loginError.textContent = "Error during login. Please try again.";
-        }
-    });
-}
+    // Directly load the rota data.
+    loadRotaData();
 
     prevWeekButton.addEventListener("click", () => {
         currentDate.setDate(currentDate.getDate() - 7);
