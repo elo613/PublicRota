@@ -7,13 +7,24 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div id="rota-container" class="rota-container"> <div class="week-header">
+    <div id="rota-container" class="rota-container"> 
+        <div class="week-header">
             <h1 id="week-title">Week of:</h1>
         </div>
     
         <div class="button-row">
             <button id="prev-week">← Previous Week</button>
             <button id="next-week">Next Week →</button>
+        </div>
+
+        <div class="dropdown">
+            <button id="menu-btn" class="dropdown-btn">More Options ▼</button>
+            <div id="dropdown-content" class="dropdown-content">
+                <a href="blocks.html">View Block Timetables</a>
+                <a href="where_at.html">Weekly Registrar Timetable</a>
+                <a href="daily_view.html">Daily Location View</a>
+                <a href="leave.html">View All Leave</a>
+            </div>
         </div>
     
         <div class="table-container">
@@ -34,26 +45,8 @@
                 </tbody>
             </table>
         </div>
-        
-        <div class="button-container">
-            <button id="view-blocks" onclick="openBlocksPage()">View Block Timetables</button>
-        </div>
-
-        <div class="button-container">
-            <button id="view-location" onclick="openRegLocation()">View Weekly Registrar Timetable</button>
-        </div>
-
-        <div class="button-container">
-            <button id="view-leave" onclick="openDaily()">Daily location</button>
-        </div>
-
-        <div class="button-container">
-            <button id="view-leave" onclick="openLeave()">View Leave</button>
-        </div>
+    </div>
     
     <script src="index.js"></script>
 </body>
 </html>
-
-
-
