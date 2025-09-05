@@ -4,28 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let authToken = ""; // Store the JWT token globally
 
-    // Check token validity
-    function checkLogin() {
-        const tokenString = localStorage.getItem("loginToken");
-        }
-
-        try {
-            const token = JSON.parse(tokenString);
-            if (Date.now() > token.expiry) {
-                alert("Session expired. Please log in again.");
-                localStorage.removeItem("loginToken");
-                redirectToLogin();
-                return false;
-            }
-            authToken = token.value; // Set the global authToken
-            return true;
-        } catch (e) {
-            console.error("Error parsing token:", e);
-            redirectToLogin();
-            return false;
-        }
-    }
-
     // Redirect to the login page
     function redirectToLogin() {
         window.location.href = "index.html";
