@@ -2658,7 +2658,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "KA"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2821,7 +2821,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "AO"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3188,7 +3188,7 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "AO"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3279,7 +3279,7 @@
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "SH"
                 ],
                 "Reporting": [
                     "KA"
