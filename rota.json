@@ -2004,7 +2004,9 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -2023,7 +2025,9 @@
                 "Duty": [
                     "BM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -2347,7 +2351,9 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -2836,7 +2842,9 @@
                 "Duty": [
                     "SR"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -3288,7 +3296,9 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -3307,7 +3317,9 @@
                 "Duty": [
                     "BM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
