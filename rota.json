@@ -1871,5 +1871,2104 @@
                 "Reporting": []
             }
         }
+    },
+    {
+        "Date": "03/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "04/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "05/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "06/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "QO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "07/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "EL"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "08/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "09/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "10/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "11/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "QO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "12/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "13/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "SR"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "14/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "15/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "16/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "17/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "QO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "18/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "19/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "20/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "21/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "22/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "23/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "24/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "QO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "25/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "26/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "MM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "27/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "SR"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "28/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "29/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "30/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "01/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "02/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "QO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "03/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "04/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "05/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "SR"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "06/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "07/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "08/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "09/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [
+                    "MM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "10/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "MM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "11/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "12/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "13/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "14/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "15/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "16/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "17/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "18/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "SR"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "19/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "20/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "21/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "22/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "23/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "24/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "25/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "26/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "27/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "28/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "29/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "SR"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "30/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [
+                    "MM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "31/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "01/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "02/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "SR"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "03/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "04/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "05/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "06/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "07/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "EL"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "08/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "09/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "EL"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "10/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "11/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "12/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "13/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "14/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "15/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "BM"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "16/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "17/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "18/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "19/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "20/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "21/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "EL"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "22/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "23/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "24/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "25/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "26/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "SH"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "KA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "27/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "MM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "28/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "MM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "29/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "QO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "30/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "EL"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
+                    "AO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "31/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "QO"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "01/02/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "EL"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
     }
 ]
