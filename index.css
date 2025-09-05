@@ -3,11 +3,11 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     margin: 0;
-    padding: 0;
+    padding: 20px; /* Added padding for better spacing on smaller screens */
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start; /* Aligned to top */
+    min-height: 100vh;
 }
 
 h1 {
@@ -15,7 +15,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Login Form */
+/* Login Form (if used on other pages) */
 .login-container {
     width: 350px;
     background: #ffffff;
@@ -23,6 +23,7 @@ h1 {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
+    margin-top: 50px;
 }
 
 label {
@@ -32,17 +33,17 @@ label {
 }
 
 input {
-    width: 300px;
+    width: 100%; /* Changed to 100% for responsiveness within its container */
+    box-sizing: border-box; /* Ensures padding is included in the width */
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-/* Button Styling */
+/* General Button Styling */
 button {
-    width: 100%;
-    padding: 10px;
+    padding: 10px 15px; /* Adjusted padding */
     background-color: #007bff;
     color: white;
     border: none;
@@ -59,16 +60,16 @@ button:hover {
 
 /* Disabled Button Styling */
 button:disabled {
-    background-color: #cccccc; /* Light grey */
-    color: #666666;          /* Darker grey for text */
-    cursor: not-allowed;     /* Indicates the button is not clickable */
-    opacity: 0.6;            /* Adds a slightly transparent effect */
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 /* Rota Viewer */
 .rota-container {
-    width: 80%;
-    max-width: 800px;
+    width: 90%; /* Increased width for better use of space */
+    max-width: 900px; /* Increased max-width */
     background: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -83,69 +84,83 @@ button:disabled {
 
 /* Styling for Previous and Next Week Buttons */
 .button-row {
-    display: flex; /* Flexbox layout */
-    justify-content: space-between; /* Space between buttons */
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
-    gap: 2%; /* Optional: Adds some spacing between the buttons */
+    gap: 2%;
 }
 
 .button-row button {
-    width: 48%; /* Each button takes 48% of the row's width */
-    padding: 10px;
-    background-color: #007bff;
+    width: 48%;
+}
+
+/* --- NEW: Styles for the Dropdown Menu --- */
+.dropdown {
+    position: relative;
+    display: block; /* Made block level */
+    margin: 15px 0;
+    text-align: left;
+}
+
+.dropdown-btn {
+    background-color: #28a745; /* Changed color to distinguish from navigation */
     color: white;
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
-    border-radius: 5px;
-    font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s;
-    text-align: center;
-}
-
-.button-row button:hover {
-    background-color: #0056b3;
-}
-
-
-.button-row button:disabled {
-    background-color: #cccccc; /* Disabled state */
-    color: #666666;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-/* Styling for 100% Width Buttons Below the Table */
-.button-container {
-    margin-top: 10px;
-}
-
-.button-container button {
-    width: 100%; /* Full width for View Blocks and View Leave buttons */
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
     border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-align: center;
+    width: 100%; /* Made the button full-width */
 }
 
-.button-container button:hover {
-    background-color: #0056b3;
+.dropdown-btn:hover {
+    background-color: #218838;
 }
 
-.button-container button:disabled {
-    background-color: #cccccc; /* Disabled state */
-    color: #666666;
-    cursor: not-allowed;
-    opacity: 0.6;
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 240px;
+    width: 100%; /* Matches the button width */
+    box-sizing: border-box;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* This class is added by JavaScript to show the dropdown */
+.show {
+    display: block;
+}
+/* --- End of Dropdown Styles --- */
+
+
+/* --- REMOVED: Old .button-container styles were here --- */
+
+
+/* Table Container for Scrolling on Small Screens */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Table Styling */
-table {
+#rota-table { /* Applied ID for specificity */
     width: 100%;
+    min-width: 600px;
     border-collapse: collapse;
     margin: 20px 0;
 }
@@ -153,12 +168,14 @@ table {
 thead th {
     background-color: #f4f4f9;
     padding: 10px;
+    font-weight: bold;
 }
 
 th, td {
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 12px; /* Increased padding for readability */
     text-align: left;
+    vertical-align: middle;
 }
 
 tbody tr:nth-child(even) {
@@ -166,9 +183,10 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #e9ecef; /* Slightly different hover color */
 }
 
+/* Miscellaneous Styles */
 .leave-today-container {
     margin: 20px 0;
     text-align: left;
@@ -184,20 +202,6 @@ tbody tr:hover {
     width: 200px;
 }
 
-
 .highlight {
-    background-color: lightblue;
-}
-
-
-.table-container {
-    width: 100%;
-    overflow-x: auto; /* Enables horizontal scrolling */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
-}
-
-#rota-table {
-    width: 100%;
-    min-width: 600px; /* Adjust based on your table content */
-    border-collapse: collapse;
+    background-color: lightblue !important; /* Added !important to ensure override */
 }
