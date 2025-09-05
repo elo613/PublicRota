@@ -3,6 +3,10 @@ const rotaTableBody = document.querySelector("#rota-table tbody");
 const weekTitle = document.getElementById("week-title");
 const prevWeekButton = document.getElementById("prev-week");
 const nextWeekButton = document.getElementById("next-week");
+// New elements for the dropdown menu
+const menuBtn = document.getElementById("menu-btn");
+const dropdownContent = document.getElementById("dropdown-content");
+
 
 let currentDate = new Date(); // Default current date
 let rotaData = [];
@@ -63,11 +67,9 @@ async function displayRota() {
         const dayDate = currentDay.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
         const dateKey = formatDateForComparison(currentDay); // Format as "dd/mm/yyyy"
 
-        // Find the rota data for the current day
         const rotaDayData = rotaData.find(item => item.Date === dateKey);
         const row = document.createElement("tr");
 
-        // Apply highlighting for the current date
         if (currentDay.toDateString() === new Date().toDateString()) {
             row.style.backgroundColor = "lightblue";
         }
@@ -77,7 +79,6 @@ async function displayRota() {
         let onLeave = 'None';
 
         if (rotaDayData) {
-            // Get registrars for each role and session
             amDuty = getShiftRegistrars(rotaDayData.Shifts, 'AM', 'Duty');
             amReporting = getShiftRegistrars(rotaDayData.Shifts, 'AM', 'Reporting');
             amUltrasound = getShiftRegistrars(rotaDayData.Shifts, 'AM', 'Ultrasound');
@@ -86,13 +87,11 @@ async function displayRota() {
             pmUltrasound = getShiftRegistrars(rotaDayData.Shifts, 'PM', 'Ultrasound');
         }
 
-        // Get registrars on leave for the current day
         const registrarsOnLeave = get_who_on_leave(currentDay);
         if (registrarsOnLeave.length > 0) {
             onLeave = registrarsOnLeave.join(", ");
         }
 
-        // Populate row with data
         row.innerHTML = `
             <td>${dayName} (${dayDate})</td>
             <td>${amDuty}</td>
@@ -137,13 +136,10 @@ function get_who_on_leave(currentDay) {
     return registrarsOnLeave;
 }
 
-// Page redirection functions
-function openBlocksPage() { window.location.href = "blocks.html"; }
-function openRegLocation() { window.location.href = "where_at.html"; }
-function openLeave() { window.location.href = "leave.html"; }
-function openShowRegLocation() { window.location.href = "reg_location.html"; }
-function openDaily() { window.location.href = "daily_view.html"; }
-function openRegBlocks() { window.location.href = "reg_blocks.html"; }
+// REMOVED: Page redirection functions are no longer needed here
+// function openBlocksPage() { ... }
+// function openRegLocation() { ... }
+// ... etc.
 
 async function loadRotaData() {
     try {
@@ -175,7 +171,6 @@ async function loadRotaData() {
 
 // Initialise the page
 document.addEventListener("DOMContentLoaded", () => {
-    // Directly load the rota data.
     loadRotaData();
 
     prevWeekButton.addEventListener("click", () => {
@@ -186,5 +181,19 @@ document.addEventListener("DOMContentLoaded", () => {
     nextWeekButton.addEventListener("click", () => {
         currentDate.setDate(currentDate.getDate() + 7);
         displayRota();
+    });
+
+    // NEW: Event listener for the dropdown menu
+    menuBtn.addEventListener("click", () => {
+        dropdownContent.classList.toggle("show");
+    });
+
+    // Close the dropdown if the user clicks outside of it
+    window.addEventListener("click", (event) => {
+        if (!event.target.matches('.dropdown-btn')) {
+            if (dropdownContent.classList.contains('show')) {
+                dropdownContent.classList.remove('show');
+            }
+        }
     });
 });
