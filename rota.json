@@ -2316,7 +2316,8 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "CM"
+                    "CM",
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2481,7 +2482,8 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "CM"
+                    "CM",
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3122,9 +3124,7 @@
             "PM": {
                 "Duty": [],
                 "Reporting": [],
-                "Ultrasound": [
-                    "SR"
-                ],
+                "Ultrasound": [],
                 "Additional": []
             }
         }
@@ -3275,9 +3275,7 @@
             "PM": {
                 "Duty": [],
                 "Reporting": [],
-                "Ultrasound": [
-                    "SH"
-                ],
+                "Ultrasound": [],
                 "Additional": []
             }
         }
@@ -3300,7 +3298,8 @@
                     "SH"
                 ],
                 "Reporting": [
-                    "KA"
+                    "KA",
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3459,7 +3458,8 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "CM"
+                    "CM",
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3624,7 +3624,8 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "SH"
+                    "SH",
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3799,7 +3800,8 @@
                     "BM"
                 ],
                 "Reporting": [
-                    "AO"
+                    "AO",
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
