@@ -1915,7 +1915,7 @@
                     "CM"
                 ],
                 "Reporting": [
-                    "SA"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2093,7 +2093,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "CM"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2753,7 +2753,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "CM"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2888,7 +2888,7 @@
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "BM"
                 ],
                 "Reporting": [
                     "SA"
