@@ -1,8 +1,8 @@
 name: Backup rota.json, registrars_data.json, blocks.json, reg_blocks.json, and ultrasound.json
 
 on:
-  schedule:
-    - cron: "0 * * * *" # Runs every hour on the hour
+  #schedule:
+    #- cron: "0 * * * *" # Runs every hour on the hour
   workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
