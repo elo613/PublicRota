@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Main initialisation
     async function initialise() {
-        if (!checkLogin()) return;
 
         const data = await fetchBlocksData();
         if (data) {
