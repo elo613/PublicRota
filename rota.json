@@ -1880,7 +1880,7 @@
                     "CM"
                 ],
                 "Reporting": [
-                    "SH"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -1902,17 +1902,17 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "KA"
                 ],
                 "Reporting": [
-                    "CM"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "CM"
                 ],
                 "Reporting": [
                     "SA"
@@ -1927,20 +1927,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "EL"
                 ],
                 "Reporting": [
-                    "EL"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -1952,7 +1952,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "SH"
                 ],
                 "Reporting": [
                     "CM"
@@ -1962,10 +1962,10 @@
             },
             "PM": {
                 "Duty": [
-                    "SH"
+                    "QO"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -1977,20 +1977,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "EL"
+                    "SH"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SR"
+                    "BM"
                 ],
                 "Reporting": [
-                    "SA"
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2002,7 +2002,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "AO"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2021,7 +2021,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "BM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2040,20 +2040,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "BM"
                 ],
                 "Reporting": [
-                    "AO"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2068,7 +2068,7 @@
                     "MM"
                 ],
                 "Reporting": [
-                    "SA"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2078,7 +2078,7 @@
                     "QO"
                 ],
                 "Reporting": [
-                    "CM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2090,10 +2090,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2113,32 +2113,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
-                ],
-                "Reporting": [
-                    "SH"
-                ],
-                "Ultrasound": [],
-                "Additional": []
-            },
-            "PM": {
-                "Duty": [
-                    "SA"
-                ],
-                "Reporting": [
-                    "BM"
-                ],
-                "Ultrasound": [],
-                "Additional": []
-            }
-        }
-    },
-    {
-        "Date": "14/11/2025",
-        "Shifts": {
-            "AM": {
-                "Duty": [
-                    "BM"
+                    "AO"
                 ],
                 "Reporting": [
                     "CM"
@@ -2151,7 +2126,32 @@
                     "SR"
                 ],
                 "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "14/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
                     "SH"
+                ],
+                "Reporting": [
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2163,7 +2163,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "KA"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2182,7 +2182,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "SR"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2211,10 +2211,10 @@
             },
             "PM": {
                 "Duty": [
-                    "SR"
+                    "SA"
                 ],
                 "Reporting": [
-                    "CM"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2226,20 +2226,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "KA"
                 ],
                 "Reporting": [
-                    "KA"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "QO"
+                    "MM"
                 ],
                 "Reporting": [
-                    "MM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2251,10 +2251,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "MM"
                 ],
                 "Reporting": [
-                    "MM"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2276,17 +2276,17 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SR"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "BM"
                 ],
                 "Reporting": [
                     "QO"
@@ -2314,7 +2314,7 @@
                     "EL"
                 ],
                 "Reporting": [
-                    "SA"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2323,25 +2323,6 @@
     },
     {
         "Date": "22/11/2025",
-        "Shifts": {
-            "AM": {
-                "Duty": [
-                    "SR"
-                ],
-                "Reporting": [],
-                "Ultrasound": [],
-                "Additional": []
-            },
-            "PM": {
-                "Duty": [],
-                "Reporting": [],
-                "Ultrasound": [],
-                "Additional": []
-            }
-        }
-    },
-    {
-        "Date": "23/11/2025",
         "Shifts": {
             "AM": {
                 "Duty": [
@@ -2360,11 +2341,30 @@
         }
     },
     {
+        "Date": "23/11/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
+                ],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [],
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
         "Date": "24/11/2025",
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "QO"
+                    "SH"
                 ],
                 "Reporting": [
                     "SA"
@@ -2374,10 +2374,10 @@
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "SR"
                 ],
                 "Reporting": [
-                    "SH"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2389,10 +2389,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "CM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2414,10 +2414,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "MM"
                 ],
                 "Reporting": [
-                    "SA"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2439,20 +2439,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "CM"
                 ],
                 "Reporting": [
-                    "AO"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SA"
+                    "SH"
                 ],
                 "Reporting": [
-                    "SH"
+                    "QO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2464,7 +2464,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "SR"
                 ],
                 "Reporting": [
                     "SH"
@@ -2474,7 +2474,7 @@
             },
             "PM": {
                 "Duty": [
-                    "SR"
+                    "CM"
                 ],
                 "Reporting": [
                     "SA"
@@ -2489,7 +2489,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "SH"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2527,20 +2527,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "AO"
                 ],
                 "Reporting": [
-                    "QO"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SR"
+                    "SA"
                 ],
                 "Reporting": [
-                    "AO"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2552,20 +2552,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "KA"
                 ],
                 "Reporting": [
-                    "MM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "QO"
                 ],
                 "Reporting": [
-                    "QO"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2577,20 +2577,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "MM"
                 ],
                 "Reporting": [
-                    "KA"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "AO"
                 ],
                 "Reporting": [
-                    "MM"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2605,17 +2605,17 @@
                     "KA"
                 ],
                 "Reporting": [
-                    "AO"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SA"
+                    "SR"
                 ],
                 "Reporting": [
-                    "SR"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2630,17 +2630,17 @@
                     "CM"
                 ],
                 "Reporting": [
-                    "SH"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "BM"
                 ],
                 "Reporting": [
-                    "SR"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2652,7 +2652,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "AO"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2671,7 +2671,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "BM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2690,10 +2690,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "BM"
                 ],
                 "Reporting": [
-                    "BM"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2703,7 +2703,7 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "AO"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2718,17 +2718,17 @@
                     "KA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "MM"
                 ],
                 "Reporting": [
-                    "MM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2740,20 +2740,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "MM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "SA"
                 ],
                 "Reporting": [
-                    "MM"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2765,7 +2765,32 @@
         "Shifts": {
             "AM": {
                 "Duty": [
+                    "CM"
+                ],
+                "Reporting": [
                     "SR"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "AO"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "12/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "SH"
                 ],
                 "Reporting": [
                     "SA"
@@ -2786,36 +2811,11 @@
         }
     },
     {
-        "Date": "12/12/2025",
-        "Shifts": {
-            "AM": {
-                "Duty": [
-                    "BM"
-                ],
-                "Reporting": [
-                    "CM"
-                ],
-                "Ultrasound": [],
-                "Additional": []
-            },
-            "PM": {
-                "Duty": [
-                    "SH"
-                ],
-                "Reporting": [
-                    "SR"
-                ],
-                "Ultrasound": [],
-                "Additional": []
-            }
-        }
-    },
-    {
         "Date": "13/12/2025",
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "KA"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2834,7 +2834,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "SR"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2853,20 +2853,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "BM"
                 ],
                 "Reporting": [
-                    "BM"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SH"
+                    "SR"
                 ],
                 "Reporting": [
-                    "SR"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2878,7 +2878,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "SH"
                 ],
                 "Reporting": [
                     "KA"
@@ -2903,20 +2903,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "MM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "EL"
                 ],
                 "Reporting": [
-                    "EL"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2928,20 +2928,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "BM"
                 ],
                 "Reporting": [
-                    "KA"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SR"
+                    "AO"
                 ],
                 "Reporting": [
-                    "AO"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2953,17 +2953,17 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "EL"
+                    "SH"
                 ],
                 "Reporting": [
-                    "SA"
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "SA"
                 ],
                 "Reporting": [
                     "AO"
@@ -2997,7 +2997,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SR"
+                    "MM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3016,20 +3016,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "CM"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SH"
+                    "BM"
                 ],
                 "Reporting": [
-                    "SR"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3044,7 +3044,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "MM"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3054,7 +3054,7 @@
                     "CM"
                 ],
                 "Reporting": [
-                    "KA"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3066,10 +3066,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "MM"
                 ],
                 "Reporting": [
-                    "MM"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3079,7 +3079,7 @@
                     "EL"
                 ],
                 "Reporting": [
-                    "AO"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3129,7 +3129,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "QO"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3148,7 +3148,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "QO"
+                    "SH"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3167,20 +3167,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "BM"
                 ],
                 "Reporting": [
-                    "QO"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "SR"
                 ],
                 "Reporting": [
-                    "SA"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3192,7 +3192,32 @@
         "Shifts": {
             "AM": {
                 "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
                     "KA"
+                ],
+                "Reporting": [
+                    "QO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "31/12/2025",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
                 ],
                 "Reporting": [
                     "CM"
@@ -3205,32 +3230,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "MM"
-                ],
-                "Ultrasound": [],
-                "Additional": []
-            }
-        }
-    },
-    {
-        "Date": "31/12/2025",
-        "Shifts": {
-            "AM": {
-                "Duty": [
-                    "SA"
-                ],
-                "Reporting": [
-                    "MM"
-                ],
-                "Ultrasound": [],
-                "Additional": []
-            },
-            "PM": {
-                "Duty": [
                     "EL"
-                ],
-                "Reporting": [
-                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3242,7 +3242,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "QO"
+                    "BM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3261,20 +3261,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "EL"
+                    "BM"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "AO"
                 ],
                 "Reporting": [
-                    "SH"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3286,7 +3286,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "AO"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3305,7 +3305,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "BM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3324,20 +3324,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "AO"
                 ],
                 "Reporting": [
-                    "SA"
+                    "QO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3349,20 +3349,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "MM"
                 ],
                 "Reporting": [
-                    "SA"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "MM"
+                    "QO"
                 ],
                 "Reporting": [
-                    "QO"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3374,17 +3374,17 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "MM"
                 ],
                 "Reporting": [
-                    "MM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "CM"
                 ],
                 "Reporting": [
                     "EL"
@@ -3399,20 +3399,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "SH"
                 ],
                 "Reporting": [
-                    "SA"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SR"
+                    "AO"
                 ],
                 "Reporting": [
-                    "SH"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3424,20 +3424,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "KA"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "SH"
                 ],
                 "Reporting": [
-                    "SR"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3449,7 +3449,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "SR"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3468,7 +3468,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "KA"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3487,20 +3487,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "BM"
                 ],
                 "Reporting": [
-                    "QO"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SR"
+                    "KA"
                 ],
                 "Reporting": [
-                    "AO"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3512,20 +3512,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "SH"
                 ],
                 "Reporting": [
-                    "MM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "QO"
                 ],
                 "Reporting": [
-                    "QO"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3537,17 +3537,17 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "MM"
                 ],
                 "Reporting": [
-                    "MM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "QO"
+                    "AO"
                 ],
                 "Reporting": [
                     "EL"
@@ -3562,20 +3562,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SR"
+                    "SH"
                 ],
                 "Reporting": [
-                    "CM"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "SA"
                 ],
                 "Reporting": [
-                    "QO"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3587,20 +3587,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "SR"
                 ],
                 "Reporting": [
-                    "EL"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "EL"
                 ],
                 "Reporting": [
-                    "SA"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3612,7 +3612,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "EL"
+                    "MM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3631,7 +3631,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SR"
+                    "EL"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3650,20 +3650,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "QO"
+                    "BM"
                 ],
                 "Reporting": [
-                    "AO"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SH"
+                    "AO"
                 ],
                 "Reporting": [
-                    "CM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3675,7 +3675,32 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "MM"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            },
+            "PM": {
+                "Duty": [
+                    "SA"
+                ],
+                "Reporting": [
+                    "QO"
+                ],
+                "Ultrasound": [],
+                "Additional": []
+            }
+        }
+    },
+    {
+        "Date": "21/01/2026",
+        "Shifts": {
+            "AM": {
+                "Duty": [
+                    "MM"
                 ],
                 "Reporting": [
                     "CM"
@@ -3688,32 +3713,7 @@
                     "QO"
                 ],
                 "Reporting": [
-                    "MM"
-                ],
-                "Ultrasound": [],
-                "Additional": []
-            }
-        }
-    },
-    {
-        "Date": "21/01/2026",
-        "Shifts": {
-            "AM": {
-                "Duty": [
-                    "SA"
-                ],
-                "Reporting": [
-                    "CM"
-                ],
-                "Ultrasound": [],
-                "Additional": []
-            },
-            "PM": {
-                "Duty": [
                     "EL"
-                ],
-                "Reporting": [
-                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3725,20 +3725,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "CM"
                 ],
                 "Reporting": [
-                    "SR"
+                    "QO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3760,10 +3760,10 @@
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "SH"
                 ],
                 "Reporting": [
-                    "BM"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3775,7 +3775,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "QO"
+                    "SH"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3794,7 +3794,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "QO"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3813,20 +3813,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "QO"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "KA"
                 ],
                 "Reporting": [
-                    "KA"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3851,7 +3851,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "MM"
+                    "QO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3866,17 +3866,17 @@
                     "MM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "EL"
+                    "AO"
                 ],
                 "Reporting": [
-                    "QO"
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3888,20 +3888,20 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "AO"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "SR"
+                    "QO"
                 ],
                 "Reporting": [
-                    "AO"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3913,10 +3913,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "SH"
                 ],
                 "Reporting": [
-                    "SH"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3926,7 +3926,7 @@
                     "BM"
                 ],
                 "Reporting": [
-                    "AO"
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3938,7 +3938,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "BM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3957,7 +3957,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "AO"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
