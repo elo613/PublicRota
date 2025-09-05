@@ -1544,7 +1544,9 @@
                 "Duty": [
                     "SH"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": []
             },
             "PM": {
@@ -2357,9 +2359,7 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [
-                    "CM"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
