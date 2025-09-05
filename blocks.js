@@ -7,9 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Check token validity
     function checkLogin() {
         const tokenString = localStorage.getItem("loginToken");
-        if (!tokenString) {
-            redirectToLogin();
-            return false;
         }
 
         try {
