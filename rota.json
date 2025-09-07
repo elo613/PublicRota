@@ -968,7 +968,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "MM"
                 ],
                 "Reporting": [
                     "SA"
@@ -1121,7 +1121,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "BM"
                 ],
                 "Reporting": []
             },
