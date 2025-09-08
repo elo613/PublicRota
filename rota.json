@@ -770,7 +770,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "QO"
                 ],
                 "Reporting": [
                     "SR"
@@ -1042,7 +1042,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "QO"
+                    "MM"
                 ],
                 "Reporting": [
                     "CM"
