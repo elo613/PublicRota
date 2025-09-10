@@ -2302,7 +2302,7 @@
                     "QO"
                 ],
                 "Ultrasound": [
-                    "SR"
+                    "EL"
                 ],
                 "Additional": []
             }
@@ -2950,7 +2950,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "SR"
                 ],
                 "Reporting": [
                     "SA"
@@ -2963,7 +2963,7 @@
                     "AO"
                 ],
                 "Reporting": [
-                    "SR"
+                    "EL"
                 ],
                 "Ultrasound": [
                     "SH"
@@ -3942,7 +3942,7 @@
                     "SH"
                 ],
                 "Ultrasound": [
-                    "BM"
+                    "EL"
                 ],
                 "Additional": []
             }
