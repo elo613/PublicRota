@@ -772,9 +772,7 @@
                 "Duty": [
                     "QO"
                 ],
-                "Reporting": [
-                    "SR"
-                ],
+                "Reporting": [],
                 "Ultrasound": []
             },
             "PM": {
