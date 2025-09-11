@@ -1027,7 +1027,7 @@
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "QO"
                 ],
                 "Reporting": [
                     "CM"
@@ -1192,7 +1192,7 @@
                     "EL"
                 ],
                 "Reporting": [
-                    "SA"
+                    "QO"
                 ],
                 "Ultrasound": []
             }
@@ -1288,7 +1288,7 @@
                     "KA"
                 ],
                 "Reporting": [
-                    "QO"
+                    "SA"
                 ]
             },
             "PM": {
@@ -1314,7 +1314,7 @@
             },
             "PM": {
                 "Duty": [
-                    "QO"
+                    "KA"
                 ],
                 "Reporting": [
                     "CM"
