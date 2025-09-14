@@ -1733,10 +1733,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "CM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "KA"
                 ],
                 "Ultrasound": []
             },
@@ -2274,10 +2274,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "CM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2425,10 +2425,10 @@
             },
             "PM": {
                 "Duty": [
-                    "MM"
+                    "QO"
                 ],
                 "Reporting": [
-                    "QO"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2605,10 +2605,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2937,10 +2937,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "CM"
                 ],
                 "Reporting": [
-                    "SA"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2962,10 +2962,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SR"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3253,10 +3253,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "CM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3581,10 +3581,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3913,10 +3913,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
