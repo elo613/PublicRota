@@ -1992,7 +1992,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "EL"
                 ],
                 "Reporting": [
                     "SR"
@@ -2059,10 +2059,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "CM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2495,18 +2495,17 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "CM",
-                    "EL"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3532,10 +3531,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "AO"
                 ],
                 "Reporting": [
-                    "AO"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
