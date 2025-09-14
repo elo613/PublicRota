@@ -1817,10 +1817,10 @@
             },
             "PM": {
                 "Duty": [
-                    "EL"
+                    "SH"
                 ],
                 "Reporting": [
-                    "SH"
+                    "EL"
                 ],
                 "Ultrasound": [
                     "SR"
