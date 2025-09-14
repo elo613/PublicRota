@@ -1765,7 +1765,7 @@
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "KA"
                 ],
                 "Reporting": [
                     "CM"
@@ -1794,10 +1794,10 @@
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "EL"
                 ],
                 "Reporting": [
-                    "EL"
+                    "KA"
                 ],
                 "Ultrasound": []
             }
