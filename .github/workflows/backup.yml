@@ -1,81 +1,110 @@
-name: Backup rota.json, registrars_data.json, blocks.json, reg_blocks.json, and ultrasound.json
+name: Backup and Update Public Rota Files
 
 on:
   schedule:
     - cron: "0 * * * *" # Runs every hour on the hour
-  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
-  backup:
+  backup-and-update:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Public Repository
-      uses: actions/checkout@v3
-      with:
-        repository: elo613/PublicRadRota
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        ref: main
+      - name: Checkout Public Repository
+        uses: actions/checkout@v3
+        with:
+          repository: elo613/PublicRadRota
+          # We check out with the PAT so we can push later
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-    - name: Fetch rota.json from Private Repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      run: |
-        curl -H "Authorization: token $GITHUB_TOKEN" \
-        -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/elo613/radrota/contents/json_files/rota.json \
-        --output rota.json
-    - name: Fetch registrars_data.json from Private Repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      run: |
-        curl -H "Authorization: token $GITHUB_TOKEN" \
-        -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/elo613/radrota/contents/json_files/registrars_data.json \
-        --output registrars_data.json
-    - name: Fetch blocks.json from Private Repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      run: |
-        curl -H "Authorization: token $GITHUB_TOKEN" \
-        -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/elo613/radrota/contents/json_files/blocks.json \
-        --output blocks.json
-    - name: Fetch reg_blocks.json from Private Repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      run: |
-        curl -H "Authorization: token $GITHUB_TOKEN" \
-        -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/elo613/radrota/contents/json_files/reg_blocks.json \
-        --output reg_blocks.json
-    - name: Fetch ultrasound.json from Private Repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      run: |
-        curl -H "Authorization: token $GITHUB_TOKEN" \
-        -H "Accept: application/vnd.github.v3.raw" \
-        https://api.github.com/repos/elo613/radrota/contents/json_files/ultrasound.json \
-        --output ultrasound.json
+      # ... (All your "Fetch" and "Replace" steps remain exactly the same) ...
 
-    - name: Replace Full Names with Abbreviations
-      env:
-        REPLACEMENT_TERMS: ${{ secrets.REPLACEMENT_TERMS }}
-      run: |
-        # Read replacement terms from secret
-        echo "$REPLACEMENT_TERMS" | while IFS="=" read -r full_name abbreviation; do
-          # Apply replacements in all JSON files
-          sed -i "s/$full_name/$abbreviation/g" rota.json
-          sed -i "s/$full_name/$abbreviation/g" registrars_data.json
-          sed -i "s/$full_name/$abbreviation/g" blocks.json
-          sed -i "s/$full_name/$abbreviation/g" reg_blocks.json
-          sed -i "s/$full_name/$abbreviation/g" ultrasound.json
-        done
+      - name: Fetch rota.json from Private Repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github.v3.raw" \
+          https://api.github.com/repos/elo613/radrota/contents/json_files/rota.json \
+          --output rota.json
+          
+      - name: Fetch registrars_data.json from Private Repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github.v3.raw" \
+          https://api.github.com/repos/elo613/radrota/contents/json_files/registrars_data.json \
+          --output registrars_data.json
+          
+      - name: Fetch blocks.json from Private Repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github.v3.raw" \
+          https://api.github.com/repos/elo613/radrota/contents/json_files/blocks.json \
+          --output blocks.json
+          
+      - name: Fetch reg_blocks.json from Private Repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github.v3.raw" \
+          https://api.github.com/repos/elo613/radrota/contents/json_files/reg_blocks.json \
+          --output reg_blocks.json
+          
+      - name: Fetch ultrasound.json from Private Repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github.v3.raw" \
+          https://api.github.com/repos/elo613/radrota/contents/json_files/ultrasound.json \
+          --output ultrasound.json
 
-    - name: Commit and Push Files to Public Repository
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add rota.json registrars_data.json blocks.json reg_blocks.json ultrasound.json
-        git commit -m "Backup JSON files with abbreviations applied"
-        git push
+      - name: Replace Full Names with Abbreviations
+        env:
+          REPLACEMENT_TERMS: ${{ secrets.REPLACEMENT_TERMS }}
+        run: |
+          # Read replacement terms from secret
+          echo "$REPLACEMENT_TERMS" | while IFS="=" read -r full_name abbreviation; do
+            # Apply replacements in all JSON files
+            sed -i "s/$full_name/$abbreviation/g" rota.json
+            sed -i "s/$full_name/$abbreviation/g" registrars_data.json
+            sed -i "s/$full_name/$abbreviation/g" blocks.json
+            sed -i "s/$full_name/$abbreviation/g" reg_blocks.json
+            sed -i "s/$full_name/$abbreviation/g" ultrasound.json
+          done
+          
+      # MODIFIED STEP: Create Pull Request instead of direct push
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          commit-message: "Automated backup of JSON files"
+          title: "Automated Rota File Update"
+          body: "This is an auto-generated PR to update the public rota files."
+          branch: "automated-backup-branch" # Pushes to this new branch
+          base: "main" # Creates the PR against the main branch
+          # These options ensure the PR is created and managed correctly
+          delete-branch: true
+          # This label is important for the next job
+          labels: "automated-pr"
+
+  auto-merge:
+    # This job runs only after the backup job is successful
+    needs: backup-and-update
+    runs-on: ubuntu-latest
+    # This condition ensures it only runs on PRs with the specific label
+    if: github.event.label.name == 'automated-pr'
+    steps:
+      - name: Merge the Pull Request
+        env:
+          # The PAT is needed to perform the merge
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          # The PR number is available from the event context
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # Merge the PR and delete the branch after merging
+          gh pr merge $PR_NUMBER --auto --squash --delete-branch
