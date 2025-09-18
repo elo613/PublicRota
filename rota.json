@@ -3344,7 +3344,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "EL"
                 ],
                 "Reporting": [
                     "SA"
@@ -3678,7 +3678,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "EL"
+                    "BM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
