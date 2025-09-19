@@ -33,6 +33,9 @@
                 <button id="tab-blocks" class="tab-button py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" onclick="showTab('blocks')">
                     Registrar Blocks
                 </button>
+                <button id="tab-view-blocks" class="tab-button py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" onclick="showTab('view-blocks')">
+                    View Blocks
+                </button>
             </nav>
         </div>
 
@@ -65,6 +68,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- View Blocks Tab -->
+            <div id="content-view-blocks" class="hidden">
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <iframe src="./blocks.html" class="w-full h-[80vh]" frameborder="0" title="Blocks Viewer"></iframe>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -76,9 +86,11 @@
         function showTab(tabName) {
             document.getElementById('content-shifts').classList.toggle('hidden', tabName !== 'shifts');
             document.getElementById('content-blocks').classList.toggle('hidden', tabName !== 'blocks');
+            document.getElementById('content-view-blocks').classList.toggle('hidden', tabName !== 'view-blocks');
             
             document.getElementById('tab-shifts').classList.toggle('active', tabName === 'shifts');
             document.getElementById('tab-blocks').classList.toggle('active', tabName === 'blocks');
+            document.getElementById('tab-view-blocks').classList.toggle('active', tabName === 'view-blocks');
         }
 
         // --- Data Fetching and Processing ---
