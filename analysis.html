@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Rota Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-button.active {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Registrar Rota Analysis</h1>
+            <p class="text-gray-600 mt-1">Detailed shift breakdowns and block schedules.</p>
+        </header>
+
+        <!-- Tab Controls -->
+        <div class="mb-6 border-b border-gray-200">
+            <nav class="flex space-x-4" aria-label="Tabs">
+                <button id="tab-shifts" class="tab-button active py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" onclick="showTab('shifts')">
+                    Shift Breakdown
+                </button>
+                <button id="tab-blocks" class="tab-button py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" onclick="showTab('blocks')">
+                    Registrar Blocks
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <main>
+            <!-- Shift Breakdown Tab -->
+            <div id="content-shifts">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div id="am-duty" class="bg-white p-6 rounded-lg shadow-sm"></div>
+                    <div id="am-reporting" class="bg-white p-6 rounded-lg shadow-sm"></div>
+                    <div id="pm-duty" class="bg-white p-6 rounded-lg shadow-sm"></div>
+                    <div id="pm-ultrasound" class="bg-white p-6 rounded-lg shadow-sm"></div>
+                    <div id="pm-reporting" class="bg-white p-6 rounded-lg shadow-sm"></div>
+                    <div id="saturday-shifts" class="bg-white p-6 rounded-lg shadow-sm"></div>
+                    <div id="sunday-shifts" class="bg-white p-6 rounded-lg shadow-sm"></div>
+                </div>
+                 <div id="loading-shifts" class="text-center p-8">
+                    <div class="text-lg font-semibold">Loading shift data...</div>
+                    <div class="mt-2 text-gray-500">Please wait a moment.</div>
+                </div>
+            </div>
+
+            <!-- Registrar Blocks Tab -->
+            <div id="content-blocks" class="hidden">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <label for="registrar-select" class="mr-4 font-semibold text-gray-700">Select Registrar:</label>
+                        <select id="registrar-select" class="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></select>
+                    </div>
+                    <div id="registrar-blocks-container">
+                         <p class="text-gray-500">Select a registrar to view their blocks.</p>
+                    </div>
+                     <div id="loading-registrars" class="text-center p-8">
+                        <div class="text-lg font-semibold">Loading registrar data...</div>
+                         <div class="mt-2 text-gray-500">Please wait a moment.</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const ROTA_URL = './rota.json';
+        const REGISTRARS_URL = './registrars_data.json';
+
+        // --- Tab Switching Logic ---
+        function showTab(tabName) {
+            document.getElementById('content-shifts').classList.toggle('hidden', tabName !== 'shifts');
+            document.getElementById('content-blocks').classList.toggle('hidden', tabName !== 'blocks');
+            
+            document.getElementById('tab-shifts').classList.toggle('active', tabName === 'shifts');
+            document.getElementById('tab-blocks').classList.toggle('active', tabName === 'blocks');
+        }
+
+        // --- Data Fetching and Processing ---
+        async function fetchData(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error(`Could not fetch data from ${url}:`, error);
+                return null;
+            }
+        }
+
+        // --- Shift Breakdown Logic ---
+        function processRotaData(rotaData) {
+            const shifts = {
+                amDuty: [],
+                amReporting: [],
+                pmDuty: [],
+                pmUltrasound: [],
+                pmReporting: [],
+                saturday: [],
+                sunday: []
+            };
+
+            rotaData.forEach(day => {
+                const [dayOfMonth, month, year] = day.Date.split('/');
+                const date = new Date(`${year}-${month}-${dayOfMonth}`);
+                const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+                const amShifts = day.Shifts.AM || {};
+                const pmShifts = day.Shifts.PM || {};
+
+                // Weekday Shifts (Monday-Friday)
+                if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+                    if (amShifts.Duty) shifts.amDuty.push(...amShifts.Duty.map(r => ({ registrar: r, date: day.Date })));
+                    if (amShifts.Reporting) shifts.amReporting.push(...amShifts.Reporting.map(r => ({ registrar: r, date: day.Date })));
+                }
+
+                // PM Shifts (Every day)
+                if (pmShifts.Duty) shifts.pmDuty.push(...pmShifts.Duty.map(r => ({ registrar: r, date: day.Date })));
+                if (pmShifts.Ultrasound) shifts.pmUltrasound.push(...pmShifts.Ultrasound.map(r => ({ registrar: r, date: day.Date })));
+                if (pmShifts.Reporting) shifts.pmReporting.push(...pmShifts.Reporting.map(r => ({ registrar: r, date: day.Date })));
+
+                // Weekend Shifts
+                if (dayOfWeek === 6) { // Saturday
+                    const allShifts = [...(amShifts.Duty || []), ...(amShifts.Reporting || []), ...(pmShifts.Duty || []), ...(pmShifts.Reporting || []), ...(pmShifts.Ultrasound || [])];
+                    shifts.saturday.push(...allShifts.map(r => ({ registrar: r, date: day.Date })));
+                } else if (dayOfWeek === 0) { // Sunday
+                    const allShifts = [...(amShifts.Duty || []), ...(amShifts.Reporting || []), ...(pmShifts.Duty || []), ...(pmShifts.Reporting || []), ...(pmShifts.Ultrasound || [])];
+                    shifts.sunday.push(...allShifts.map(r => ({ registrar: r, date: day.Date })));
+                }
+            });
+            return shifts;
+        }
+        
+        function createShiftListHTML(title, shifts) {
+            let content = `<h2 class="text-xl font-bold mb-4 text-gray-800">${title}</h2>`;
+            if (shifts.length === 0) {
+                content += '<p class="text-gray-500">No shifts found for this category.</p>';
+                return content;
+            }
+            
+            const shiftCounts = shifts.reduce((acc, shift) => {
+                acc[shift.registrar] = (acc[shift.registrar] || 0) + 1;
+                return acc;
+            }, {});
+
+            const sortedRegistrars = Object.keys(shiftCounts).sort((a, b) => shiftCounts[b] - shiftCounts[a]);
+
+            content += '<ul class="space-y-2">';
+            sortedRegistrars.forEach(registrar => {
+                content += `<li class="flex justify-between items-center text-sm">
+                                <span class="font-medium">${registrar}</span>
+                                <span class="text-gray-600 bg-gray-100 px-2 py-1 rounded-full text-xs font-semibold">${shiftCounts[registrar]} shift(s)</span>
+                           </li>`;
+            });
+            content += '</ul>';
+            return content;
+        }
+
+        function displayShifts(shifts) {
+            document.getElementById('am-duty').innerHTML = createShiftListHTML('AM Duty (Mon-Fri)', shifts.amDuty);
+            document.getElementById('am-reporting').innerHTML = createShiftListHTML('AM Reporting (Mon-Fri)', shifts.amReporting);
+            document.getElementById('pm-duty').innerHTML = createShiftListHTML('PM Duty', shifts.pmDuty);
+            document.getElementById('pm-ultrasound').innerHTML = createShiftListHTML('PM Ultrasound', shifts.pmUltrasound);
+            document.getElementById('pm-reporting').innerHTML = createShiftListHTML('PM Reporting', shifts.pmReporting);
+            document.getElementById('saturday-shifts').innerHTML = createShiftListHTML('Saturday Shifts', shifts.saturday);
+            document.getElementById('sunday-shifts').innerHTML = createShiftListHTML('Sunday Shifts', shifts.sunday);
+            document.getElementById('loading-shifts').style.display = 'none';
+        }
+
+        // --- Registrar Blocks Logic ---
+        function setupRegistrarBlocks(registrarsData) {
+            const select = document.getElementById('registrar-select');
+            select.innerHTML = '<option value="">-- Select a Registrar --</option>'; // Default option
+
+            registrarsData.sort((a, b) => a.name.localeCompare(b.name));
+
+            registrarsData.forEach(registrar => {
+                const option = document.createElement('option');
+                option.value = registrar.name;
+                option.textContent = registrar.name;
+                select.appendChild(option);
+            });
+
+            select.addEventListener('change', (event) => {
+                const registrarName = event.target.value;
+                if(registrarName){
+                    const registrar = registrarsData.find(r => r.name === registrarName);
+                    displayRegistrarBlocks(registrar);
+                } else {
+                     document.getElementById('registrar-blocks-container').innerHTML = '<p class="text-gray-500">Select a registrar to view their blocks.</p>';
+                }
+            });
+            document.getElementById('loading-registrars').style.display = 'none';
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-GB', options);
+        }
+
+        function displayRegistrarBlocks(registrar) {
+            const container = document.getElementById('registrar-blocks-container');
+            if (!registrar || !registrar.blocks || registrar.blocks.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">No blocks found for this registrar.</p>';
+                return;
+            }
+
+            // Sort blocks chronologically by start date
+            const sortedBlocks = registrar.blocks.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+
+            let content = `<h2 class="text-xl font-bold mb-4 text-gray-800">Blocks for ${registrar.name}</h2>`;
+            content += '<div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200">';
+            content += `<thead class="bg-gray-50"><tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Block Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
+                        </tr></thead>`;
+            content += '<tbody class="bg-white divide-y divide-gray-200">';
+
+            sortedBlocks.forEach(block => {
+                content += `<tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${block.block_name}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatDate(block.start_date)}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatDate(block.end_date)}</td>
+                            </tr>`;
+            });
+
+            content += '</tbody></table></div>';
+            container.innerHTML = content;
+        }
+
+
+        // --- Initialization ---
+        async function initialize() {
+            const rotaData = await fetchData(ROTA_URL);
+            if (rotaData) {
+                const processedShifts = processRotaData(rotaData);
+                displayShifts(processedShifts);
+            } else {
+                 document.getElementById('loading-shifts').innerHTML = '<div class="text-red-500 font-semibold">Failed to load shift data.</div>';
+            }
+
+            const registrarsData = await fetchData(REGISTRARS_URL);
+            if (registrarsData) {
+                setupRegistrarBlocks(registrarsData);
+            } else {
+                 document.getElementById('loading-registrars').innerHTML = '<div class="text-red-500 font-semibold">Failed to load registrar data.</div>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>
