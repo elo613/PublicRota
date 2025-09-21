@@ -3102,10 +3102,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "KA"
                 ],
                 "Reporting": [
-                    "KA"
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
