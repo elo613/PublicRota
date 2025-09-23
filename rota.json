@@ -1702,7 +1702,7 @@
                     "BM"
                 ],
                 "Reporting": [
-                    "KA"
+                    "EL"
                 ],
                 "Ultrasound": [
                     "SH"
@@ -1717,7 +1717,9 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": []
             },
             "PM": {
@@ -1725,7 +1727,7 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SA"
                 ],
                 "Ultrasound": []
             }
