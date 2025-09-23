@@ -1091,7 +1091,7 @@
             },
             "PM": {
                 "Duty": [
-                    "EL"
+                    "BM"
                 ],
                 "Reporting": [
                     "AO"
@@ -1697,7 +1697,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "EL"
+                    "BM"
                 ],
                 "Reporting": [],
                 "Ultrasound": []
@@ -1714,7 +1714,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "EL"
                 ],
                 "Reporting": [],
                 "Ultrasound": []
