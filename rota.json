@@ -1083,6 +1083,14 @@
                 ],
                 "Ultrasound": [
                     "BM"
+                ],
+                "Additional": [
+                    [
+                        "CM",
+                        "25/09/2025",
+                        "PM",
+                        "Self-study session"
+                    ]
                 ]
             }
         }
