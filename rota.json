@@ -2223,7 +2223,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "EL"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -2366,8 +2366,7 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "CM",
-                    "EL"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2389,7 +2388,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "EL"
+                    "AO"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
