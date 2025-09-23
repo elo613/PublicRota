@@ -2013,7 +2013,7 @@
         },
         "allowance": {
             "study": "30",
-            "annual": "27",
+            "annual": "28",
             "notes": ""
         },
         "leave_records": [
@@ -2027,6 +2027,18 @@
                 "start": "29 Dec 2025",
                 "end": "31 Dec 2025",
                 "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "22 Dec 2025",
+                "end": "24 Dec 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "25 Dec 2025",
+                "end": "26 Dec 2025",
+                "type": "Other",
                 "half_day": false
             }
         ],
