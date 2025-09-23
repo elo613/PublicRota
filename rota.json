@@ -1035,7 +1035,15 @@
                 "Reporting": [
                     "CM"
                 ],
-                "Ultrasound": []
+                "Ultrasound": [],
+                "Additional": [
+                    [
+                        "EL",
+                        "23/09/2025",
+                        "PM",
+                        "Leave"
+                    ]
+                ]
             }
         }
     },
