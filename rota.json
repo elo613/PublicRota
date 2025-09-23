@@ -1223,7 +1223,15 @@
                 "Reporting": [
                     "QO"
                 ],
-                "Ultrasound": []
+                "Ultrasound": [],
+                "Additional": [
+                    [
+                        "CM",
+                        "01/10/2025",
+                        "PM",
+                        "Private Study Session"
+                    ]
+                ]
             }
         }
     },
@@ -1234,7 +1242,9 @@
                 "Duty": [
                     "KA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": []
             },
             "PM": {
