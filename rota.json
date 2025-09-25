@@ -1409,10 +1409,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "EL"
                 ],
                 "Reporting": [
-                    "EL"
+                    "CM"
                 ]
             },
             "PM": {
@@ -2041,7 +2041,7 @@
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "SH"
                 ],
                 "Reporting": [
                     "EL"
@@ -2126,7 +2126,7 @@
                     "MM"
                 ],
                 "Reporting": [
-                    "SH"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2203,7 +2203,7 @@
                     "SH"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2323,7 +2323,7 @@
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "QO"
                 ],
                 "Reporting": [
                     "EL"
@@ -2428,7 +2428,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "QO"
                 ],
                 "Reporting": [
                     "SA"
@@ -2593,7 +2593,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "QO"
                 ],
                 "Reporting": [
                     "SH"
@@ -3836,7 +3836,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "EL"
                 ],
                 "Reporting": [
                     "SR"
@@ -4045,7 +4045,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "EL"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
