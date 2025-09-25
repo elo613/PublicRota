@@ -1820,7 +1820,9 @@
                 "Duty": [
                     "SA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Additional": [
                     [
                         "CM",
@@ -1835,9 +1837,7 @@
                 "Duty": [
                     "EL"
                 ],
-                "Reporting": [
-                    "KA"
-                ],
+                "Reporting": [],
                 "Ultrasound": []
             }
         }
@@ -3628,7 +3628,7 @@
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "MM"
                 ],
                 "Reporting": [
                     "EL"
@@ -3959,7 +3959,7 @@
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "MM"
                 ],
                 "Reporting": [
                     "EL"
