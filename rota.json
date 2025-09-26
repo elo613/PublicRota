@@ -2151,7 +2151,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SR"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2836,7 +2836,7 @@
                     "CM"
                 ],
                 "Reporting": [
-                    "SR"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
