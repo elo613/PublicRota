@@ -1364,11 +1364,9 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
-                ],
-                "Reporting": [
                     "AO"
-                ]
+                ],
+                "Reporting": []
             },
             "PM": {
                 "Duty": [
@@ -2368,7 +2366,7 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "CM"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
