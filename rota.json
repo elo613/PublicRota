@@ -1224,14 +1224,7 @@
                     "QO"
                 ],
                 "Ultrasound": [],
-                "Additional": [
-                    [
-                        "CM",
-                        "01/10/2025",
-                        "PM",
-                        "Private Study Session"
-                    ]
-                ]
+                "Additional": []
             }
         }
     },
@@ -1279,7 +1272,15 @@
                 "Reporting": [
                     "SA"
                 ],
-                "Ultrasound": []
+                "Ultrasound": [],
+                "Additional": [
+                    [
+                        "CM",
+                        "03/10/2025",
+                        "PM",
+                        "Private Study Session"
+                    ]
+                ]
             }
         }
     },
