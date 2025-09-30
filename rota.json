@@ -1347,7 +1347,7 @@
                     "AO"
                 ],
                 "Reporting": [
-                    "SA"
+                    "BM"
                 ]
             },
             "PM": {
@@ -1640,7 +1640,7 @@
                     "SH"
                 ],
                 "Reporting": [
-                    "AO"
+                    "BM"
                 ],
                 "Ultrasound": []
             },
@@ -2135,7 +2135,7 @@
                     "QO"
                 ],
                 "Reporting": [
-                    "SA"
+                    "BM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2542,7 +2542,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "BM"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
