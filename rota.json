@@ -2120,7 +2120,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "SH"
                 ],
                 "Reporting": [
                     "QO"
@@ -2628,7 +2628,7 @@
                     "QO"
                 ],
                 "Reporting": [
-                    "MM"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2643,7 +2643,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "MM"
+                    "QO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3124,9 +3124,7 @@
                 "Duty": [
                     "CM"
                 ],
-                "Reporting": [
-                    "MM"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             }
