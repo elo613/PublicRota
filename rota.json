@@ -1346,15 +1346,15 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "BM"
-                ]
+                "Reporting": []
             },
             "PM": {
                 "Duty": [
                     "KA"
                 ],
-                "Reporting": []
+                "Reporting": [
+                    "BM"
+                ]
             }
         }
     },
