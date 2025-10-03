@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Availability Calendar</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        .controls label {
+            font-weight: bold;
+        }
+        .controls select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .week-container {
+            margin-bottom: 30px;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .week-container h3 {
+            color: #34495e;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .availability-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 14px;
+        }
+        .availability-table th,
+        .availability-table td {
+            border: 1px solid #e0e0e0;
+            padding: 8px;
+            text-align: center;
+            min-width: 50px;
+        }
+        .availability-table th {
+            background-color: #f2f5f7;
+            color: #555;
+            font-weight: 600;
+        }
+        .registrar-name {
+            text-align: left;
+            font-weight: bold;
+            background-color: #f8f9fa;
+            width: 10%;
+        }
+        .available {
+            background-color: #2ECC71; /* A clear, friendly green */
+        }
+        .other-month-cell {
+            background-color: #fdfdfd;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Registrar Availability</h1>
+    </header>
+
+    <div class="controls">
+        <label for="monthSelect">Month:</label>
+        <select id="monthSelect"></select>
+        <label for="yearSelect">Year:</label>
+        <select id="yearSelect"></select>
+    </div>
+
+    <div id="calendar-container">
+        <p>Loading registrar data...</p>
+    </div>
+
+    <script>
+        // --- GLOBAL STATE ---
+        let allRegistrars = [];
+        const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            setupControls();
+            fetchData();
+        });
+
+        /**
+         * Populates month and year dropdowns and attaches event listeners.
+         */
+        function setupControls() {
+            const monthSelect = document.getElementById('monthSelect');
+            const yearSelect = document.getElementById('yearSelect');
+            const today = new Date(); // Using current date for setup
+
+            // Populate months
+            MONTH_NAMES.forEach((month, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = month;
+                monthSelect.appendChild(option);
+            });
+
+            // Populate years (current year +/- 2)
+            const currentYear = today.getFullYear();
+            for (let i = currentYear - 2; i <= currentYear + 3; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+
+            // Set default to October 2025 as per current context
+            monthSelect.value = 9; // October is month 9 (0-indexed)
+            yearSelect.value = 2025;
+
+            // Add event listeners
+            monthSelect.addEventListener('change', renderCalendar);
+            yearSelect.addEventListener('change', renderCalendar);
+        }
+
+        /**
+         * Fetches and processes the registrar data from the JSON file.
+         */
+        async function fetchData() {
+            try {
+                // Fetch from the relative path, assuming it's in the same folder.
+                const response = await fetch('registrars_data.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                preprocessData(data);
+                allRegistrars = data;
+                renderCalendar();
+            } catch (error) {
+                const container = document.getElementById('calendar-container');
+                container.innerHTML = `<p style="color: red; text-align: center;"><strong>Error:</strong> Could not load or parse registrar data. Please ensure 'registrars_data.json' is in the same folder and is valid JSON.</p>`;
+                console.error("Fetch Error:", error);
+            }
+        }
+
+        /**
+         * Parses date strings into Date objects for easier comparison.
+         * Also determines a registrar's default weekly availability pattern.
+         * @param {Array} data - The array of registrar objects.
+         */
+        function preprocessData(data) {
+            data.forEach(reg => {
+                // Convert leave record strings to Date objects
+                if (reg.leave_records) {
+                    reg.leave_records.forEach(leave => {
+                        leave.startDate = new Date(leave.start);
+                        leave.endDate = new Date(leave.end);
+                        // Set time to end of day for inclusive date range
+                        leave.endDate.setHours(23, 59, 59, 999);
+                    });
+                }
+                // Convert block strings to Date objects
+                if (reg.blocks) {
+                    reg.blocks.forEach(block => {
+                        block.startDate = new Date(block.start_date);
+                        block.endDate = new Date(block.end_date);
+                        block.endDate.setHours(23, 59, 59, 999);
+                    });
+                }
+                // ASSUMPTION: Find the first non-empty availability pattern to use as the default weekly schedule.
+                reg.defaultAvailability = null;
+                if (reg.availability) {
+                    for (let i = 1; i <= 12; i++) {
+                        const weekPattern = reg.availability[String(i)];
+                        if (weekPattern && Object.values(weekPattern).some(isAvailable => isAvailable === true)) {
+                            reg.defaultAvailability = weekPattern;
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // --- RENDERING LOGIC ---
+
+        /**
+         * Main function to clear and redraw the entire calendar view for a given month.
+         */
+        function renderCalendar() {
+            const year = parseInt(document.getElementById('yearSelect').value);
+            const month = parseInt(document.getElementById('monthSelect').value);
+            const container = document.getElementById('calendar-container');
+            container.innerHTML = '';
+
+            const weeks = getMondaysInMonth(year, month);
+
+            weeks.forEach(monday => {
+                const weekContainer = document.createElement('div');
+                weekContainer.className = 'week-container';
+                
+                const weekStartFormatted = monday.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+                const weekHeader = document.createElement('h3');
+                weekHeader.textContent = `Week Starting ${weekStartFormatted}`;
+                weekContainer.appendChild(weekHeader);
+
+                let tableHTML = `
+                    <table class="availability-table">
+                        <thead>
+                            <tr>
+                                <th>Registrar</th>
+                                <th>Mon AM</th><th>Mon PM</th>
+                                <th>Tue AM</th><th>Tue PM</th>
+                                <th>Wed AM</th><th>Wed PM</th>
+                                <th>Thu AM</th><th>Thu PM</th>
+                                <th>Fri AM</th><th>Fri PM</th>
+                                <th>Weekends</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                allRegistrars.forEach(reg => {
+                    tableHTML += `<tr><td class="registrar-name">${reg.name}</td>`;
+                    
+                    // Weekday Sessions (Monday to Friday)
+                    for (let i = 0; i < 5; i++) {
+                        const currentDate = new Date(monday);
+                        currentDate.setDate(monday.getDate() + i);
+                        
+                        const amClass = getSessionStatusClass(reg, currentDate, "AM", month);
+                        const pmClass = getSessionStatusClass(reg, currentDate, "PM", month);
+                        
+                        tableHTML += `<td class="${amClass}"></td>`;
+                        tableHTML += `<td class="${pmClass}"></td>`;
+                    }
+                    
+                    // Weekend Session
+                    const satDate = new Date(monday);
+                    satDate.setDate(monday.getDate() + 5);
+                    const sunDate = new Date(monday);
+                    sunDate.setDate(monday.getDate() + 6);
+                    const weekendClass = getWeekendStatusClass(reg, satDate, sunDate, month);
+                    tableHTML += `<td class="${weekendClass}"></td>`;
+                    
+                    tableHTML += `</tr>`;
+                });
+
+                tableHTML += `</tbody></table>`;
+                weekContainer.innerHTML += tableHTML;
+                container.appendChild(weekContainer);
+            });
+        }
+
+        /**
+         * Determines the CSS class for a specific registrar, date, and session (AM/PM).
+         * @returns {string} The CSS class name ('available' or 'other-month-cell').
+         */
+        function getSessionStatusClass(reg, date, session, selectedMonth) {
+            if (date.getMonth() !== selectedMonth) return 'other-month-cell';
+
+            const dayOfWeek = date.getDay(); // 0=Sun, 1=Mon...
+            const dayNames = { 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri' };
+
+            // 1. Check for Leave
+            const isOnLeave = reg.leave_records?.some(leave => date >= leave.startDate && date <= leave.endDate);
+            if (isOnLeave) return '';
+
+            // 2. Check if working in a Block
+            const isInBlock = reg.blocks?.some(block => date >= block.startDate && date <= block.endDate);
+            if (!isInBlock) return '';
+
+            // 3. Check availability pattern
+            const dayName = dayNames[dayOfWeek];
+            if (!dayName) return ''; // Should not happen in this function
+            
+            const sessionKey = `${dayName} ${session}`;
+            if (reg.defaultAvailability && reg.defaultAvailability[sessionKey]) {
+                return 'available';
+            }
+
+            return ''; // Default to unavailable
+        }
+
+        /**
+         * Determines the CSS class for the combined weekend slot.
+         * @returns {string} The CSS class name.
+         */
+        function getWeekendStatusClass(reg, satDate, sunDate, selectedMonth) {
+            const isWeekendInView = satDate.getMonth() === selectedMonth || sunDate.getMonth() === selectedMonth;
+            if (!isWeekendInView) return 'other-month-cell';
+
+            // Available if available on either Saturday or Sunday
+            const isAvailable = [satDate, sunDate].some(date => {
+                if (date.getMonth() !== selectedMonth) return false;
+
+                const isOnLeave = reg.leave_records?.some(leave => date >= leave.startDate && date <= leave.endDate);
+                const isInBlock = reg.blocks?.some(block => date >= block.startDate && date <= block.endDate);
+                
+                return !isOnLeave && isInBlock;
+            });
+
+            if (isAvailable && reg.defaultAvailability?.["Weekends"]) {
+                return 'available';
+            }
+            
+            return '';
+        }
+
+        // --- HELPER FUNCTIONS ---
+
+        /**
+         * Calculates the start date (Monday) for each week that falls within a given month.
+         * @returns {Date[]} An array of Date objects, each representing a Monday.
+         */
+        function getMondaysInMonth(year, month) {
+            const mondays = [];
+            const d = new Date(year, month, 1);
+
+            // Find the first Monday of the month's first week.
+            // This may be in the previous month.
+            if (d.getDay() !== 1) { // If not a Monday
+                d.setDate(d.getDate() - (d.getDay() + 6) % 7);
+            }
+
+            // Add all Mondays until we enter the next month.
+            while (d.getMonth() === month || mondays.length === 0) {
+                 if (d.getFullYear() > year || (d.getFullYear() === year && d.getMonth() > month)) break;
+                mondays.push(new Date(d));
+                d.setDate(d.getDate() + 7);
+            }
+            
+            return mondays;
+        }
+
+    </script>
+</body>
+</html>
