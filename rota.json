@@ -1331,7 +1331,7 @@
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "AO"
                 ],
                 "Reporting": [
                     "CM"
@@ -1442,7 +1442,7 @@
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "KA"
                 ],
                 "Reporting": [
                     "SA"
