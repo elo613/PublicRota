@@ -1331,7 +1331,7 @@
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "EL"
                 ],
                 "Reporting": [
                     "CM"
@@ -1418,13 +1418,19 @@
             },
             "PM": {
                 "Duty": [
-                    "EL"
-                ],
-                "Reporting": [
                     "AO"
                 ],
+                "Reporting": [],
                 "Ultrasound": [
                     "BM"
+                ],
+                "Additional": [
+                    [
+                        "CM",
+                        "09/10/2025",
+                        "PM",
+                        "Private study"
+                    ]
                 ]
             }
         }
