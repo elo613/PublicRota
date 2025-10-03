@@ -1346,7 +1346,21 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": []
+                "Reporting": [],
+                "Additional": [
+                    [
+                        "CM",
+                        "07/10/2025",
+                        "AM",
+                        "Physics teaching offsite"
+                    ],
+                    [
+                        "SA",
+                        "07/10/2025",
+                        "AM",
+                        "Physics teaching offsite"
+                    ]
+                ]
             },
             "PM": {
                 "Duty": [
@@ -1354,6 +1368,20 @@
                 ],
                 "Reporting": [
                     "BM"
+                ],
+                "Additional": [
+                    [
+                        "CM",
+                        "07/10/2025",
+                        "PM",
+                        "Physics teaching offsite"
+                    ],
+                    [
+                        "SA",
+                        "07/10/2025",
+                        "PM",
+                        "Physics teaching offsite"
+                    ]
                 ]
             }
         }
@@ -1483,7 +1511,21 @@
                     "SH"
                 ],
                 "Reporting": [],
-                "Ultrasound": []
+                "Ultrasound": [],
+                "Additional": [
+                    [
+                        "SA",
+                        "14/10/2025",
+                        "AM",
+                        "Physics teaching offsite"
+                    ],
+                    [
+                        "CM",
+                        "14/10/2025",
+                        "AM",
+                        "Physics teaching offsite"
+                    ]
+                ]
             },
             "PM": {
                 "Duty": [
@@ -1492,7 +1534,21 @@
                 "Reporting": [
                     "AO"
                 ],
-                "Ultrasound": []
+                "Ultrasound": [],
+                "Additional": [
+                    [
+                        "SA",
+                        "14/10/2025",
+                        "PM",
+                        "Physics teaching offsite"
+                    ],
+                    [
+                        "CM",
+                        "14/10/2025",
+                        "PM",
+                        "Physics teaching offsite"
+                    ]
+                ]
             }
         }
     },
@@ -1770,7 +1826,7 @@
                     "CM"
                 ],
                 "Reporting": [
-                    "KA"
+                    "SH"
                 ],
                 "Ultrasound": []
             },
@@ -1792,17 +1848,23 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "SR"
-                ],
-                "Ultrasound": []
+                "Reporting": [],
+                "Ultrasound": [],
+                "Additional": [
+                    [
+                        "CM",
+                        "28/10/2025",
+                        "AM",
+                        "Physics teaching offsite"
+                    ]
+                ]
             },
             "PM": {
                 "Duty": [
                     "KA"
                 ],
                 "Reporting": [
-                    "CM"
+                    "AO"
                 ],
                 "Ultrasound": []
             }
@@ -1832,7 +1894,9 @@
                 "Duty": [
                     "EL"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": []
             }
         }
