@@ -3564,8 +3564,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "CM",
-                    "EL"
+                    "CM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3730,15 +3729,14 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "SH",
-                    "EL"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
                 "Duty": [
-                    "EL"
+                    "CM"
                 ],
                 "Reporting": [
                     "KA"
