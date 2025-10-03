@@ -46,78 +46,56 @@
         }
 
         .table-container {
-            overflow-x: auto;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             background-color: #ffffff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
 
-        .rota-table {
+        .weekly-rota-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .rota-table th,
-        .rota-table td {
+        .weekly-rota-table th,
+        .weekly-rota-table td {
             border: 1px solid #e0e0e0;
-            padding: 8px;
+            padding: 12px;
             text-align: center;
-            min-width: 45px;
         }
 
-        .rota-table th {
+        .weekly-rota-table th {
             background-color: #f2f5f7;
             color: #555;
             font-weight: 600;
-            white-space: nowrap;
         }
         
-        /* Styles for sticky first column */
-        .rota-table th:first-child,
-        .rota-table td:first-child {
-            position: sticky;
-            left: 0;
-            z-index: 1;
-            width: 120px;
-            min-width: 120px;
-        }
-        
-        .rota-table th:first-child {
-            background-color: #e9edf0;
-             border-right: 2px solid #ccc;
-        }
-        
-        .rota-table td:first-child {
+        .registrar-name {
             background-color: #f8f9fa;
             font-weight: bold;
             text-align: left;
-            border-right: 2px solid #ccc;
+            width: 15%;
         }
         
         .available {
-            background-color: #2ECC71; /* Green highlight */
-        }
-        
-        .weekend-col {
-            background-color: #f9f9f9;
+            background-color: #2ECC71; /* Green highlight for availability */
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Registrar Monthly Rota</h1>
+        <h1>Registrar Standard Weekly Rota</h1>
+        <p>Select a month to see the corresponding weekly schedule.</p>
     </header>
 
     <div class="controls">
         <label for="monthSelect">Month:</label>
         <select id="monthSelect"></select>
-        <label for="yearSelect">Year:</label>
-        <select id="yearSelect"></select>
     </div>
 
-    <div id="calendar-container" class="table-container">
+    <div id="rota-container" class="table-container">
         <p>Loading registrar data...</p>
     </div>
 
@@ -134,141 +112,63 @@
 
         function setupControls() {
             const monthSelect = document.getElementById('monthSelect');
-            const yearSelect = document.getElementById('yearSelect');
-            const today = new Date();
-
+            
             MONTH_NAMES.forEach((month, index) => {
                 monthSelect.add(new Option(month, index));
             });
+            
+            // Set default to the current month
+            monthSelect.value = new Date().getMonth();
 
-            const currentYear = today.getFullYear();
-            for (let i = currentYear - 2; i <= currentYear + 3; i++) {
-                yearSelect.add(new Option(i, i));
-            }
-
-            monthSelect.value = 9; // Default to October
-            yearSelect.value = 2025; // Default to 2025
-
-            monthSelect.addEventListener('change', renderCalendar);
-            yearSelect.addEventListener('change', renderCalendar);
+            monthSelect.addEventListener('change', renderMonthlyRota);
         }
 
         async function fetchData() {
             try {
                 const response = await fetch('registrars_data.json');
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-                const data = await response.json();
-                preprocessData(data);
-                allRegistrars = data;
-                renderCalendar();
+                allRegistrars = await response.json();
+                renderMonthlyRota();
             } catch (error) {
-                document.getElementById('calendar-container').innerHTML = `<p style="color: red; text-align: center;"><strong>Error:</strong> Could not load registrar data.</p>`;
+                document.getElementById('rota-container').innerHTML = `<p style="color: red; text-align: center;"><strong>Error:</strong> Could not load registrar data.</p>`;
                 console.error("Fetch Error:", error);
             }
         }
 
-        function preprocessData(data) {
-            data.forEach(reg => {
-                if (reg.leave_records) {
-                    reg.leave_records.forEach(leave => {
-                        leave.startDate = new Date(leave.start);
-                        leave.endDate = new Date(leave.end);
-                        leave.endDate.setHours(23, 59, 59, 999);
-                    });
-                }
-                if (reg.blocks) {
-                    reg.blocks.forEach(block => {
-                        block.startDate = new Date(block.start_date);
-                        block.endDate = new Date(block.end_date);
-                        block.endDate.setHours(23, 59, 59, 999);
-                    });
-                }
-                reg.defaultAvailability = null;
-                if (reg.availability) {
-                    for (let i = 1; i <= 12; i++) {
-                        const weekPattern = reg.availability[String(i)];
-                        if (weekPattern && Object.values(weekPattern).some(v => v === true)) {
-                            reg.defaultAvailability = weekPattern;
-                            break;
-                        }
-                    }
-                }
-            });
-        }
-
         // --- RENDERING LOGIC ---
-        function renderCalendar() {
-            const year = parseInt(document.getElementById('yearSelect').value);
-            const month = parseInt(document.getElementById('monthSelect').value);
-            const container = document.getElementById('calendar-container');
+        function renderMonthlyRota() {
+            const container = document.getElementById('rota-container');
+            const selectedMonth = parseInt(document.getElementById('monthSelect').value);
+            // The availability keys in the JSON are 1-12, so we add 1 to the month index (0-11)
+            const monthKey = String(selectedMonth + 1);
 
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const daySuffix = (d) => ['th', 'st', 'nd', 'rd'][(d % 10 > 3) ? 0 : (d % 100 - d % 10 != 10) * d % 10] || 'th';
+            const SESSIONS = ["Mon AM", "Mon PM", "Tue AM", "Tue PM", "Wed AM", "Wed PM", "Thu AM", "Thu PM", "Fri AM", "Fri PM", "Weekends"];
 
-            // --- Build Table Headers ---
-            let headerRow1 = '<tr><th rowspan="2">Registrar</th>';
-            let headerRow2 = '<tr>';
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const date = new Date(year, month, day);
-                const dayOfWeek = date.getDay();
-                const weekendClass = (dayOfWeek === 0 || dayOfWeek === 6) ? 'weekend-col' : '';
-                
-                headerRow1 += `<th colspan="2" class="${weekendClass}">${day}${daySuffix(day)}</th>`;
-                headerRow2 += `<th class="${weekendClass}">AM</th><th class="${weekendClass}">PM</th>`;
-            }
-            headerRow1 += '</tr>';
-            headerRow2 += '</tr>';
+            // --- Build Table Header ---
+            let tableHTML = `<table class="weekly-rota-table"><thead><tr><th>Registrar</th>`;
+            SESSIONS.forEach(session => {
+                tableHTML += `<th>${session}</th>`;
+            });
+            tableHTML += `</tr></thead>`;
 
             // --- Build Table Body ---
-            let bodyHTML = '';
+            tableHTML += `<tbody>`;
             allRegistrars.forEach(reg => {
-                bodyHTML += `<tr><td>${reg.name}</td>`;
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const currentDate = new Date(year, month, day);
-                     const dayOfWeek = currentDate.getDay();
-                    const weekendClass = (dayOfWeek === 0 || dayOfWeek === 6) ? 'weekend-col' : '';
-
-                    const amClass = getSessionStatusClass(reg, currentDate, "AM");
-                    const pmClass = getSessionStatusClass(reg, currentDate, "PM");
-
-                    bodyHTML += `<td class="${amClass} ${weekendClass}"></td>`;
-                    bodyHTML += `<td class="${pmClass} ${weekendClass}"></td>`;
-                }
-                bodyHTML += '</tr>';
+                tableHTML += `<tr><td class="registrar-name">${reg.name}</td>`;
+                
+                // Get the specific availability pattern for the selected month
+                const monthPattern = reg.availability ? reg.availability[monthKey] : null;
+                
+                SESSIONS.forEach(session => {
+                    const isAvailable = monthPattern && monthPattern[session];
+                    tableHTML += `<td class="${isAvailable ? 'available' : ''}"></td>`;
+                });
+                
+                tableHTML += `</tr>`;
             });
+            tableHTML += `</tbody></table>`;
             
-            container.innerHTML = `
-                <table class="rota-table">
-                    <thead>${headerRow1}${headerRow2}</thead>
-                    <tbody>${bodyHTML}</tbody>
-                </table>
-            `;
-        }
-
-        function getSessionStatusClass(reg, date, session) {
-            const isOnLeave = reg.leave_records?.some(leave => date >= leave.startDate && date <= leave.endDate);
-            if (isOnLeave) return '';
-
-            const isInBlock = reg.blocks?.some(block => date >= block.startDate && date <= block.endDate);
-            if (!isInBlock) return '';
-
-            if (reg.defaultAvailability) {
-                const dayOfWeek = date.getDay(); // 0=Sun, 6=Sat
-
-                if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Weekday
-                    const dayNames = { 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri' };
-                    const dayName = dayNames[dayOfWeek];
-                    if (reg.defaultAvailability[`${dayName} ${session}`]) {
-                        return 'available';
-                    }
-                } else { // Weekend
-                    if (reg.defaultAvailability['Weekends']) {
-                        return 'available';
-                    }
-                }
-            }
-            return '';
+            container.innerHTML = tableHTML;
         }
     </script>
 </body>
