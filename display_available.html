@@ -12,13 +12,16 @@
             background-color: #f4f7f6;
             color: #333;
         }
+
         header {
             text-align: center;
             margin-bottom: 20px;
         }
+
         h1 {
             color: #2c3e50;
         }
+
         .controls {
             display: flex;
             justify-content: center;
@@ -27,59 +30,89 @@
             padding: 15px;
             background-color: #ffffff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 25px;
         }
+
         .controls label {
             font-weight: bold;
         }
+
         .controls select {
             padding: 8px 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
         }
-        .week-container {
-            margin-bottom: 30px;
+
+        #calendar-container {
             background-color: #ffffff;
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .week-container h3 {
-            color: #34495e;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
-        }
-        .availability-table {
-            border-collapse: collapse;
+
+        .month-calendar {
             width: 100%;
-            font-size: 14px;
+            border-collapse: collapse;
         }
-        .availability-table th,
-        .availability-table td {
-            border: 1px solid #e0e0e0;
-            padding: 8px;
+
+        .month-calendar th {
             text-align: center;
-            min-width: 50px;
-        }
-        .availability-table th {
+            padding: 12px;
             background-color: #f2f5f7;
             color: #555;
             font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
         }
-        .registrar-name {
-            text-align: left;
+
+        .month-calendar td {
+            width: 14.28%; /* 100% / 7 days */
+            height: 120px;
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+            padding: 5px;
+        }
+        
+        .month-calendar .other-month {
+            background-color: #f9f9f9;
+        }
+        
+        .month-calendar .today .day-number {
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
             font-weight: bold;
-            background-color: #f8f9fa;
-            width: 10%;
         }
-        .available {
-            background-color: #2ECC71; /* A clear, friendly green */
+
+        .day-number {
+            font-size: 14px;
+            font-weight: 500;
+            color: #34495e;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
         }
-        .other-month-cell {
-            background-color: #fdfdfd;
+        
+        .available-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 5px 0 0 0;
         }
+        
+        .available-list li {
+            background-color: #2ECC71; /* Green highlight for availability */
+            color: white;
+            font-size: 12px;
+            padding: 3px 5px;
+            border-radius: 4px;
+            margin-bottom: 3px;
+            text-align: center;
+            font-weight: 500;
+        }
+
     </style>
 </head>
 <body>
@@ -103,6 +136,7 @@
         // --- GLOBAL STATE ---
         let allRegistrars = [];
         const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -110,78 +144,50 @@
             fetchData();
         });
 
-        /**
-         * Populates month and year dropdowns and attaches event listeners.
-         */
         function setupControls() {
             const monthSelect = document.getElementById('monthSelect');
             const yearSelect = document.getElementById('yearSelect');
-            const today = new Date(); // Using current date for setup
+            const today = new Date();
 
-            // Populate months
             MONTH_NAMES.forEach((month, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = month;
-                monthSelect.appendChild(option);
+                monthSelect.add(new Option(month, index));
             });
 
-            // Populate years (current year +/- 2)
             const currentYear = today.getFullYear();
             for (let i = currentYear - 2; i <= currentYear + 3; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                yearSelect.appendChild(option);
+                yearSelect.add(new Option(i, i));
             }
 
-            // Set default to October 2025 as per current context
-            monthSelect.value = 9; // October is month 9 (0-indexed)
-            yearSelect.value = 2025;
+            monthSelect.value = 9; // Default to October
+            yearSelect.value = 2025; // Default to 2025
 
-            // Add event listeners
             monthSelect.addEventListener('change', renderCalendar);
             yearSelect.addEventListener('change', renderCalendar);
         }
 
-        /**
-         * Fetches and processes the registrar data from the JSON file.
-         */
         async function fetchData() {
             try {
-                // Fetch from the relative path, assuming it's in the same folder.
                 const response = await fetch('registrars_data.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 const data = await response.json();
                 preprocessData(data);
                 allRegistrars = data;
                 renderCalendar();
             } catch (error) {
-                const container = document.getElementById('calendar-container');
-                container.innerHTML = `<p style="color: red; text-align: center;"><strong>Error:</strong> Could not load or parse registrar data. Please ensure 'registrars_data.json' is in the same folder and is valid JSON.</p>`;
+                document.getElementById('calendar-container').innerHTML = `<p style="color: red; text-align: center;"><strong>Error:</strong> Could not load registrar data.</p>`;
                 console.error("Fetch Error:", error);
             }
         }
 
-        /**
-         * Parses date strings into Date objects for easier comparison.
-         * Also determines a registrar's default weekly availability pattern.
-         * @param {Array} data - The array of registrar objects.
-         */
         function preprocessData(data) {
             data.forEach(reg => {
-                // Convert leave record strings to Date objects
                 if (reg.leave_records) {
                     reg.leave_records.forEach(leave => {
                         leave.startDate = new Date(leave.start);
                         leave.endDate = new Date(leave.end);
-                        // Set time to end of day for inclusive date range
                         leave.endDate.setHours(23, 59, 59, 999);
                     });
                 }
-                // Convert block strings to Date objects
                 if (reg.blocks) {
                     reg.blocks.forEach(block => {
                         block.startDate = new Date(block.start_date);
@@ -189,12 +195,11 @@
                         block.endDate.setHours(23, 59, 59, 999);
                     });
                 }
-                // ASSUMPTION: Find the first non-empty availability pattern to use as the default weekly schedule.
                 reg.defaultAvailability = null;
                 if (reg.availability) {
                     for (let i = 1; i <= 12; i++) {
                         const weekPattern = reg.availability[String(i)];
-                        if (weekPattern && Object.values(weekPattern).some(isAvailable => isAvailable === true)) {
+                        if (weekPattern && Object.values(weekPattern).some(v => v === true)) {
                             reg.defaultAvailability = weekPattern;
                             break;
                         }
@@ -203,156 +208,103 @@
             });
         }
 
-
         // --- RENDERING LOGIC ---
-
-        /**
-         * Main function to clear and redraw the entire calendar view for a given month.
-         */
         function renderCalendar() {
             const year = parseInt(document.getElementById('yearSelect').value);
             const month = parseInt(document.getElementById('monthSelect').value);
             const container = document.getElementById('calendar-container');
-            container.innerHTML = '';
 
-            const weeks = getMondaysInMonth(year, month);
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay(); // 0 for Sunday, 1 for Monday, etc.
 
-            weeks.forEach(monday => {
-                const weekContainer = document.createElement('div');
-                weekContainer.className = 'week-container';
-                
-                const weekStartFormatted = monday.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
-                const weekHeader = document.createElement('h3');
-                weekHeader.textContent = `Week Starting ${weekStartFormatted}`;
-                weekContainer.appendChild(weekHeader);
-
-                let tableHTML = `
-                    <table class="availability-table">
-                        <thead>
-                            <tr>
-                                <th>Registrar</th>
-                                <th>Mon AM</th><th>Mon PM</th>
-                                <th>Tue AM</th><th>Tue PM</th>
-                                <th>Wed AM</th><th>Wed PM</th>
-                                <th>Thu AM</th><th>Thu PM</th>
-                                <th>Fri AM</th><th>Fri PM</th>
-                                <th>Weekends</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-
-                allRegistrars.forEach(reg => {
-                    tableHTML += `<tr><td class="registrar-name">${reg.name}</td>`;
-                    
-                    // Weekday Sessions (Monday to Friday)
-                    for (let i = 0; i < 5; i++) {
-                        const currentDate = new Date(monday);
-                        currentDate.setDate(monday.getDate() + i);
-                        
-                        const amClass = getSessionStatusClass(reg, currentDate, "AM", month);
-                        const pmClass = getSessionStatusClass(reg, currentDate, "PM", month);
-                        
-                        tableHTML += `<td class="${amClass}"></td>`;
-                        tableHTML += `<td class="${pmClass}"></td>`;
-                    }
-                    
-                    // Weekend Session
-                    const satDate = new Date(monday);
-                    satDate.setDate(monday.getDate() + 5);
-                    const sunDate = new Date(monday);
-                    sunDate.setDate(monday.getDate() + 6);
-                    const weekendClass = getWeekendStatusClass(reg, satDate, sunDate, month);
-                    tableHTML += `<td class="${weekendClass}"></td>`;
-                    
-                    tableHTML += `</tr>`;
-                });
-
-                tableHTML += `</tbody></table>`;
-                weekContainer.innerHTML += tableHTML;
-                container.appendChild(weekContainer);
+            let tableHTML = `<table class="month-calendar"><thead><tr>`;
+            DAY_NAMES.forEach(day => {
+                tableHTML += `<th>${day}</th>`;
             });
-        }
+            tableHTML += `</tr></thead><tbody><tr>`;
 
-        /**
-         * Determines the CSS class for a specific registrar, date, and session (AM/PM).
-         * @returns {string} The CSS class name ('available' or 'other-month-cell').
-         */
-        function getSessionStatusClass(reg, date, session, selectedMonth) {
-            if (date.getMonth() !== selectedMonth) return 'other-month-cell';
-
-            const dayOfWeek = date.getDay(); // 0=Sun, 1=Mon...
-            const dayNames = { 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri' };
-
-            // 1. Check for Leave
-            const isOnLeave = reg.leave_records?.some(leave => date >= leave.startDate && date <= leave.endDate);
-            if (isOnLeave) return '';
-
-            // 2. Check if working in a Block
-            const isInBlock = reg.blocks?.some(block => date >= block.startDate && date <= block.endDate);
-            if (!isInBlock) return '';
-
-            // 3. Check availability pattern
-            const dayName = dayNames[dayOfWeek];
-            if (!dayName) return ''; // Should not happen in this function
-            
-            const sessionKey = `${dayName} ${session}`;
-            if (reg.defaultAvailability && reg.defaultAvailability[sessionKey]) {
-                return 'available';
+            // Add empty cells for days before the 1st of the month
+            for (let i = 0; i < startingDay; i++) {
+                tableHTML += `<td class="other-month"></td>`;
             }
 
-            return ''; // Default to unavailable
+            const today = new Date();
+            const todayDateString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+
+            // Add cells for each day of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const currentDate = new Date(year, month, day);
+                const dayOfWeek = currentDate.getDay();
+
+                if (dayOfWeek === 0 && day !== 1) { // New week starts on Sunday
+                    tableHTML += `</tr><tr>`;
+                }
+
+                // Check if this cell is today
+                const isToday = `${year}-${month}-${day}` === todayDateString;
+                
+                const availableRegistrars = getAvailableRegistrarsForDay(currentDate);
+                
+                tableHTML += `<td class="${isToday ? 'today' : ''}">`;
+                tableHTML += `<div class="day-number">${day}</div>`;
+                if (availableRegistrars.length > 0) {
+                    tableHTML += `<ul class="available-list">`;
+                    availableRegistrars.forEach(name => {
+                        tableHTML += `<li>${name}</li>`;
+                    });
+                    tableHTML += `</ul>`;
+                }
+                tableHTML += `</td>`;
+            }
+            
+            // Add empty cells for the end of the last week
+            const lastDayOfWeek = lastDay.getDay();
+            for (let i = lastDayOfWeek; i < 6; i++) {
+                 tableHTML += `<td class="other-month"></td>`;
+            }
+
+            tableHTML += `</tr></tbody></table>`;
+            container.innerHTML = tableHTML;
         }
-
+        
         /**
-         * Determines the CSS class for the combined weekend slot.
-         * @returns {string} The CSS class name.
+         * Checks all registrars and returns a list of those available on a specific date.
+         * @param {Date} date - The date to check.
+         * @returns {string[]} - An array of names of available registrars.
          */
-        function getWeekendStatusClass(reg, satDate, sunDate, selectedMonth) {
-            const isWeekendInView = satDate.getMonth() === selectedMonth || sunDate.getMonth() === selectedMonth;
-            if (!isWeekendInView) return 'other-month-cell';
-
-            // Available if available on either Saturday or Sunday
-            const isAvailable = [satDate, sunDate].some(date => {
-                if (date.getMonth() !== selectedMonth) return false;
+        function getAvailableRegistrarsForDay(date) {
+            const available = [];
+            
+            allRegistrars.forEach(reg => {
+                const dayOfWeek = date.getDay();
 
                 const isOnLeave = reg.leave_records?.some(leave => date >= leave.startDate && date <= leave.endDate);
+                if (isOnLeave) return;
+
                 const isInBlock = reg.blocks?.some(block => date >= block.startDate && date <= block.endDate);
-                
-                return !isOnLeave && isInBlock;
+                if (!isInBlock) return;
+
+                if (reg.defaultAvailability) {
+                    let hasWorkingSession = false;
+                    if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Weekday
+                        const dayNames = { 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri' };
+                        const dayName = dayNames[dayOfWeek];
+                        if (reg.defaultAvailability[`${dayName} AM`] || reg.defaultAvailability[`${dayName} PM`]) {
+                            hasWorkingSession = true;
+                        }
+                    } else { // Weekend (Sunday or Saturday)
+                        if (reg.defaultAvailability['Weekends']) {
+                            hasWorkingSession = true;
+                        }
+                    }
+                    if (hasWorkingSession) {
+                        available.push(reg.name);
+                    }
+                }
             });
-
-            if (isAvailable && reg.defaultAvailability?.["Weekends"]) {
-                return 'available';
-            }
-            
-            return '';
-        }
-
-        // --- HELPER FUNCTIONS ---
-
-        /**
-         * Calculates the start date (Monday) for each week that falls within a given month.
-         * @returns {Date[]} An array of Date objects, each representing a Monday.
-         */
-        function getMondaysInMonth(year, month) {
-            const mondays = [];
-            const d = new Date(year, month, 1);
-
-            // Find the first Monday of the month's first week.
-            // This may be in the previous month.
-            if (d.getDay() !== 1) { // If not a Monday
-                d.setDate(d.getDate() - (d.getDay() + 6) % 7);
-            }
-
-            // Add all Mondays until we enter the next month.
-            while (d.getMonth() === month || mondays.length === 0) {
-                 if (d.getFullYear() > year || (d.getFullYear() === year && d.getMonth() > month)) break;
-                mondays.push(new Date(d));
-                d.setDate(d.getDate() + 7);
-            }
-            
-            return mondays;
+            return available;
         }
 
     </script>
