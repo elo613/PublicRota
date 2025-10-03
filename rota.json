@@ -1331,7 +1331,7 @@
             },
             "PM": {
                 "Duty": [
-                    "BM"
+                    "KA"
                 ],
                 "Reporting": [
                     "CM"
@@ -1369,7 +1369,7 @@
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "BM"
                 ],
                 "Reporting": [
                     "EL"
@@ -1457,7 +1457,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "AO"
                 ],
                 "Reporting": [
                     "SR"
@@ -1482,9 +1482,7 @@
                 "Duty": [
                     "SH"
                 ],
-                "Reporting": [
-                    "AO"
-                ],
+                "Reporting": [],
                 "Ultrasound": []
             },
             "PM": {
@@ -1492,7 +1490,7 @@
                     "BM"
                 ],
                 "Reporting": [
-                    "CM"
+                    "AO"
                 ],
                 "Ultrasound": []
             }
@@ -1514,7 +1512,9 @@
                 "Duty": [
                     "EL"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": []
             }
         }
@@ -1613,13 +1613,13 @@
                     "BM"
                 ],
                 "Reporting": [
-                    "KA"
+                    "SH"
                 ],
                 "Ultrasound": []
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "KA"
                 ],
                 "Reporting": [
                     "SR"
@@ -1635,16 +1635,16 @@
                 "Duty": [
                     "SH"
                 ],
-                "Reporting": [
-                    "BM"
-                ],
+                "Reporting": [],
                 "Ultrasound": []
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "AO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "BM"
+                ],
                 "Ultrasound": []
             }
         }
@@ -1959,7 +1959,7 @@
             },
             "PM": {
                 "Duty": [
-                    "CM"
+                    "BM"
                 ],
                 "Reporting": [
                     "KA"
@@ -2286,7 +2286,7 @@
                     "KA"
                 ],
                 "Reporting": [
-                    "CM"
+                    "MM"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2296,7 +2296,7 @@
                     "MM"
                 ],
                 "Reporting": [
-                    "SA"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2308,10 +2308,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "CM"
+                    "MM"
                 ],
                 "Reporting": [
-                    "MM"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
