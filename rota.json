@@ -2365,7 +2365,9 @@
                 "Duty": [
                     "QO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "MM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -2435,7 +2437,9 @@
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
+                "Duty": [
+                    "KA"
+                ],
                 "Reporting": [
                     "SR"
                 ],
@@ -2687,7 +2691,9 @@
                 "Duty": [
                     "QO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "AO"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -2747,7 +2753,9 @@
         "Date": "05/12/2025",
         "Shifts": {
             "AM": {
-                "Duty": [],
+                "Duty": [
+                    "SR"
+                ],
                 "Reporting": [
                     "CM"
                 ],
@@ -2755,8 +2763,12 @@
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
-                "Reporting": [],
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -2842,7 +2854,9 @@
                 "Duty": [
                     "KA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "MM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -2902,13 +2916,19 @@
         "Date": "12/12/2025",
         "Shifts": {
             "AM": {
-                "Duty": [],
-                "Reporting": [],
+                "Duty": [
+                    "KA"
+                ],
+                "Reporting": [
+                    "SR"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
+                "Duty": [
+                    "SH"
+                ],
                 "Reporting": [
                     "BM"
                 ],
@@ -2999,7 +3019,9 @@
                 "Duty": [
                     "KA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "MM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -3045,7 +3067,7 @@
             },
             "PM": {
                 "Duty": [
-                    "SA"
+                    "EL"
                 ],
                 "Reporting": [
                     "SH"
@@ -3059,14 +3081,22 @@
         "Date": "19/12/2025",
         "Shifts": {
             "AM": {
-                "Duty": [],
-                "Reporting": [],
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
-                "Reporting": [],
+                "Duty": [
+                    "SH"
+                ],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -3324,7 +3354,9 @@
                 "Duty": [
                     "EL"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -3446,7 +3478,9 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -3475,10 +3509,10 @@
             },
             "PM": {
                 "Duty": [
-                    "EL"
+                    "MM"
                 ],
                 "Reporting": [
-                    "AO"
+                    "EL"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3524,7 +3558,9 @@
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
+                "Duty": [
+                    "EL"
+                ],
                 "Reporting": [
                     "CM"
                 ],
@@ -3767,7 +3803,7 @@
                     "SH"
                 ],
                 "Reporting": [
-                    "MM"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3776,7 +3812,9 @@
                 "Duty": [
                     "BM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "MM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -3846,7 +3884,9 @@
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
+                "Duty": [
+                    "CM"
+                ],
                 "Reporting": [
                     "SR"
                 ],
@@ -3925,7 +3965,9 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SH"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -4008,7 +4050,9 @@
                 "Duty": [
                     "SA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "EL"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
