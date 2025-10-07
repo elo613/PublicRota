@@ -3173,14 +3173,18 @@
                     "KA"
                 ],
                 "Reporting": [
-                    "BM"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
-                "Reporting": [],
+                "Duty": [
+                    "SR"
+                ],
+                "Reporting": [
+                    "BM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -3398,7 +3402,9 @@
                 "Duty": [
                     "SA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "EL"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
