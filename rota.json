@@ -2446,10 +2446,10 @@
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "SR"
                 ],
                 "Reporting": [
-                    "SR"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
