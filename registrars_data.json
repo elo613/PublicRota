@@ -1886,6 +1886,18 @@
                 "end": "13 Mar 2026",
                 "type": "Study",
                 "half_day": false
+            },
+            {
+                "start": "22 Oct 2025",
+                "end": "22 Oct 2025",
+                "type": "Annual",
+                "half_day": true
+            },
+            {
+                "start": "30 Oct 2025",
+                "end": "31 Oct 2025",
+                "type": "Annual",
+                "half_day": false
             }
         ],
         "availability": {
