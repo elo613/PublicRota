@@ -920,7 +920,15 @@
                 "Reporting": [
                     "AO"
                 ],
-                "Ultrasound": []
+                "Ultrasound": [],
+                "Additional": [
+                    [
+                        "SA",
+                        "23/10/2025",
+                        "AM",
+                        "Private study"
+                    ]
+                ]
             },
             "PM": {
                 "Duty": [
