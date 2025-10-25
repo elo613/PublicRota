@@ -1104,6 +1104,14 @@
                 ],
                 "Ultrasound": [
                     "SR"
+                ],
+                "Additional": [
+                    [
+                        "CM",
+                        "30/10/2025",
+                        "PM",
+                        "Private study"
+                    ]
                 ]
             }
         }
@@ -1211,7 +1219,14 @@
                     "KA"
                 ],
                 "Ultrasound": [],
-                "Additional": []
+                "Additional": [
+                    [
+                        "CM",
+                        "04/11/2025",
+                        "PM",
+                        "Private study"
+                    ]
+                ]
             }
         }
     },
