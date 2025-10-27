@@ -1048,7 +1048,15 @@
                 "Reporting": [
                     "AO"
                 ],
-                "Ultrasound": []
+                "Ultrasound": [],
+                "Additional": [
+                    [
+                        "CM",
+                        "28/10/2025",
+                        "PM",
+                        "Private study"
+                    ]
+                ]
             }
         }
     },
@@ -1105,14 +1113,7 @@
                 "Ultrasound": [
                     "SR"
                 ],
-                "Additional": [
-                    [
-                        "CM",
-                        "30/10/2025",
-                        "PM",
-                        "Private study"
-                    ]
-                ]
+                "Additional": []
             }
         }
     },
