@@ -100,6 +100,12 @@
                 "end": "23 Nov 2025",
                 "type": "Annual",
                 "half_day": false
+            },
+            {
+                "start": "16 Jan 2026",
+                "end": "16 Jan 2026",
+                "type": "Study",
+                "half_day": false
             }
         ],
         "availability": {
