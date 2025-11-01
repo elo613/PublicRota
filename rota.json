@@ -3237,7 +3237,7 @@
             },
             "PM": {
                 "Duty": [
-                    "EL"
+                    "SH"
                 ],
                 "Reporting": [
                     "AO"
@@ -3254,7 +3254,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SH"
+                    "EL"
                 ],
                 "Reporting": [
                     "SR"
