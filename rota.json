@@ -1195,7 +1195,14 @@
                     "AO"
                 ],
                 "Ultrasound": [],
-                "Additional": []
+                "Additional": [
+                    [
+                        "CM",
+                        "03/11/2025",
+                        "PM",
+                        "Private study"
+                    ]
+                ]
             }
         }
     },
@@ -1220,14 +1227,7 @@
                     "KA"
                 ],
                 "Ultrasound": [],
-                "Additional": [
-                    [
-                        "CM",
-                        "04/11/2025",
-                        "PM",
-                        "Private study"
-                    ]
-                ]
+                "Additional": []
             }
         }
     },
