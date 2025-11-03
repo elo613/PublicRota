@@ -1828,9 +1828,9 @@
             "GP films": 0
         },
         "allowance": {
-            "study": 30,
-            "annual": 32,
-            "notes": ""
+            "study": "30",
+            "annual": "32",
+            "notes": "4 extra days for weekend courses"
         },
         "leave_records": [
             {
@@ -1921,6 +1921,12 @@
                 "start": "30 Oct 2025",
                 "end": "31 Oct 2025",
                 "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "07 Nov 2025",
+                "end": "07 Nov 2025",
+                "type": "Other",
                 "half_day": false
             }
         ],

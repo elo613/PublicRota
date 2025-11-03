@@ -1285,7 +1285,14 @@
                     "CM"
                 ],
                 "Ultrasound": [],
-                "Additional": []
+                "Additional": [
+                    [
+                        "SA",
+                        "06/11/2025",
+                        "AM",
+                        "Private study"
+                    ]
+                ]
             },
             "PM": {
                 "Duty": [
@@ -1354,9 +1361,7 @@
                 "Duty": [
                     "BM"
                 ],
-                "Reporting": [
-                    "SA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -1686,7 +1691,9 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
