@@ -1419,7 +1419,14 @@
                     "BM"
                 ],
                 "Ultrasound": [],
-                "Additional": []
+                "Additional": [
+                    [
+                        "CM",
+                        "11/11/2025",
+                        "PM",
+                        "Private study"
+                    ]
+                ]
             }
         }
     },
