@@ -1928,6 +1928,12 @@
                 "end": "07 Nov 2025",
                 "type": "Other",
                 "half_day": false
+            },
+            {
+                "start": "17 Nov 2025",
+                "end": "17 Nov 2025",
+                "type": "Annual",
+                "half_day": true
             }
         ],
         "availability": {

@@ -1466,7 +1466,14 @@
                     "CM"
                 ],
                 "Ultrasound": [],
-                "Additional": []
+                "Additional": [
+                    [
+                        "SA",
+                        "13/11/2025",
+                        "AM",
+                        "Private study"
+                    ]
+                ]
             },
             "PM": {
                 "Duty": [
