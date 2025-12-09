@@ -2202,9 +2202,7 @@
                 "Duty": [
                     "BM"
                 ],
-                "Reporting": [
-                    "SA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -2501,7 +2499,9 @@
                 "Duty": [
                     "QO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
