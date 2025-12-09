@@ -2147,7 +2147,14 @@
                 "Ultrasound": [
                     "AO"
                 ],
-                "Additional": []
+                "Additional": [
+                    [
+                        "SA",
+                        "11/12/2025",
+                        "PM",
+                        "Private study"
+                    ]
+                ]
             }
         }
     },
