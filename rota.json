@@ -2179,7 +2179,14 @@
                     "BM"
                 ],
                 "Ultrasound": [],
-                "Additional": []
+                "Additional": [
+                    [
+                        "CM",
+                        "12/12/2025",
+                        "PM",
+                        "Private study afternoon"
+                    ]
+                ]
             }
         }
     },
