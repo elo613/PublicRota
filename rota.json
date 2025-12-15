@@ -2321,7 +2321,7 @@
                     "EL"
                 ],
                 "Reporting": [
-                    "SH"
+                    "SR"
                 ],
                 "Ultrasound": [
                     "BM"
@@ -2411,7 +2411,7 @@
                     "SA"
                 ],
                 "Reporting": [
-                    "SR"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
