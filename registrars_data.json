@@ -1690,6 +1690,12 @@
                 "end": "27 Feb 2026",
                 "type": "Other",
                 "half_day": false
+            },
+            {
+                "start": "28 Feb 2026",
+                "end": "01 Mar 2026",
+                "type": "Study",
+                "half_day": false
             }
         ],
         "availability": {
