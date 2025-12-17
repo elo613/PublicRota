@@ -1070,6 +1070,12 @@
                 "end": "22 Dec 2025",
                 "type": "Other",
                 "half_day": false
+            },
+            {
+                "start": "07 Feb 2026",
+                "end": "08 Feb 2026",
+                "type": "Other",
+                "half_day": false
             }
         ],
         "availability": {
