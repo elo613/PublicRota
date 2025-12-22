@@ -118,6 +118,12 @@
                 "end": "24 Dec 2025",
                 "type": "Annual",
                 "half_day": false
+            },
+            {
+                "start": "11 Apr 2026",
+                "end": "12 Apr 2026",
+                "type": "Annual",
+                "half_day": false
             }
         ],
         "availability": {
