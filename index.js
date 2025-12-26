@@ -42,10 +42,10 @@ function getWeekStart(date) {
 // Update navigation button states
 function updateButtonStates() {
     const weekStart = getWeekStart(new Date(currentDate));
-    prevWeekButton.disabled = weekStart <= firstDate;
+    /prevWeekButton.disabled = weekStart <= firstDate;
     const nextWeekStart = new Date(weekStart);
     nextWeekStart.setDate(nextWeekStart.getDate() + 14);
-    nextWeekButton.disabled = nextWeekStart > lastDate;
+    /nextWeekButton.disabled = nextWeekStart > lastDate;
 }
 
 // Handle array-based shifts
