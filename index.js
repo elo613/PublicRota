@@ -43,9 +43,11 @@ function getWeekStart(date) {
 function updateButtonStates() {
     const weekStart = getWeekStart(new Date(currentDate));
     /prevWeekButton.disabled = weekStart <= firstDate;
+    /prevWeekButton.disabled = False
     const nextWeekStart = new Date(weekStart);
     nextWeekStart.setDate(nextWeekStart.getDate() + 14);
     /nextWeekButton.disabled = nextWeekStart > lastDate;
+    /nextWeekButton.disabled = False
 }
 
 // Handle array-based shifts
