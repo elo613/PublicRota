@@ -2693,9 +2693,7 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [
-                    "SA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -2839,7 +2837,9 @@
                 "Duty": [
                     "SR"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -3053,7 +3053,7 @@
                     "AO"
                 ],
                 "Reporting": [
-                    "SA"
+                    "SH"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -3128,7 +3128,7 @@
                     "EL"
                 ],
                 "Reporting": [
-                    "SH"
+                    "SA"
                 ],
                 "Ultrasound": [
                     "QO"
