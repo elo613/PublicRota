@@ -130,6 +130,12 @@
                 "end": "09 Feb 2026",
                 "type": "Annual",
                 "half_day": false
+            },
+            {
+                "start": "30 May 2026",
+                "end": "01 Jun 2026",
+                "type": "Annual",
+                "half_day": false
             }
         ],
         "availability": {
