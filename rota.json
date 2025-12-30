@@ -3427,7 +3427,9 @@
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
+                "Duty": [
+                    "AO"
+                ],
                 "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
@@ -3730,16 +3732,18 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "AO"
+                    "KA"
                 ],
                 "Reporting": [
-                    "KA"
+                    "AO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
             },
             "PM": {
-                "Duty": [],
+                "Duty": [
+                    "AO"
+                ],
                 "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
