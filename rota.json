@@ -3628,7 +3628,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "SR"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3796,7 +3796,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SR"
+                    "MM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -4084,7 +4084,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "BM"
+                    "MM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -4208,7 +4208,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "MM"
+                    "BM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
