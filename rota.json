@@ -3577,9 +3577,7 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "KA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -3587,7 +3585,9 @@
                 "Duty": [
                     "CM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -3598,11 +3598,9 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
-                ],
-                "Reporting": [
                     "SA"
                 ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -4010,10 +4008,10 @@
             },
             "PM": {
                 "Duty": [
-                    "QO"
+                    "MM"
                 ],
                 "Reporting": [
-                    "MM"
+                    "QO"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -4052,9 +4050,7 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "KA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -4062,7 +4058,9 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -4081,10 +4079,10 @@
             },
             "PM": {
                 "Duty": [
-                    "KA"
+                    "QO"
                 ],
                 "Reporting": [
-                    "QO"
+                    "KA"
                 ],
                 "Ultrasound": [
                     "MM"
@@ -4496,10 +4494,10 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "SA"
                 ],
                 "Reporting": [
-                    "SA"
+                    "KA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
