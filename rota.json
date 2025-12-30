@@ -3646,7 +3646,9 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -4433,7 +4435,9 @@
                 "Duty": [
                     "EL"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -4768,7 +4772,9 @@
                 "Duty": [
                     "SR"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "CM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
