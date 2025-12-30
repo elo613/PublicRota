@@ -1,1 +1,2745 @@
-[{"name": "EL", "blocks": [{"start_date": "2025-08-05", "end_date": "2026-08-04", "block_name": "EL subspec"}], "skills": {"General ultrasound": 1, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": 30, "annual": 32, "notes": "="}, "leave_records": [{"start": "29 Nov 2025", "end": "07 Dec 2025", "type": "Study", "half_day": false}, {"start": "06 Aug 2025", "end": "10 Aug 2025", "type": "Study", "half_day": false}, {"start": "12 Apr 2026", "end": "12 Apr 2026", "type": "Annual", "half_day": false}, {"start": "17 Aug 2025", "end": "17 Aug 2025", "type": "Annual", "half_day": false}, {"start": "24 Oct 2025", "end": "24 Oct 2025", "type": "Study", "half_day": false}, {"start": "17 Nov 2025", "end": "17 Nov 2025", "type": "Study", "half_day": false}, {"start": "30 Mar 2026", "end": "05 Apr 2026", "type": "Annual", "half_day": false}, {"start": "28 Nov 2025", "end": "28 Nov 2025", "type": "Annual", "half_day": false}, {"start": "25 Dec 2025", "end": "26 Dec 2025", "type": "Other", "half_day": false}, {"start": "08 Dec 2025", "end": "10 Dec 2025", "type": "Annual", "half_day": false}, {"start": "08 Nov 2025", "end": "13 Nov 2025", "type": "Annual", "half_day": false}, {"start": "23 Sep 2025", "end": "23 Sep 2025", "type": "Annual", "half_day": true}, {"start": "21 Nov 2025", "end": "23 Nov 2025", "type": "Annual", "half_day": false}, {"start": "16 Jan 2026", "end": "16 Jan 2026", "type": "Study", "half_day": false}, {"start": "05 Jun 2026", "end": "07 Jun 2026", "type": "Study", "half_day": false}, {"start": "24 Dec 2025", "end": "24 Dec 2025", "type": "Annual", "half_day": false}, {"start": "11 Apr 2026", "end": "12 Apr 2026", "type": "Annual", "half_day": false}, {"start": "06 Feb 2026", "end": "09 Feb 2026", "type": "Annual", "half_day": false}, {"start": "30 May 2026", "end": "01 Jun 2026", "type": "Annual", "half_day": false}, {"start": "14 Feb 2026", "end": "15 Feb 2026", "type": "Other", "half_day": false}], "availability": {"1": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "2": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "3": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "4": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "5": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "6": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "7": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "8": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "9": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": false, "Weekends": true}, "10": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": false, "Weekends": true}, "11": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": false, "Weekends": true}, "12": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": false, "Weekends": true}}}, {"name": "SR", "blocks": [{"start_date": "2024-11-04", "end_date": "2025-01-31", "block_name": "Head and Neck"}, {"start_date": "2025-02-03", "end_date": "2025-02-28", "block_name": "Breast"}, {"start_date": "2025-03-03", "end_date": "2025-05-30", "block_name": "Neuro"}, {"start_date": "2025-06-02", "end_date": "2025-07-25", "block_name": "Breast"}, {"start_date": "2025-09-15", "end_date": "2026-08-04", "block_name": "SR subspeciality training"}], "skills": {"General ultrasound": 1, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": 30, "annual": 32, "notes": ""}, "leave_records": [{"start": "22 Sep 2025", "end": "10 Oct 2025", "type": "Study", "half_day": false}, {"start": "11 Sep 2025", "end": "12 Sep 2025", "type": "Study", "half_day": false}, {"start": "11 Mar 2026", "end": "13 Mar 2026", "type": "Study", "half_day": false}, {"start": "13 Feb 2026", "end": "13 Feb 2026", "type": "Annual", "half_day": false}, {"start": "20 Feb 2026", "end": "20 Feb 2026", "type": "Annual", "half_day": false}, {"start": "27 Feb 2026", "end": "27 Feb 2026", "type": "Annual", "half_day": false}], "availability": {"1": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "2": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "3": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "4": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "5": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "6": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "7": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "8": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "9": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "10": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "11": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "12": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}}}, {"name": "SH", "blocks": [{"start_date": "2024-12-02", "end_date": "2025-02-28", "block_name": "Neuro"}, {"start_date": "2025-06-02", "end_date": "2025-07-25", "block_name": "Head and Neck"}, {"start_date": "2025-03-03", "end_date": "2025-05-30", "block_name": "Haem Onc"}, {"start_date": "2025-08-05", "end_date": "2026-08-04", "block_name": "SH subspeciality training"}], "skills": {"General ultrasound": 1, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": 30, "annual": 34, "notes": "2+ days for weekend course"}, "leave_records": [{"start": "11 Sep 2025", "end": "12 Sep 2025", "type": "Study", "half_day": false}, {"start": "20 Sep 2025", "end": "21 Sep 2025", "type": "Study", "half_day": false}, {"start": "15 Nov 2025", "end": "21 Nov 2025", "type": "Annual", "half_day": false}, {"start": "11 Dec 2025", "end": "11 Dec 2025", "type": "Study", "half_day": false}, {"start": "09 Jan 2026", "end": "09 Jan 2026", "type": "Study", "half_day": false}, {"start": "02 Mar 2026", "end": "09 Mar 2026", "type": "Annual", "half_day": false}, {"start": "10 Mar 2026", "end": "16 Mar 2026", "type": "Annual", "half_day": false}, {"start": "23 Feb 2026", "end": "23 Feb 2026", "type": "Study", "half_day": false}, {"start": "22 Sep 2025", "end": "08 Oct 2025", "type": "Study", "half_day": false}], "availability": {"1": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "2": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "3": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "4": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "5": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "6": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "7": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "8": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "9": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "10": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "11": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "12": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}}}, {"name": "QO", "blocks": [{"start_date": "2025-05-12", "end_date": "2025-08-22", "block_name": "Haem Onc"}, {"start_date": "2025-12-08", "end_date": "2026-03-20", "block_name": "Head and Neck"}, {"start_date": "2026-03-23", "end_date": "2026-07-03", "block_name": "Breast"}, {"start_date": "2025-08-25", "end_date": "2025-12-05", "block_name": "Gynaecology"}], "skills": {"General ultrasound": 1, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": 32, "annual": 30, "notes": ""}, "leave_records": [{"start": "12 Nov 2025", "end": "13 Nov 2025", "type": "Study", "half_day": false}, {"start": "20 Oct 2025", "end": "05 Nov 2025", "type": "Study", "half_day": false}, {"start": "13 Oct 2025", "end": "19 Oct 2025", "type": "Annual", "half_day": false}, {"start": "22 Aug 2025", "end": "22 Aug 2025", "type": "Other", "half_day": false}, {"start": "06 Dec 2025", "end": "26 Dec 2025", "type": "Annual", "half_day": false}, {"start": "06 Oct 2025", "end": "10 Oct 2025", "type": "Study", "half_day": false}], "availability": {"1": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "2": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "3": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "4": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "5": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "6": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "7": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "8": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "9": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "10": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": true, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "11": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "12": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}}}, {"name": "KA", "blocks": [{"start_date": "2025-02-03", "end_date": "2025-05-02", "block_name": "GI"}, {"start_date": "2025-05-05", "end_date": "2025-08-01", "block_name": "Chest"}, {"start_date": "2025-08-04", "end_date": "2025-10-31", "block_name": "MSK"}, {"start_date": "2026-02-02", "end_date": "2026-05-01", "block_name": "IR"}, {"start_date": "2026-05-04", "end_date": "2026-07-31", "block_name": "Haem Onc"}, {"start_date": "2026-08-03", "end_date": "2026-10-30", "block_name": "Paediatrics"}, {"start_date": "2027-05-03", "end_date": "2027-07-30", "block_name": "Breast"}, {"start_date": "2026-11-02", "end_date": "2027-01-29", "block_name": "Neuro and H&N"}, {"start_date": "2025-11-03", "end_date": "2026-01-30", "block_name": "Gynaecology"}], "skills": {"General ultrasound": 1, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": "27", "annual": "27", "notes": ""}, "leave_records": [{"start": "18 Aug 2025", "end": "22 Aug 2025", "type": "Study", "half_day": false}, {"start": "04 Sep 2025", "end": "04 Sep 2025", "type": "Other", "half_day": false}, {"start": "08 Nov 2025", "end": "16 Nov 2025", "type": "Annual", "half_day": false}, {"start": "22 Dec 2025", "end": "22 Dec 2025", "type": "Other", "half_day": false}, {"start": "07 Feb 2026", "end": "08 Feb 2026", "type": "Other", "half_day": false}, {"start": "12 Jan 2026", "end": "12 Jan 2026", "type": "Other", "half_day": false}], "availability": {"1": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "2": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "3": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "4": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "5": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "6": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "7": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "8": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "9": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "10": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": true}, "11": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": false, "Thu AM": true, "Thu PM": false, "Fri AM": true, "Fri PM": false, "Weekends": true}, "12": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": false, "Thu AM": true, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}}}, {"name": "MM", "blocks": [{"start_date": "2025-02-03", "end_date": "2025-05-02", "block_name": "Breast"}, {"start_date": "2025-08-04", "end_date": "2025-10-31", "block_name": "Paediatrics"}, {"start_date": "2025-11-03", "end_date": "2026-01-30", "block_name": "Haem Onc"}, {"start_date": "2026-02-02", "end_date": "2026-05-01", "block_name": "Head and Neck"}, {"start_date": "2026-05-04", "end_date": "2026-07-31", "block_name": "IR"}, {"start_date": "2025-05-05", "end_date": "2025-08-01", "block_name": "Gynaecology"}], "skills": {"General ultrasound": 1, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": 30, "annual": 32, "notes": ""}, "leave_records": [{"start": "08 Oct 2025", "end": "10 Oct 2025", "type": "Study", "half_day": false}, {"start": "12 Nov 2025", "end": "13 Nov 2025", "type": "Study", "half_day": false}, {"start": "20 Oct 2025", "end": "05 Nov 2025", "type": "Study", "half_day": false}, {"start": "07 Oct 2025", "end": "07 Oct 2025", "type": "Annual", "half_day": false}, {"start": "08 Sep 2025", "end": "10 Sep 2025", "type": "Study", "half_day": false}, {"start": "30 Nov 2025", "end": "04 Dec 2025", "type": "Study", "half_day": false}, {"start": "20 Dec 2025", "end": "28 Dec 2025", "type": "Annual", "half_day": false}, {"start": "06 Nov 2025", "end": "11 Nov 2025", "type": "Annual", "half_day": false}, {"start": "06 Feb 2026", "end": "13 Feb 2026", "type": "Annual", "half_day": false}, {"start": "01 Mar 2026", "end": "01 Mar 2026", "type": "Annual", "half_day": false}, {"start": "20 Mar 2026", "end": "20 Mar 2026", "type": "Annual", "half_day": false}], "availability": {"1": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "2": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "3": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "4": {"Mon AM": false, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "5": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "6": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "7": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "8": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "9": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "10": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": true}, "11": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "12": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}}}, {"name": "CM", "skills": {"General ultrasound": 0, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": 30, "annual": 32, "notes": ""}, "leave_records": [{"start": "19 Oct 2025", "end": "19 Oct 2025", "type": "Annual", "half_day": false}, {"start": "16 Aug 2025", "end": "17 Aug 2025", "type": "Annual", "half_day": false}, {"start": "27 Sep 2025", "end": "28 Sep 2025", "type": "Annual", "half_day": false}, {"start": "20 Sep 2025", "end": "20 Sep 2025", "type": "Annual", "half_day": false}, {"start": "01 Dec 2025", "end": "01 Dec 2025", "type": "Other", "half_day": false}, {"start": "02 Dec 2025", "end": "02 Dec 2025", "type": "Annual", "half_day": false}, {"start": "29 Jan 2026", "end": "29 Jan 2026", "type": "Annual", "half_day": false}, {"start": "25 Feb 2026", "end": "26 Feb 2026", "type": "Study", "half_day": false}, {"start": "02 Mar 2026", "end": "13 Mar 2026", "type": "Study", "half_day": false}, {"start": "31 Jan 2026", "end": "08 Feb 2026", "type": "Annual", "half_day": false}, {"start": "16 Feb 2026", "end": "24 Feb 2026", "type": "Annual", "half_day": false}, {"start": "11 Sep 2025", "end": "11 Sep 2025", "type": "Study", "half_day": false}, {"start": "12 Sep 2025", "end": "12 Sep 2025", "type": "Study", "half_day": false}, {"start": "09 Sep 2025", "end": "09 Sep 2025", "type": "Study", "half_day": false}, {"start": "08 Sep 2025", "end": "08 Sep 2025", "type": "Study", "half_day": false}, {"start": "30 Sep 2025", "end": "30 Sep 2025", "type": "Study", "half_day": false}, {"start": "13 Oct 2025", "end": "13 Oct 2025", "type": "Study", "half_day": false}, {"start": "20 Oct 2025", "end": "20 Oct 2025", "type": "Study", "half_day": false}, {"start": "21 Oct 2025", "end": "21 Oct 2025", "type": "Study", "half_day": false}, {"start": "22 Oct 2025", "end": "22 Oct 2025", "type": "Annual", "half_day": false}, {"start": "26 Sep 2025", "end": "26 Sep 2025", "type": "Other", "half_day": false}, {"start": "25 Jun 2026", "end": "28 Jun 2026", "type": "Annual", "half_day": false}, {"start": "11 May 2026", "end": "14 May 2026", "type": "Annual", "half_day": false}, {"start": "25 Apr 2026", "end": "26 Apr 2026", "type": "Other", "half_day": false}, {"start": "27 Apr 2026", "end": "27 Apr 2026", "type": "Annual", "half_day": false}, {"start": "02 Oct 2025", "end": "02 Oct 2025", "type": "Study", "half_day": false}, {"start": "19 Jan 2026", "end": "20 Jan 2026", "type": "Study", "half_day": false}, {"start": "16 Oct 2025", "end": "16 Oct 2025", "type": "Other", "half_day": false}, {"start": "09 Feb 2026", "end": "10 Feb 2026", "type": "Other", "half_day": false}, {"start": "13 Feb 2026", "end": "13 Feb 2026", "type": "Other", "half_day": false}, {"start": "27 Feb 2026", "end": "27 Feb 2026", "type": "Other", "half_day": false}, {"start": "28 Feb 2026", "end": "01 Mar 2026", "type": "Study", "half_day": false}, {"start": "02 Apr 2026", "end": "02 Apr 2026", "type": "Other", "half_day": false}], "availability": {"1": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "2": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "3": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "4": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "5": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "6": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "7": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "8": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "9": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}, "10": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}, "11": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}, "12": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}}, "blocks": [{"start_date": "2025-08-06", "end_date": "2025-10-31", "block_name": "General ST1 induction"}]}, {"name": "SA", "skills": {"General ultrasound": 0, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": "30", "annual": "32", "notes": "4 extra days for weekend courses"}, "leave_records": [{"start": "10 Sep 2025", "end": "10 Sep 2025", "type": "Annual", "half_day": false}, {"start": "19 Aug 2025", "end": "19 Aug 2025", "type": "Annual", "half_day": false}, {"start": "05 Sep 2025", "end": "05 Sep 2025", "type": "Annual", "half_day": false}, {"start": "22 Sep 2025", "end": "26 Sep 2025", "type": "Annual", "half_day": false}, {"start": "08 Sep 2025", "end": "09 Sep 2025", "type": "Study", "half_day": false}, {"start": "11 Sep 2025", "end": "12 Sep 2025", "type": "Study", "half_day": false}, {"start": "30 Sep 2025", "end": "30 Sep 2025", "type": "Study", "half_day": false}, {"start": "13 Oct 2025", "end": "13 Oct 2025", "type": "Study", "half_day": false}, {"start": "20 Oct 2025", "end": "21 Oct 2025", "type": "Study", "half_day": false}, {"start": "29 Sep 2025", "end": "29 Sep 2025", "type": "Other", "half_day": false}, {"start": "02 Oct 2025", "end": "02 Oct 2025", "type": "Study", "half_day": false}, {"start": "17 Oct 2025", "end": "17 Oct 2025", "type": "Annual", "half_day": false}, {"start": "24 Feb 2026", "end": "13 Mar 2026", "type": "Study", "half_day": false}, {"start": "22 Oct 2025", "end": "22 Oct 2025", "type": "Annual", "half_day": true}, {"start": "30 Oct 2025", "end": "31 Oct 2025", "type": "Annual", "half_day": false}, {"start": "07 Nov 2025", "end": "07 Nov 2025", "type": "Other", "half_day": false}, {"start": "17 Nov 2025", "end": "17 Nov 2025", "type": "Annual", "half_day": true}, {"start": "15 Dec 2025", "end": "16 Dec 2025", "type": "Other", "half_day": false}, {"start": "30 Dec 2025", "end": "30 Dec 2025", "type": "Other", "half_day": false}, {"start": "19 Jan 2026", "end": "20 Jan 2026", "type": "Study", "half_day": false}, {"start": "06 Jan 2026", "end": "06 Jan 2026", "type": "Study", "half_day": false}], "availability": {"1": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "2": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "3": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "4": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "5": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "6": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "7": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": false, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": false}, "8": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}, "9": {"Mon AM": true, "Mon PM": true, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}, "10": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}, "11": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}, "12": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": true, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": false}}, "blocks": [{"start_date": "2025-08-06", "end_date": "2025-10-31", "block_name": "General ST1 induction"}]}, {"name": "AO", "skills": {"General ultrasound": 1, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": "30", "annual": "28", "notes": ""}, "leave_records": [{"start": "15 Oct 2025", "end": "19 Oct 2025", "type": "Annual", "half_day": false}, {"start": "29 Dec 2025", "end": "31 Dec 2025", "type": "Annual", "half_day": false}, {"start": "22 Dec 2025", "end": "24 Dec 2025", "type": "Annual", "half_day": false}, {"start": "25 Dec 2025", "end": "26 Dec 2025", "type": "Other", "half_day": false}, {"start": "07 Dec 2025", "end": "08 Dec 2025", "type": "Study", "half_day": false}, {"start": "18 Jun 2026", "end": "19 Jun 2026", "type": "Study", "half_day": false}, {"start": "30 Mar 2026", "end": "02 Apr 2026", "type": "Annual", "half_day": false}, {"start": "03 Apr 2026", "end": "06 Apr 2026", "type": "Other", "half_day": false}, {"start": "07 Apr 2026", "end": "10 Apr 2026", "type": "Annual", "half_day": false}], "availability": {"1": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": true, "Weekends": true}, "2": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "3": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "4": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": true, "Wed PM": true, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "5": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "6": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "7": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "8": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "9": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "10": {"Mon AM": false, "Mon PM": false, "Tue AM": true, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": true, "Fri PM": true, "Weekends": true}, "11": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "12": {"Mon AM": true, "Mon PM": true, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": true}}, "blocks": [{"start_date": "2025-08-06", "end_date": "2025-10-31", "block_name": "Breast"}]}, {"name": "BM", "skills": {"General ultrasound": 1, "Duty": 1, "MSK x-xray": 0, "Paeds x-ray": 0, "Chest x-ray": 0, "Abdo x-ray": 0, "GP films": 0}, "allowance": {"study": 30, "annual": 32, "notes": ""}, "leave_records": [{"start": "05 Aug 2025", "end": "17 Aug 2025", "type": "Other", "half_day": false}, {"start": "27 Oct 2025", "end": "02 Nov 2025", "type": "Annual", "half_day": false}, {"start": "07 Feb 2026", "end": "08 Feb 2026", "type": "Other", "half_day": false}, {"start": "14 Feb 2026", "end": "15 Feb 2026", "type": "Other", "half_day": false}, {"start": "22 Feb 2026", "end": "22 Feb 2026", "type": "Other", "half_day": false}, {"start": "01 Mar 2026", "end": "01 Mar 2026", "type": "Other", "half_day": false}], "availability": {"1": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "2": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "3": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "4": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "5": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "6": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "7": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "8": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "9": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": false, "Wed AM": false, "Wed PM": false, "Thu AM": false, "Thu PM": false, "Fri AM": false, "Fri PM": false, "Weekends": true}, "10": {"Mon AM": false, "Mon PM": false, "Tue AM": false, "Tue PM": true, "Wed AM": false, "Wed PM": true, "Thu AM": false, "Thu PM": true, "Fri AM": false, "Fri PM": false, "Weekends": true}, "11": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": true}, "12": {"Mon AM": false, "Mon PM": true, "Tue AM": true, "Tue PM": false, "Wed AM": false, "Wed PM": true, "Thu AM": true, "Thu PM": true, "Fri AM": false, "Fri PM": true, "Weekends": true}}, "blocks": [{"start_date": "2025-09-15", "end_date": "2025-11-14", "block_name": "IR"}, {"start_date": "2025-11-17", "end_date": "2026-01-02", "block_name": "Paediatrics"}, {"start_date": "2026-01-05", "end_date": "2026-01-30", "block_name": "Gynaecology"}, {"start_date": "2026-02-02", "end_date": "2026-02-27", "block_name": "Urology"}, {"start_date": "2026-03-02", "end_date": "2026-03-27", "block_name": "Chest"}]}]
+[
+    {
+        "name": "EL",
+        "blocks": [
+            {
+                "start_date": "2025-08-05",
+                "end_date": "2026-08-04",
+                "block_name": "EL subspec"
+            }
+        ],
+        "skills": {
+            "General ultrasound": 1,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": 30,
+            "annual": 32,
+            "notes": "="
+        },
+        "leave_records": [
+            {
+                "start": "29 Nov 2025",
+                "end": "07 Dec 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "06 Aug 2025",
+                "end": "10 Aug 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "12 Apr 2026",
+                "end": "12 Apr 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "17 Aug 2025",
+                "end": "17 Aug 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "24 Oct 2025",
+                "end": "24 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "17 Nov 2025",
+                "end": "17 Nov 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "30 Mar 2026",
+                "end": "05 Apr 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "28 Nov 2025",
+                "end": "28 Nov 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "25 Dec 2025",
+                "end": "26 Dec 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "08 Dec 2025",
+                "end": "10 Dec 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "08 Nov 2025",
+                "end": "13 Nov 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "23 Sep 2025",
+                "end": "23 Sep 2025",
+                "type": "Annual",
+                "half_day": true
+            },
+            {
+                "start": "21 Nov 2025",
+                "end": "23 Nov 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "16 Jan 2026",
+                "end": "16 Jan 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "05 Jun 2026",
+                "end": "07 Jun 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "24 Dec 2025",
+                "end": "24 Dec 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "11 Apr 2026",
+                "end": "12 Apr 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "06 Feb 2026",
+                "end": "09 Feb 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "30 May 2026",
+                "end": "01 Jun 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "14 Feb 2026",
+                "end": "15 Feb 2026",
+                "type": "Other",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "2": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "3": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "4": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "5": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "6": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "7": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "8": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "9": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "10": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "11": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "12": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": false,
+                "Weekends": true
+            }
+        }
+    },
+    {
+        "name": "SR",
+        "blocks": [
+            {
+                "start_date": "2024-11-04",
+                "end_date": "2025-01-31",
+                "block_name": "Head and Neck"
+            },
+            {
+                "start_date": "2025-02-03",
+                "end_date": "2025-02-28",
+                "block_name": "Breast"
+            },
+            {
+                "start_date": "2025-03-03",
+                "end_date": "2025-05-30",
+                "block_name": "Neuro"
+            },
+            {
+                "start_date": "2025-06-02",
+                "end_date": "2025-07-25",
+                "block_name": "Breast"
+            },
+            {
+                "start_date": "2025-09-15",
+                "end_date": "2026-08-04",
+                "block_name": "SR subspeciality training"
+            }
+        ],
+        "skills": {
+            "General ultrasound": 1,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": 30,
+            "annual": 32,
+            "notes": ""
+        },
+        "leave_records": [
+            {
+                "start": "22 Sep 2025",
+                "end": "10 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "11 Sep 2025",
+                "end": "12 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "11 Mar 2026",
+                "end": "13 Mar 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "13 Feb 2026",
+                "end": "13 Feb 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "20 Feb 2026",
+                "end": "20 Feb 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "27 Feb 2026",
+                "end": "27 Feb 2026",
+                "type": "Annual",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "2": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "3": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "4": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "5": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "6": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "7": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "8": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "9": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "10": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "11": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "12": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            }
+        }
+    },
+    {
+        "name": "SH",
+        "blocks": [
+            {
+                "start_date": "2024-12-02",
+                "end_date": "2025-02-28",
+                "block_name": "Neuro"
+            },
+            {
+                "start_date": "2025-06-02",
+                "end_date": "2025-07-25",
+                "block_name": "Head and Neck"
+            },
+            {
+                "start_date": "2025-03-03",
+                "end_date": "2025-05-30",
+                "block_name": "Haem Onc"
+            },
+            {
+                "start_date": "2025-08-05",
+                "end_date": "2026-08-04",
+                "block_name": "SH subspeciality training"
+            }
+        ],
+        "skills": {
+            "General ultrasound": 1,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": 30,
+            "annual": 34,
+            "notes": "2+ days for weekend course"
+        },
+        "leave_records": [
+            {
+                "start": "11 Sep 2025",
+                "end": "12 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "20 Sep 2025",
+                "end": "21 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "15 Nov 2025",
+                "end": "21 Nov 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "11 Dec 2025",
+                "end": "11 Dec 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "09 Jan 2026",
+                "end": "09 Jan 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "02 Mar 2026",
+                "end": "09 Mar 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "10 Mar 2026",
+                "end": "16 Mar 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "23 Feb 2026",
+                "end": "23 Feb 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "22 Sep 2025",
+                "end": "08 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "2": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "3": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "4": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "5": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "6": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "7": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "8": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "9": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "10": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "11": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "12": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            }
+        }
+    },
+    {
+        "name": "QO",
+        "blocks": [
+            {
+                "start_date": "2025-05-12",
+                "end_date": "2025-08-22",
+                "block_name": "Haem Onc"
+            },
+            {
+                "start_date": "2025-12-08",
+                "end_date": "2026-03-20",
+                "block_name": "Head and Neck"
+            },
+            {
+                "start_date": "2026-03-23",
+                "end_date": "2026-07-03",
+                "block_name": "Breast"
+            },
+            {
+                "start_date": "2025-08-25",
+                "end_date": "2025-12-05",
+                "block_name": "Gynaecology"
+            }
+        ],
+        "skills": {
+            "General ultrasound": 1,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": 32,
+            "annual": 30,
+            "notes": ""
+        },
+        "leave_records": [
+            {
+                "start": "12 Nov 2025",
+                "end": "13 Nov 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "20 Oct 2025",
+                "end": "05 Nov 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "13 Oct 2025",
+                "end": "19 Oct 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "22 Aug 2025",
+                "end": "22 Aug 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "06 Dec 2025",
+                "end": "26 Dec 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "06 Oct 2025",
+                "end": "10 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "2": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "3": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "4": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "5": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "6": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "7": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "8": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "9": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "10": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": true,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "11": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "12": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            }
+        }
+    },
+    {
+        "name": "KA",
+        "blocks": [
+            {
+                "start_date": "2025-02-03",
+                "end_date": "2025-05-02",
+                "block_name": "GI"
+            },
+            {
+                "start_date": "2025-05-05",
+                "end_date": "2025-08-01",
+                "block_name": "Chest"
+            },
+            {
+                "start_date": "2025-08-04",
+                "end_date": "2025-10-31",
+                "block_name": "MSK"
+            },
+            {
+                "start_date": "2026-02-02",
+                "end_date": "2026-05-01",
+                "block_name": "IR"
+            },
+            {
+                "start_date": "2026-05-04",
+                "end_date": "2026-07-31",
+                "block_name": "Haem Onc"
+            },
+            {
+                "start_date": "2026-08-03",
+                "end_date": "2026-10-30",
+                "block_name": "Paediatrics"
+            },
+            {
+                "start_date": "2027-05-03",
+                "end_date": "2027-07-30",
+                "block_name": "Breast"
+            },
+            {
+                "start_date": "2026-11-02",
+                "end_date": "2027-01-29",
+                "block_name": "Neuro and H&N"
+            },
+            {
+                "start_date": "2025-11-03",
+                "end_date": "2026-01-30",
+                "block_name": "Gynaecology"
+            }
+        ],
+        "skills": {
+            "General ultrasound": 1,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": "27",
+            "annual": "27",
+            "notes": ""
+        },
+        "leave_records": [
+            {
+                "start": "18 Aug 2025",
+                "end": "22 Aug 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "04 Sep 2025",
+                "end": "04 Sep 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "08 Nov 2025",
+                "end": "16 Nov 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "22 Dec 2025",
+                "end": "22 Dec 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "07 Feb 2026",
+                "end": "08 Feb 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "12 Jan 2026",
+                "end": "12 Jan 2026",
+                "type": "Other",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "2": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "3": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "4": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "5": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "6": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "7": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "8": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "9": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "10": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "11": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": false,
+                "Fri AM": true,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "12": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            }
+        }
+    },
+    {
+        "name": "MM",
+        "blocks": [
+            {
+                "start_date": "2025-02-03",
+                "end_date": "2025-05-02",
+                "block_name": "Breast"
+            },
+            {
+                "start_date": "2025-08-04",
+                "end_date": "2025-10-31",
+                "block_name": "Paediatrics"
+            },
+            {
+                "start_date": "2025-11-03",
+                "end_date": "2026-01-30",
+                "block_name": "Haem Onc"
+            },
+            {
+                "start_date": "2026-02-02",
+                "end_date": "2026-05-01",
+                "block_name": "Head and Neck"
+            },
+            {
+                "start_date": "2026-05-04",
+                "end_date": "2026-07-31",
+                "block_name": "IR"
+            },
+            {
+                "start_date": "2025-05-05",
+                "end_date": "2025-08-01",
+                "block_name": "Gynaecology"
+            }
+        ],
+        "skills": {
+            "General ultrasound": 1,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": 30,
+            "annual": 32,
+            "notes": ""
+        },
+        "leave_records": [
+            {
+                "start": "08 Oct 2025",
+                "end": "10 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "12 Nov 2025",
+                "end": "13 Nov 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "20 Oct 2025",
+                "end": "03 Nov 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "07 Oct 2025",
+                "end": "07 Oct 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "08 Sep 2025",
+                "end": "10 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "30 Nov 2025",
+                "end": "04 Dec 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "20 Dec 2025",
+                "end": "28 Dec 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "06 Nov 2025",
+                "end": "11 Nov 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "06 Feb 2026",
+                "end": "13 Feb 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "01 Mar 2026",
+                "end": "01 Mar 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "20 Mar 2026",
+                "end": "20 Mar 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "03 Feb 2026",
+                "end": "03 Feb 2026",
+                "type": "Annual",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "2": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "3": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "4": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "5": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "6": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "7": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "8": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "9": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "10": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "11": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "12": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            }
+        }
+    },
+    {
+        "name": "CM",
+        "skills": {
+            "General ultrasound": 0,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": 30,
+            "annual": 32,
+            "notes": ""
+        },
+        "leave_records": [
+            {
+                "start": "19 Oct 2025",
+                "end": "19 Oct 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "16 Aug 2025",
+                "end": "17 Aug 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "27 Sep 2025",
+                "end": "28 Sep 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "20 Sep 2025",
+                "end": "20 Sep 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "01 Dec 2025",
+                "end": "01 Dec 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "02 Dec 2025",
+                "end": "02 Dec 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "29 Jan 2026",
+                "end": "29 Jan 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "25 Feb 2026",
+                "end": "26 Feb 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "02 Mar 2026",
+                "end": "13 Mar 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "31 Jan 2026",
+                "end": "08 Feb 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "16 Feb 2026",
+                "end": "24 Feb 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "11 Sep 2025",
+                "end": "11 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "12 Sep 2025",
+                "end": "12 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "09 Sep 2025",
+                "end": "09 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "08 Sep 2025",
+                "end": "08 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "30 Sep 2025",
+                "end": "30 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "13 Oct 2025",
+                "end": "13 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "20 Oct 2025",
+                "end": "20 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "21 Oct 2025",
+                "end": "21 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "22 Oct 2025",
+                "end": "22 Oct 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "26 Sep 2025",
+                "end": "26 Sep 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "25 Jun 2026",
+                "end": "28 Jun 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "11 May 2026",
+                "end": "14 May 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "25 Apr 2026",
+                "end": "26 Apr 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "27 Apr 2026",
+                "end": "27 Apr 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "02 Oct 2025",
+                "end": "02 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "19 Jan 2026",
+                "end": "20 Jan 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "16 Oct 2025",
+                "end": "16 Oct 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "09 Feb 2026",
+                "end": "10 Feb 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "13 Feb 2026",
+                "end": "13 Feb 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "27 Feb 2026",
+                "end": "27 Feb 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "28 Feb 2026",
+                "end": "01 Mar 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "02 Apr 2026",
+                "end": "02 Apr 2026",
+                "type": "Other",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "2": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "3": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "4": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "5": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "6": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "7": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "8": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "9": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "10": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "11": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "12": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            }
+        },
+        "blocks": [
+            {
+                "start_date": "2025-08-06",
+                "end_date": "2025-10-31",
+                "block_name": "General ST1 induction"
+            }
+        ]
+    },
+    {
+        "name": "SA",
+        "skills": {
+            "General ultrasound": 0,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": "30",
+            "annual": "32",
+            "notes": "4 extra days for weekend courses"
+        },
+        "leave_records": [
+            {
+                "start": "10 Sep 2025",
+                "end": "10 Sep 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "19 Aug 2025",
+                "end": "19 Aug 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "05 Sep 2025",
+                "end": "05 Sep 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "22 Sep 2025",
+                "end": "26 Sep 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "08 Sep 2025",
+                "end": "09 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "11 Sep 2025",
+                "end": "12 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "30 Sep 2025",
+                "end": "30 Sep 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "13 Oct 2025",
+                "end": "13 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "20 Oct 2025",
+                "end": "21 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "29 Sep 2025",
+                "end": "29 Sep 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "02 Oct 2025",
+                "end": "02 Oct 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "17 Oct 2025",
+                "end": "17 Oct 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "24 Feb 2026",
+                "end": "13 Mar 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "22 Oct 2025",
+                "end": "22 Oct 2025",
+                "type": "Annual",
+                "half_day": true
+            },
+            {
+                "start": "30 Oct 2025",
+                "end": "31 Oct 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "07 Nov 2025",
+                "end": "07 Nov 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "17 Nov 2025",
+                "end": "17 Nov 2025",
+                "type": "Annual",
+                "half_day": true
+            },
+            {
+                "start": "15 Dec 2025",
+                "end": "16 Dec 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "30 Dec 2025",
+                "end": "30 Dec 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "19 Jan 2026",
+                "end": "20 Jan 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "06 Jan 2026",
+                "end": "06 Jan 2026",
+                "type": "Study",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "2": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "3": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "4": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "5": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "6": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "7": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "8": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "9": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "10": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "11": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            },
+            "12": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": false
+            }
+        },
+        "blocks": [
+            {
+                "start_date": "2025-08-06",
+                "end_date": "2025-10-31",
+                "block_name": "General ST1 induction"
+            }
+        ]
+    },
+    {
+        "name": "AO",
+        "skills": {
+            "General ultrasound": 1,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": "30",
+            "annual": "28",
+            "notes": ""
+        },
+        "leave_records": [
+            {
+                "start": "15 Oct 2025",
+                "end": "19 Oct 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "29 Dec 2025",
+                "end": "31 Dec 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "22 Dec 2025",
+                "end": "24 Dec 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "25 Dec 2025",
+                "end": "26 Dec 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "07 Dec 2025",
+                "end": "08 Dec 2025",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "18 Jun 2026",
+                "end": "19 Jun 2026",
+                "type": "Study",
+                "half_day": false
+            },
+            {
+                "start": "30 Mar 2026",
+                "end": "02 Apr 2026",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "03 Apr 2026",
+                "end": "06 Apr 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "07 Apr 2026",
+                "end": "10 Apr 2026",
+                "type": "Annual",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "2": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "3": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "4": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": true,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "5": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "6": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "7": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "8": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "9": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "10": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": true,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": true,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "11": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "12": {
+                "Mon AM": true,
+                "Mon PM": true,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": true
+            }
+        },
+        "blocks": [
+            {
+                "start_date": "2025-08-06",
+                "end_date": "2025-10-31",
+                "block_name": "Breast"
+            }
+        ]
+    },
+    {
+        "name": "BM",
+        "skills": {
+            "General ultrasound": 1,
+            "Duty": 1,
+            "MSK x-xray": 0,
+            "Paeds x-ray": 0,
+            "Chest x-ray": 0,
+            "Abdo x-ray": 0,
+            "GP films": 0
+        },
+        "allowance": {
+            "study": 30,
+            "annual": 32,
+            "notes": ""
+        },
+        "leave_records": [
+            {
+                "start": "05 Aug 2025",
+                "end": "17 Aug 2025",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "27 Oct 2025",
+                "end": "02 Nov 2025",
+                "type": "Annual",
+                "half_day": false
+            },
+            {
+                "start": "07 Feb 2026",
+                "end": "08 Feb 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "14 Feb 2026",
+                "end": "15 Feb 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "22 Feb 2026",
+                "end": "22 Feb 2026",
+                "type": "Other",
+                "half_day": false
+            },
+            {
+                "start": "01 Mar 2026",
+                "end": "01 Mar 2026",
+                "type": "Other",
+                "half_day": false
+            }
+        ],
+        "availability": {
+            "1": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "2": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "3": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "4": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "5": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "6": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "7": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "8": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "9": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": false,
+                "Thu AM": false,
+                "Thu PM": false,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "10": {
+                "Mon AM": false,
+                "Mon PM": false,
+                "Tue AM": false,
+                "Tue PM": true,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": false,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": false,
+                "Weekends": true
+            },
+            "11": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": true
+            },
+            "12": {
+                "Mon AM": false,
+                "Mon PM": true,
+                "Tue AM": true,
+                "Tue PM": false,
+                "Wed AM": false,
+                "Wed PM": true,
+                "Thu AM": true,
+                "Thu PM": true,
+                "Fri AM": false,
+                "Fri PM": true,
+                "Weekends": true
+            }
+        },
+        "blocks": [
+            {
+                "start_date": "2025-09-15",
+                "end_date": "2025-11-14",
+                "block_name": "IR"
+            },
+            {
+                "start_date": "2025-11-17",
+                "end_date": "2026-01-02",
+                "block_name": "Paediatrics"
+            },
+            {
+                "start_date": "2026-01-05",
+                "end_date": "2026-01-30",
+                "block_name": "Gynaecology"
+            },
+            {
+                "start_date": "2026-02-02",
+                "end_date": "2026-02-27",
+                "block_name": "Urology"
+            },
+            {
+                "start_date": "2026-03-02",
+                "end_date": "2026-03-27",
+                "block_name": "Chest"
+            }
+        ]
+    }
+]
