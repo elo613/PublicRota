@@ -4598,7 +4598,9 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -4925,7 +4927,9 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -5067,7 +5071,9 @@
                 "Duty": [
                     "SH"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
