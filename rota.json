@@ -4215,7 +4215,9 @@
                 "Duty": [
                     "KA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "AO"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -4362,9 +4364,7 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "KA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -4372,7 +4372,9 @@
                 "Duty": [
                     "CM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -4525,9 +4527,7 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "KA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -4535,7 +4535,9 @@
                 "Duty": [
                     "CM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -4998,9 +5000,7 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "KA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -5008,7 +5008,9 @@
                 "Duty": [
                     "CM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -5161,9 +5163,7 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "KA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -5171,7 +5171,9 @@
                 "Duty": [
                     "CM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -5322,9 +5324,7 @@
                 "Duty": [
                     "AO"
                 ],
-                "Reporting": [
-                    "KA"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -5332,7 +5332,9 @@
                 "Duty": [
                     "CM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "KA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
