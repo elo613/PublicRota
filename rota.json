@@ -3788,9 +3788,7 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [
-                    "SH"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -3798,7 +3796,9 @@
                 "Duty": [
                     "SA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SH"
+                ],
                 "Ultrasound": [
                     "MM"
                 ],
@@ -3949,9 +3949,7 @@
                 "Duty": [
                     "SH"
                 ],
-                "Reporting": [
-                    "MM"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -3959,7 +3957,9 @@
                 "Duty": [
                     "KA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "MM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
@@ -4593,7 +4593,9 @@
                 "Duty": [
                     "SA"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "MM"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             }
