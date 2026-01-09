@@ -3799,9 +3799,7 @@
                 "Reporting": [
                     "SH"
                 ],
-                "Ultrasound": [
-                    "MM"
-                ],
+                "Ultrasound": [],
                 "Additional": []
             }
         }
