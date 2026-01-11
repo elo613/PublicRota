@@ -3746,7 +3746,7 @@
             },
             "PM": {
                 "Duty": [
-                    "AO"
+                    "MM"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
