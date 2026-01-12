@@ -2916,7 +2916,14 @@
                     "QO"
                 ],
                 "Ultrasound": [],
-                "Additional": []
+                "Additional": [
+                    [
+                        "CM",
+                        "13/01/2026",
+                        "PM",
+                        "Private study"
+                    ]
+                ]
             }
         }
     },
