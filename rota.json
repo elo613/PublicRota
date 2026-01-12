@@ -3796,9 +3796,7 @@
                 "Duty": [
                     "SA"
                 ],
-                "Reporting": [
-                    "SH"
-                ],
+                "Reporting": [],
                 "Ultrasound": [],
                 "Additional": []
             }

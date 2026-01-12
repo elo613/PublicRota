@@ -132,12 +132,6 @@
                 "half_day": false
             },
             {
-                "start": "14 Feb 2026",
-                "end": "15 Feb 2026",
-                "type": "Other",
-                "half_day": false
-            },
-            {
                 "start": "30 Mar 2026",
                 "end": "06 Apr 2026",
                 "type": "Annual",
