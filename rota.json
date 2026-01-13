@@ -3833,7 +3833,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "EL"
+                    "KA"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
@@ -3992,7 +3992,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "EL"
                 ],
                 "Reporting": [],
                 "Ultrasound": [],
