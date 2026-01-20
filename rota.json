@@ -92,7 +92,7 @@
                     "EL"
                 ],
                 "Reporting": [
-                    "SA"
+                    "KA"
                 ],
                 "Ultrasound": [
                     "QO"
@@ -382,7 +382,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "KA"
+                    "SA"
                 ],
                 "Reporting": [
                     "AO"
