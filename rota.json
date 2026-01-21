@@ -1516,7 +1516,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "CM"
                 ],
                 "Reporting": [
                     "KA"
@@ -2110,7 +2110,7 @@
         "Shifts": {
             "AM": {
                 "Duty": [
-                    "SA"
+                    "CM"
                 ],
                 "Reporting": [
                     "SR"
