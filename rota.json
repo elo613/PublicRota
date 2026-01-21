@@ -1466,7 +1466,9 @@
                 "Duty": [
                     "SR"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -1943,7 +1945,9 @@
                 "Duty": [
                     "SR"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "AO"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
