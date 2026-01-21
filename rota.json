@@ -752,7 +752,9 @@
                 "Duty": [
                     "MM"
                 ],
-                "Reporting": [],
+                "Reporting": [
+                    "SA"
+                ],
                 "Ultrasound": [],
                 "Additional": []
             },
@@ -1316,7 +1318,7 @@
                     "SR"
                 ],
                 "Reporting": [
-                    "QO"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
@@ -2117,7 +2119,7 @@
                     "KA"
                 ],
                 "Reporting": [
-                    "QO"
+                    "SA"
                 ],
                 "Ultrasound": [],
                 "Additional": []
