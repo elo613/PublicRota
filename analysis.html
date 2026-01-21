@@ -24,7 +24,6 @@
             <p class="text-gray-600 mt-1">Detailed shift breakdowns and block schedules.</p>
         </header>
 
-        <!-- Tab Controls -->
         <div class="mb-6 border-b border-gray-200">
             <nav class="flex space-x-4" aria-label="Tabs">
                 <button id="tab-blocks" class="tab-button py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" onclick="showTab('blocks')">
@@ -39,20 +38,16 @@
             </nav>
         </div>
 
-        <!-- Tab Content -->
         <main>
-            <!-- Shift Breakdown Tab -->
             <div id="content-shifts">
                 <div id="shift-summary-table-container" class="bg-white p-6 rounded-lg shadow-sm overflow-x-auto">
-                    <!-- Table will be generated here by JS -->
-                </div>
+                    </div>
                  <div id="loading-shifts" class="text-center p-8">
                     <div class="text-lg font-semibold">Loading shift data...</div>
                     <div class="mt-2 text-gray-500">Please wait a moment.</div>
                 </div>
             </div>
 
-            <!-- Registrar Blocks Tab -->
             <div id="content-blocks" class="hidden">
                 <div class="bg-white p-6 rounded-lg shadow-sm">
                     <div class="flex items-center mb-4">
@@ -69,7 +64,6 @@
                 </div>
             </div>
 
-            <!-- View Blocks Tab -->
             <div id="content-view-blocks" class="hidden">
                 <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                     <iframe src="./blocks.html" class="w-full h-[80vh]" frameborder="0" title="Blocks Viewer"></iframe>
@@ -82,7 +76,6 @@
         const ROTA_URL = './rota.json';
         const REGISTRARS_URL = './registrars_data.json';
 
-        // --- Tab Switching Logic ---
         function showTab(tabName) {
             document.getElementById('content-shifts').classList.toggle('hidden', tabName !== 'shifts');
             document.getElementById('content-blocks').classList.toggle('hidden', tabName !== 'blocks');
@@ -93,13 +86,10 @@
             document.getElementById('tab-view-blocks').classList.toggle('active', tabName === 'view-blocks');
         }
 
-        // --- Data Fetching and Processing ---
         async function fetchData(url) {
             try {
                 const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 return await response.json();
             } catch (error) {
                 console.error(`Could not fetch data from ${url}:`, error);
@@ -107,44 +97,33 @@
             }
         }
 
-        // --- Shift Breakdown Logic ---
         function processRotaData(rotaData) {
             const shifts = {
-                amDuty: [],
-                amReporting: [],
-                pmDuty: [],
-                pmUltrasound: [],
-                pmReporting: [],
-                saturday: [],
-                sunday: []
+                amDuty: [], amReporting: [], pmDuty: [],
+                pmUltrasound: [], pmReporting: [], saturday: [], sunday: []
             };
 
             rotaData.forEach(day => {
                 const [dayOfMonth, month, year] = day.Date.split('/');
                 const date = new Date(`${year}-${month}-${dayOfMonth}`);
-                const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+                const dayOfWeek = date.getDay();
 
                 const amShifts = day.Shifts.AM || {};
                 const pmShifts = day.Shifts.PM || {};
 
-                // Weekday Shifts (Monday-Friday)
                 if (dayOfWeek >= 1 && dayOfWeek <= 5) {
                     if (amShifts.Duty) shifts.amDuty.push(...amShifts.Duty.map(r => ({ registrar: r, date: day.Date })));
                     if (amShifts.Reporting) shifts.amReporting.push(...amShifts.Reporting.map(r => ({ registrar: r, date: day.Date })));
                 }
 
-                // PM Shifts (Every day)
                 if (pmShifts.Duty) shifts.pmDuty.push(...pmShifts.Duty.map(r => ({ registrar: r, date: day.Date })));
                 if (pmShifts.Ultrasound) shifts.pmUltrasound.push(...pmShifts.Ultrasound.map(r => ({ registrar: r, date: day.Date })));
                 if (pmShifts.Reporting) shifts.pmReporting.push(...pmShifts.Reporting.map(r => ({ registrar: r, date: day.Date })));
 
-                // Weekend Shifts
-                if (dayOfWeek === 6) { // Saturday
+                if (dayOfWeek === 6 || dayOfWeek === 0) {
                     const allShifts = [...(amShifts.Duty || []), ...(amShifts.Reporting || []), ...(pmShifts.Duty || []), ...(pmShifts.Reporting || []), ...(pmShifts.Ultrasound || [])];
-                    shifts.saturday.push(...allShifts.map(r => ({ registrar: r, date: day.Date })));
-                } else if (dayOfWeek === 0) { // Sunday
-                    const allShifts = [...(amShifts.Duty || []), ...(amShifts.Reporting || []), ...(pmShifts.Duty || []), ...(pmShifts.Reporting || []), ...(pmShifts.Ultrasound || [])];
-                    shifts.sunday.push(...allShifts.map(r => ({ registrar: r, date: day.Date })));
+                    const key = dayOfWeek === 6 ? 'saturday' : 'sunday';
+                    shifts[key].push(...allShifts.map(r => ({ registrar: r, date: day.Date })));
                 }
             });
             return shifts;
@@ -152,7 +131,6 @@
         
         function displayShiftSummaryTable(shifts, registrarsData) {
             const container = document.getElementById('shift-summary-table-container');
-
             const summaryData = {};
             const allRegistrarNames = new Set(registrarsData.map(r => r.name));
 
@@ -166,16 +144,12 @@
                 sunday: 'Sunday Shifts'
             };
 
-            // Tally shifts and discover any registrars from rota not in main list
             Object.values(shifts).flat().forEach(shift => {
-                if (shift.registrar) {
-                    allRegistrarNames.add(shift.registrar);
-                }
+                if (shift.registrar) allRegistrarNames.add(shift.registrar);
             });
 
             const sortedRegistrarNames = Array.from(allRegistrarNames).sort();
 
-            // Initialize summary data structure for all registrars
             sortedRegistrarNames.forEach(name => {
                 summaryData[name] = {
                     'AM Duty (Mon-Fri)': 0,
@@ -185,31 +159,44 @@
                     'PM Reporting': 0,
                     'Saturday Shifts': 0,
                     'Sunday Shifts': 0,
-                    'Total': 0
+                    'TOTAL Duty': 0,      // New Column
+                    'TOTAL Reporting': 0,  // New Column
+                    'Grand Total': 0
                 };
             });
 
-            // Populate summary data with shift counts
             for (const shiftKey in shiftMapping) {
                 const shiftCategoryName = shiftMapping[shiftKey];
                 shifts[shiftKey].forEach(shift => {
                     const registrarName = shift.registrar;
                     if (summaryData[registrarName]) {
                         summaryData[registrarName][shiftCategoryName]++;
-                        summaryData[registrarName]['Total']++;
+                        summaryData[registrarName]['Grand Total']++;
+                        
+                        // Logic for aggregated totals
+                        if (shiftKey === 'amDuty' || shiftKey === 'pmDuty') {
+                            summaryData[registrarName]['TOTAL Duty']++;
+                        }
+                        if (shiftKey === 'amReporting' || shiftKey === 'pmReporting') {
+                            summaryData[registrarName]['TOTAL Reporting']++;
+                        }
                     }
                 });
             }
 
-            // Generate HTML table
-            const headers = Object.keys(summaryData[sortedRegistrarNames[0]] || {});
+            const headers = [
+                'AM Duty (Mon-Fri)', 'PM Duty', 'TOTAL Duty', 
+                'AM Reporting (Mon-Fri)', 'PM Reporting', 'TOTAL Reporting',
+                'PM Ultrasound', 'Saturday Shifts', 'Sunday Shifts', 'Grand Total'
+            ];
             
             let content = `<h2 class="text-xl font-bold mb-4 text-gray-800">Shift Type Analysis</h2>`;
             content += '<table class="min-w-full divide-y divide-gray-200">';
             content += `<thead class="bg-gray-50"><tr>`;
             content += `<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50 z-10">Registrar</th>`;
             headers.forEach(header => {
-                content += `<th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">${header}</th>`;
+                const bgColor = header.includes('TOTAL') ? 'bg-blue-50' : '';
+                content += `<th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider ${bgColor}">${header}</th>`;
             });
             content += `</tr></thead>`;
 
@@ -218,26 +205,22 @@
                 content += `<tr>`;
                 content += `<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 sticky left-0 bg-white z-10">${name}</td>`;
                 headers.forEach(header => {
-                    content += `<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">${summaryData[name][header]}</td>`;
+                    const isTotal = header.includes('TOTAL') || header === 'Grand Total';
+                    const weightClass = isTotal ? 'font-bold text-blue-700' : 'text-gray-500';
+                    content += `<td class="px-6 py-4 whitespace-nowrap text-sm text-center ${weightClass}">${summaryData[name][header]}</td>`;
                 });
                 content += `</tr>`;
             });
 
             content += '</tbody></table>';
-
             container.innerHTML = content;
             document.getElementById('loading-shifts').style.display = 'none';
         }
 
-
-        // --- Registrar Blocks Logic ---
         function setupRegistrarBlocks(registrarsData) {
             const select = document.getElementById('registrar-select');
-            select.innerHTML = '<option value="">-- Select a Registrar --</option>'; // Default option
-
-            registrarsData.sort((a, b) => a.name.localeCompare(b.name));
-
-            registrarsData.forEach(registrar => {
+            select.innerHTML = '<option value="">-- Select a Registrar --</option>';
+            registrarsData.sort((a, b) => a.name.localeCompare(b.name)).forEach(registrar => {
                 const option = document.createElement('option');
                 option.value = registrar.name;
                 option.textContent = registrar.name;
@@ -247,19 +230,16 @@
             select.addEventListener('change', (event) => {
                 const registrarName = event.target.value;
                 if(registrarName){
-                    const registrar = registrarsData.find(r => r.name === registrarName);
-                    displayRegistrarBlocks(registrar);
+                    displayRegistrarBlocks(registrarsData.find(r => r.name === registrarName));
                 } else {
-                     document.getElementById('registrar-blocks-container').innerHTML = '<p class="text-gray-500">Select a registrar to view their blocks.</p>';
+                    document.getElementById('registrar-blocks-container').innerHTML = '<p class="text-gray-500">Select a registrar to view their blocks.</p>';
                 }
             });
             document.getElementById('loading-registrars').style.display = 'none';
         }
         
         function formatDate(dateString) {
-            const date = new Date(dateString);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return date.toLocaleDateString('en-GB', options);
+            return new Date(dateString).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
         }
 
         function displayRegistrarBlocks(registrar) {
@@ -268,57 +248,23 @@
                 container.innerHTML = '<p class="text-gray-500">No blocks found for this registrar.</p>';
                 return;
             }
-
-            // Sort blocks chronologically by start date
             const sortedBlocks = registrar.blocks.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
-
             let content = `<h2 class="text-xl font-bold mb-4 text-gray-800">Blocks for ${registrar.name}</h2>`;
-            content += '<div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200">';
-            content += `<thead class="bg-gray-50"><tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Block Name</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
-                        </tr></thead>`;
-            content += '<tbody class="bg-white divide-y divide-gray-200">';
-
+            content += '<div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Block Name</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Date</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Date</th></tr></thead><tbody class="bg-white divide-y divide-gray-200">';
             sortedBlocks.forEach(block => {
-                content += `<tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${block.block_name}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatDate(block.start_date)}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatDate(block.end_date)}</td>
-                            </tr>`;
+                content += `<tr><td class="px-6 py-4 text-sm font-medium text-gray-900">${block.block_name}</td><td class="px-6 py-4 text-sm text-gray-500">${formatDate(block.start_date)}</td><td class="px-6 py-4 text-sm text-gray-500">${formatDate(block.end_date)}</td></tr>`;
             });
-
-            content += '</tbody></table></div>';
-            container.innerHTML = content;
+            container.innerHTML = content + '</tbody></table></div>';
         }
 
-
-        // --- Initialization ---
         async function initialize() {
-            const [rotaData, registrarsData] = await Promise.all([
-                fetchData(ROTA_URL),
-                fetchData(REGISTRARS_URL)
-            ]);
-
-            // Set up the shift breakdown tab
+            const [rotaData, registrarsData] = await Promise.all([fetchData(ROTA_URL), fetchData(REGISTRARS_URL)]);
             if (rotaData && registrarsData) {
-                const processedShifts = processRotaData(rotaData);
-                displayShiftSummaryTable(processedShifts, registrarsData);
+                displayShiftSummaryTable(processRotaData(rotaData), registrarsData);
             } else {
-                 const loadingShifts = document.getElementById('loading-shifts');
-                 loadingShifts.innerHTML = '<div class="text-red-500 font-semibold">Failed to load shift and/or registrar data.</div>';
-                 loadingShifts.style.display = 'block';
+                 document.getElementById('loading-shifts').innerHTML = '<div class="text-red-500 font-semibold">Failed to load data.</div>';
             }
-
-            // Set up the registrar blocks tab
-            if (registrarsData) {
-                setupRegistrarBlocks(registrarsData);
-            } else {
-                 const loadingRegistrars = document.getElementById('loading-registrars');
-                 loadingRegistrars.innerHTML = '<div class="text-red-500 font-semibold">Failed to load registrar data.</div>';
-                 loadingRegistrars.style.display = 'block';
-            }
+            if (registrarsData) setupRegistrarBlocks(registrarsData);
         }
 
         document.addEventListener('DOMContentLoaded', initialize);
